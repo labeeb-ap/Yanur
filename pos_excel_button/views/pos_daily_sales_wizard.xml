@@ -1,0 +1,37 @@
+<odoo>
+    <!-- Wizard Form View -->
+    <record id="view_pos_daily_sales_wizard_form" model="ir.ui.view">
+        <field name="name">pos.daily.sales.wizard.form</field>
+        <field name="model">pos.daily.sales.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Daily Sales">
+                <group>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="pos_config_ids" widget="many2many_tags"/>
+                </group>
+                <footer>
+                    <button name="action_export_excel" string="Export XLSX" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_pos_daily_sales_report" model="ir.actions.act_window">
+        <field name="name">Daily Sales Report</field>
+        <field name="res_model">pos.daily.sales.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- Menu under POS Reporting -->
+       <!-- Menu under POS Reporting -->
+    <menuitem id="menu_pos_daily_sales_report"
+          name="Daily Sales Report"
+          parent="point_of_sale.menu_point_rep"
+          action="action_pos_daily_sales_report"
+          sequence="20"/>
+
+</odoo>

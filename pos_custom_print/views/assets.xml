@@ -1,0 +1,8 @@
+<odoo>
+    <template id="assets" name="xls_assets" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript"
+                    src="pos_custom_print/static/src/js/pos_receipt_invoice_number.js"/>
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_additional_input_rule,additional.input.rule,model_additional_input_rule,,1,1,1,1
+access_additional_input_rule_line,additional.input.rule.line,model_additional_input_rule_line,,1,1,1,1
+access_employee_input_rule_line,employee.input.rule.line,model_employee_input_rule_line,,1,1,1,1
+

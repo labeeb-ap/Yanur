@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <record id="paperformat_euro_lowmargin_sale_report_qweb" model="report.paperformat">
+        <field name="name">European A4 low margin</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">45</field>
+        <field name="margin_bottom">75</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">40</field>
+        <field name="dpi">70</field>
+    </record>
+
+    <record id="report_of_event_order_form" model="ir.actions.report">
+        <field name="name">Event Order Report</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">event_order.report_sales_invoice_template_id</field>
+        <field name="report_file">event_order.report_sales_invoice_template_id</field>
+        <field name="paperformat_id" ref="event_order.paperformat_euro_lowmargin_sale_report_qweb"/>
+
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_type">report</field>
+    </record>
+    <record id="report_of_event_order_form_v2" model="ir.actions.report">
+        <field name="name">Event Order Report V2 (Cleaned)</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">event_order.report_sales_invoice_template_id_v2</field>
+        <field name="report_file">event_order.report_sales_invoice_template_id_v2</field>
+        <field name="paperformat_id" ref="event_order.paperformat_euro_lowmargin_sale_report_qweb"/>
+
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

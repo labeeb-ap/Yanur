@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hr_payslip_form_inherit_hr_payroll_customization" model="ir.ui.view">
+        <field name="name">hr.payslip.view.form</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="om_hr_payroll.view_hr_payslip_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='contract_id']" position="after">
+                <field name="additional_rule_amount" invisible="0"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

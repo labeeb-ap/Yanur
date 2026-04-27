@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_review_test_template_id">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <div class="header">
+                    <table width="100%">
+                        <tr>
+                            <td style="vertical-align: bottom;">
+                                <img src='/web/binary/company_logo'
+                                     style="width:165px; height:165px;"
+                                     alt="Logo"/>
+                            </td>
+                            <td align="right"
+                                style="font-family: 'Times New Roman'; font-size: 19px;vertical-align: top;">
+                                <b>Ya-Nur Restaurant</b>
+                                <br></br>
+                                <t t-esc="company_name"/>
+                                <t t-if="com_street">
+                                    <br/>
+                                    <t t-esc="com_street"/>
+                                </t>
+                                <t t-if="com_street2">
+                                    <br/>
+                                    <t t-esc="com_street2"/>
+                                </t>
+                                <br/>
+                                <t t-esc="com_city"/>
+                                <t t-esc="com_state"/>
+                                <t t-esc="com_zip"/>
+                                <t t-if="com_country">
+                                    <br/>
+                                    <t t-esc="com_country"/>
+                                </t>
+                                <t t-if="com_phone">
+                                    <br/>
+                                    Phone:&#160;<t t-esc="com_phone"/>
+                                </t>
+                                <t t-if="com_email">
+                                    <br/>
+                                    Email:&#160;<t t-esc="com_email"/>
+                                </t>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <table width="100%">
+                    <tr>
+                        <td style="padding:10px">
+                            Event Order Summary List From
+                            &#160;<span t-esc="start"/>
+                            To
+                            &#160;<span t-esc="end"/>
+                        </td>
+                        <td align="right" style="padding:10px;">
+                            Print date:
+                            <t t-esc="time.strftime('%d-%m-%Y')"/>
+                        </td>
+                    </tr>
+                    <!--                    <tr>-->
+                    <!--                        <td>-->
+                    <!--                            <span t-esc="end"/>-->
+                    <!--                        </td>-->
+                    <!--                    </tr>-->
+                </table>
+                <table width="100%" style="font-size:12px;text-color:#808080;">
+                    <thead>
+                        <tr>
+                            <!--                                        <th style="text-align:center;border-bottom: 1px solid black;border-right: 1px solid black;padding: 1px 1px 1px 1px;background-color: #e5e5e5; vertical-align: middle;">-->
+                            <!--                                            Pax-->
+                            <!--                                        </th>-->
+                            <th style="font-family: 'Times New Roman'; font-size: 14px;text-align:center;border-bottom: 2px solid black;border-left: 2px solid black;border-top: 2px solid black;padding: 1px 1px 1px 5px;background-color: #687980; vertical-align: middle; color: #333;">
+                                EventOrderNumber
+                            </th>
+                            <th style="font-family: 'Times New Roman'; font-size: 14px;text-align:center;border-bottom: 2px solid black;border-top: 2px solid black;padding: 1px 1px 1px 5px;background-color: #e5e5e5; vertical-align: middle; color: #333;background-color: #687980;">
+                                EventTitle
+                            </th>
+                            <th style="font-family: 'Times New Roman'; font-size: 14px;text-align:center;border-bottom: 2px solid black;border-top: 2px solid black;padding: 1px 1px 1px 5px;background-color: #e5e5e5; vertical-align: middle; color: #333;background-color: #687980;">
+                                Customer
+                            </th>
+                            <th style="font-family: 'Times New Roman'; font-size: 14px;text-align:center;border-bottom: 2px solid black;border-top: 2px solid black;padding: 1px 1px 1px 5px;background-color: #e5e5e5; vertical-align: middle; color: #333;background-color: #687980;">
+                                Time : Yanur
+                            </th>
+                            <th style="font-family: 'Times New Roman'; font-size: 14px;text-align:center;border-bottom: 2px solid black;border-top: 2px solid black;padding: 1px 1px 1px 5px;background-color: #e5e5e5; vertical-align: middle; color: #333;background-color: #687980;">
+                                SalesMan
+                            </th>
+                            <th style="font-family: 'Times New Roman'; font-size: 14px;text-align:center;border-bottom: 2px solid black;border-top: 2px solid black;padding: 1px 1px 1px 5px;background-color: #e5e5e5; vertical-align: middle; color: #333;background-color: #687980;">
+                                OrderDate
+                            </th>
+                            <th style="font-family: 'Times New Roman'; font-size: 14px;text-align:center;border-bottom: 2px solid black;border-top: 2px solid black;padding: 1px 1px 1px 5px;background-color: #e5e5e5; vertical-align: middle; color: #333;background-color: #687980;">
+                                FunctionDate
+                            </th>
+                            <th style="font-family: 'Times New Roman'; font-size: 14px;text-align:center;border-bottom: 2px solid black;border-top: 2px solid black;padding: 1px 1px 1px 5px;background-color: #e5e5e5; vertical-align: middle; color: #333;background-color: #687980;">
+                                Pax
+                            </th>
+                            <th style="font-family: 'Times New Roman'; font-size: 14px;text-align:center;border-bottom: 2px solid black;border-top: 2px solid black;padding: 1px 1px 1px 5px;background-color: #e5e5e5; vertical-align: middle; color: #333;background-color: #687980;">
+                                Price/PAX
+                            </th>
+                            <th style="font-family: 'Times New Roman'; font-size: 14px;text-align:center;border-bottom: 2px solid black;border-top: 2px solid black;padding: 1px 1px 1px 5px;background-color: #e5e5e5; vertical-align: middle; color: #333;background-color: #687980;">
+                                Misc.Amount
+                            </th>
+                            <th style="font-family: 'Times New Roman'; font-size: 14px;text-align:center;border-bottom: 2px solid black;border-right: 2px solid black;border-top: 2px solid black;padding: 1px 1px 1px 5px;background-color: #e5e5e5; vertical-align: middle; color: #333;background-color: #687980;">
+                                TotalAmount
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td colspan="11" style="border-bottom: 1px solid black; padding-top: 15px;"/>
+                    </tr>
+                    <t t-foreach="objet_list" t-as="o">
+                        <tr style="font-family: 'Times New Roman'; font-size: 15px;">
+                            <td style="text-align:center;padding: 1px 1px 1px 1px;background-color: #e5e5e5; vertical-align: middle;background-color: #FFFBF5;height: 50px;">
+                                <span t-esc="o['name']"/>
+                                <br/>
+                            </td>
+                            <td style="text-align:center;padding: 1px 1px 1px 1px;background-color: #e5e5e5; vertical-align: middle;background-color: #FFFBF5;height: 50px;">
+
+                                <span t-esc="o['event_title']"/>
+                            </td>
+                            <td style="text-align:center;padding: 1px 1px 1px 1px;background-color: #e5e5e5; vertical-align: middle;background-color: #FFFBF5;height: 50px;">
+
+                                <span t-esc="o['customer']"/>
+                            </td>
+                            <td style="text-align:center;padding: 1px 1px 1px 1px;background-color: #e5e5e5; vertical-align: middle;background-color: #FFFBF5;height: 50px;">
+
+                                <span t-esc="'%.2f'% o['time_yanur']"/>
+
+                            </td>
+                            <td style="text-align:center; 1px 1px 1px 1px;background-color: #e5e5e5; vertical-align: middle;background-color: #FFFBF5;height: 50px;">
+
+                                <span t-esc="o['sales_man_name']"/>
+                            </td>
+                            <td style="text-align:center; 1px 1px 1px 1px;background-color: #e5e5e5; vertical-align: middle;background-color: #FFFBF5;height: 50px;">
+
+                                <span t-esc="o['date_order']"/>
+                            </td>
+                            <td style="text-align:center;padding: 1px 1px 1px 1px;background-color: #e5e5e5; vertical-align: middle;background-color: #FFFBF5;height: 50px;">
+
+                                <span t-esc="o['exp_delivery_date']"/>
+                            </td>
+                            <td style="text-align:center; 1px 1px 1px 1px;background-color: #e5e5e5; vertical-align: middle;background-color: #FFFBF5;height: 50px;">
+
+                                <span t-esc="o['total_pax']"/>
+                            </td>
+                            <td style="text-align:center;: 1px 1px 1px 1px;background-color: #e5e5e5; vertical-align: middle;background-color: #FFFBF5;height: 50px;">
+
+                                <span t-esc="o['price_per_pax']"/>
+                            </td>
+                            <td style="text-align:center; 1px 1px 1px 1px;background-color: #e5e5e5; vertical-align: middle;background-color: #FFFBF5;height: 50px;">
+
+                                <span t-esc="o['additional_amount']"/>
+                            </td>
+                            <td style="text-align:center; 1px 1px 1px 1px;background-color: #e5e5e5; vertical-align: middle;background-color: #FFFBF5;height: 50px;">
+
+                                <span t-esc="o['amount_total']"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right"
+                                style="vertical-align: middle;padding-bottom: 20px;">
+                                <b>
+                                    <u>REGION:</u>
+                                </b>
+                            </td>
+                            <td colspan="10"
+                                style="vertical-align: middle; padding-left: 20px;padding-bottom: 20px;">
+                                <span t-esc="o['venue']"/>
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <!--                                                         t-if="o['pax_com'] and o['event_amount_comp'] and o['event_date_complementory'] and o['event_time_complementory']"-->
+                            <td align="right"
+                                style="vertical-align: middle;padding-bottom: 20px;">
+                                <b>
+                                    Complementry Details :
+                                </b>
+                            </td>
+                            <td align="right"
+                                style="vertical-align: middle;padding-bottom: 20px;">
+                                <b>
+                                    Pax :
+                                    <span t-esc="o['total_pax_com']"/>
+                                </b>
+                            </td>
+
+                            <td align="right"
+                                style="vertical-align: middle;padding-bottom: 20px;">
+                                <b>
+                                    Amount :
+                                    <span t-esc="o['event_amount_comp']"/>
+
+                                </b>
+                            </td>
+                            <td align="right"
+                                style="vertical-align: middle;padding-bottom: 20px;">
+                                <b>
+                                    Date :
+                                    <span t-esc="o['events_date_complementory']"/>
+                                </b>
+                            </td>
+                            <td align="right"
+                                style="vertical-align: middle;padding-bottom: 20px;">
+                                <b>
+                                    Time :
+                                    <span t-esc="o['event_time_complementory']"/>
+                                </b>
+                            </td>
+                        </tr>
+
+
+                        <tr style="border-bottom: 1px solid black;">
+                            <!--                                                         t-if="o['food_pax'] and o['event_amount'] and o['events_date_food'] and o['event_time_food']"-->
+                            <td align="right"
+                                style="vertical-align: middle;padding-bottom: 20px;">
+                                <b>
+                                    Food Tasting Details :
+                                </b>
+                            </td>
+                            <td align="right"
+                                style="vertical-align: middle;padding-bottom: 20px;">
+                                <b>
+                                    Pax :
+                                    <span t-esc="o['total_pax_food']"/>
+                                </b>
+                            </td>
+                            <td align="right"
+                                style="vertical-align: middle;padding-bottom: 20px;">
+                                <b>
+                                    Amount :
+                                    <span t-esc="o['event_amount']"/>
+
+                                </b>
+                            </td>
+                            <td align="right"
+                                style="vertical-align: middle;padding-bottom: 20px;">
+                                <b>
+                                    Date :
+                                    <span t-esc="o['events_date_food']"/>
+                                </b>
+                            </td>
+                            <td align="right"
+                                style="vertical-align: middle;padding-bottom: 20px;">
+                                <b>
+                                    Time :
+                                </b>
+                            </td>
+                            <td colspan="10"
+                                style="vertical-align: middle;padding-left: 20px;padding-bottom: 20px;">
+                                <span t-esc="o['event_time_food']"/>
+                            </td>
+                        </tr>
+                    </t>
+                    <tr style="border-bottom: 1px solid black;">
+                    </tr>
+                    <tr>
+                        <td align="right"
+                            style="vertical-align: middle;padding-bottom: 20px;">
+                            <b>Complementary Details :</b>
+                        </td>
+                        <td align="right">
+                            <b>Total Pax :
+                                <span t-esc="total_pax_com"/>
+                                <!--                                <hr style="border-top: 1px solid black; width: 100%;"></hr>-->
+                            </b>
+                        </td>
+                        <td align="right"
+                            style="vertical-align: middle;padding-bottom: 20px;">
+                            <b>Total Amount :
+                                <span t-esc="total_amount_com"/>
+                            </b>
+                        </td>
+
+                        <td colspan="3"/>
+                        <td colspan="3" align="center" style="border-bottom: 1px solid black;">Grand total:</td>
+                        <td align="center" style="border-bottom: 1px solid black;">
+                            <span t-esc="additional_amount"/>
+                        </td>
+                        <td align="center" style="border-bottom: 1px solid black;">
+                            <span t-esc="grand_total"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left"
+                            style="vertical-align: middle;padding-bottom: 20px;">
+                            <b>Food Tasting Details :</b>
+                        </td>
+                        <td align="left"
+                            style="vertical-align: middle;padding-bottom: 20px;">
+                            <b>Total Pax :
+                                <span t-esc="total_pax_food"/>
+                            </b>
+                        </td>
+                        <td align="left"
+                            style="vertical-align: middle;padding-bottom: 20px;">
+                            <b>Total Amount :
+                                <span t-esc="total_amount_food"/>
+                            </b>
+                        </td>
+
+                    </tr>
+                    <!--                    <tr>-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;<hr style="border-top: 1px solid black; width: 100%;" /></tr>-->
+                </table>
+            </t>
+        </t>
+
+    </template>
+</odoo>

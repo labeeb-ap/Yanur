@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+        <record model="ir.rule" id="additional_rule_input">
+        <field name="name">additional_input_rule_multi-company</field>
+        <field name="model_id" search="[('model','=','additional.input.rule')]" model="ir.model"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+        <record model="ir.rule" id="additional_rule_line_input">
+        <field name="name">additional_input_rule_line_multi-company</field>
+        <field name="model_id" search="[('model','=','additional.input.rule.line')]" model="ir.model"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+        <record model="ir.rule" id="employee_rule_line_input">
+        <field name="name">employee_input_rule_line_multi-company</field>
+        <field name="model_id" search="[('model','=','employee.input.rule.line')]" model="ir.model"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+</data>
+ </odoo>

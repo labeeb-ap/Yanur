@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="biotime_settings_tree" model="ir.ui.view">
+        <field name="name">biometric.settings.tree</field>
+        <field name="model">biometric.settings</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="biotime_ip"/>
+            </tree>
+        </field>
+    </record>
+    <record id="biotime_settings_form_view" model="ir.ui.view">
+        <field name="name">biometric.settings.form</field>
+        <field name="model">biometric.settings</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="password" required="1"/>
+                            <field name="last_fetch_date" required="1"/>
+                        </group>
+                        <group>
+                        <field name="biotime_ip" required="1"/>
+                        <field name="biotime_token" required="1"/>
+<!--                        <field name="Last_date"/>-->
+                        </group>
+
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_biotime_settings" model="ir.actions.act_window">
+        <field name="name">Biometric Settings</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">biometric.settings</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="biometric_settings_menu" parent="hr_biotime_attendance.biometric_attendance_menu"
+              name="Biotime Settings"
+              action="action_biotime_settings" sequence="1"/>
+
+</odoo>

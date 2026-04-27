@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="pos_session_field_id" model="ir.ui.view">
+        <field name="name">pos.session.name</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="pos_manager_validation_mac5.res_users_pos_manager_view_form"/>
+        <field name="priority" eval="50"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='pos_security_pin']" position="after">
+
+                <field name="pos_session_ids" widget="many2many_tags" options="{'no_create_edit': True, 'no_quick_create': True}"/>
+
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="paperformat_statement_report" model="report.paperformat">
+        <field name="name">Report format</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">12</field>
+        </record>
+
+        <record id="rental_items" model="ir.actions.report">
+            <field name="name">Rental Item Pdf Report</field>
+            <field name="model">rent.items</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">production_plan_mk.product_pdf</field>
+            <field name="report_file">production_plan_mk.product_pdf</field>
+            <field name="binding_model_id" ref="model_rent_items"/>
+            <field name="paperformat_id" ref="production_plan_mk.paperformat_statement_report"/>
+        </record>
+    </data>
+</odoo>

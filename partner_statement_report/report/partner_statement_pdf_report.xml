@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template id="partner_statement">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+                    <div class="page">
+                        <table width="100%">
+                            <tr>
+                                <td align="center" colspan="3" style="font-size: 30px;">
+                                    <b>PARTNER STATEMENT REPORT</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" colspan="3" style="padding-top: 2%; vertical-align: middle;">
+                                    <b>
+                                        <t t-esc="company_name"/>
+                                    </b>
+                                    <t t-if="com_street">
+                                        <br/>
+                                        <t t-esc="com_street"/>
+                                    </t>
+                                    <t t-if="com_street2">
+                                        <br/>
+                                        <t t-esc="com_street2"/>
+                                    </t>
+                                    <br/>
+                                    <t t-esc="com_city"/>
+                                    <t t-esc="com_state"/>
+                                    <t t-esc="com_zip"/>
+                                    <t t-if="com_country">
+                                        <br/>
+                                        <t t-esc="com_country"/>
+                                    </t>
+                                    <t t-if="com_phone">
+                                        <br/>
+                                        Phone:&#160;<t t-esc="com_phone"/>
+                                    </t>
+                                    <t t-if="com_email">
+                                        <br/>
+                                        Email:&#160;<t t-esc="com_email"/>
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="padding-top: 5%; font-size: 22px;">Date From:
+                                    <b>
+                                        <t t-esc="from_date"/>
+                                    </b>
+                                </td>
+                                <td align="center" style="padding-top: 5%; font-size: 22px;">Date To:
+                                    <b>
+                                        <t t-esc="to_date"/>
+                                    </b>
+                                </td>
+                                <td align="center" style="padding-top: 5%; font-size: 22px;">Partner:
+                                    <b>
+                                        <t t-esc="partner_id"/>
+                                    </b>
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <table width="100%" class="table table-bordered">
+                            <tr style="background-color: #F6F6F6;">
+                                <td align="center" style="vertical-align: middle; font-size: 20px;">
+                                    <b>Sl_No</b>
+                                </td>
+                                <td align="center" style="vertical-align: middle; font-size: 20px;">
+                                    <b>Date</b>
+                                </td>
+                                <td align="center" style="vertical-align: middle; font-size: 20px;">
+                                    <b>Doc No</b>
+                                </td>
+                                <td align="center" style="vertical-align: middle; font-size: 20px;">
+                                    <b>Doc Type</b>
+                                </td>
+                                <td align="center" style="vertical-align: middle; font-size: 20px;">
+                                    <b>Debit</b>
+                                </td>
+                                <td align="center" style="vertical-align: middle; font-size: 20px;">
+                                    <b>Credit</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" colspan="8" style="vertical-align: middle; font-size: 25px;">
+                                    <b>Opening
+                                        Balance :
+                                            <t t-if="open_bal_dr">
+                                                <span t-esc="open_bal_dr"/>&#160;Dr
+                                            </t>
+                                            <t t-if="open_bal_cr">
+                                                <span t-esc="open_bal_cr"/>&#160;Cr
+                                            </t>
+                                    </b>
+                                </td>
+                            </tr>
+
+<!--                            <t t-if="open == 0">-->
+<!--                                <t t-set="cumulative" t-value="0"/>-->
+<!--                            </t>-->
+<!--                            <t t-else="">-->
+<!--                                <t t-set="cumulative" t-value="open"/>-->
+<!--                            </t>-->
+                            <t t-set="sl_no" t-value="0"/>
+                            <t t-foreach="move_ids" t-as="docs">
+                                <tr>
+                                    <t t-set="sl_no" t-value="sl_no+1"/>
+                                <td align="center" style="vertical-align: middle;border:1px solid black;">
+                                    <span t-att-style="style" t-esc="sl_no"/>
+                                </td>
+                                <td align="center" style="vertical-align: middle;border:1px solid black;">
+                                    <span t-esc="docs['date']"/>
+                                </td>
+                                <td align="center" style="vertical-align: middle;border:1px solid black;">
+                                    <span t-esc="docs['doc_name']"/>
+                                </td>
+                                <td align="center" style="vertical-align: middle;border:1px solid black;">
+                                    <span t-esc="docs['journal_name']"/>
+                                </td>
+                                <td align="right" style="vertical-align: middle;border:1px solid black;">
+                                    <span t-esc="docs['debit']"/>
+                                </td>
+                                <td align="right" style="vertical-align: middle;border:1px solid black;">
+                                    <span t-esc="docs['credit']"/>
+                                </td>
+                                </tr>
+                            </t>
+<!--                            <tr><td colspan="6" style="padding-top: 30px;"></td></tr>-->
+                        <tr>
+
+                            <td colspan="4" align="right" style="vertical-align: middle;font-size: 25px;">
+                                <b>Total &#160;&#160;&#160;&#160;</b>
+                            </td>
+                            <td align="right" style="vertical-align: middle;font-size: 20px;">
+                                <b> <span t-esc="current_dr_sum"/></b>&#160;Dr&#160;
+                            </td>
+                            <td align="right" style="vertical-align: middle;font-size: 20px;">
+                                <b> <span t-esc="current_cr_sum"/> </b>&#160;Cr&#160;
+                            </td>
+                        </tr>
+<!--                        <tr><td colspan="6" style="padding-top: 30px;"></td></tr>-->
+
+                            <tr>
+                                <td align="right" colspan="8" style="vertical-align: middle; font-size: 25px;">
+                                    <b>Closing
+                                        Balance :
+                                        <t t-if="bal_dr">
+                                            <span t-esc="bal_dr"/>&#160;Dr
+                                        </t>
+                                        <t t-if="bal_cr">
+                                            <span t-esc="bal_cr"/>&#160;Cr
+                                        </t>
+                                    </b>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="footer o_standard_footer" style="border-top: 2px solid black;">
+                        <div class="row text-center">
+                            <div class="col col-12 text-center">
+                                <ul class="list-inline">
+                                    <li class="list-inline-item">
+                                        <span class="page"/>
+                                    </li>
+                                    <li class="list-inline-item">/</li>
+                                    <li class="list-inline-item">
+                                        <span class="topage"/>
+                                    </li>
+                                    <li>
+                                        <span t-esc="user.name"/>&#160;-&#160;
+                                        <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y %H:%M')"/>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

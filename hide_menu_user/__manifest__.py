@@ -1,0 +1,26 @@
+# -*- coding: utf-8 -*-
+# Part of Odoo. See LICENSE file for full copyright and licensing details.
+{
+    'name': 'Hide Any Menu User Wise',
+    'version': '14.0.1.0.0',
+    'summary': 'Hide Any Menu Item User Wise',
+    'description': 'Hide Any Menu Item User Wise, Hide Menu Items, Hide Menu',
+    'category': 'Technical',
+    'author': 'Divergent Catalist ERP Solutions',
+    'company': 'Divergent Catalist ERP Solutions',
+    'maintainer': 'Divergent Catalist ERP Solutions',
+    'website': "https://www.catalisterp.com/",
+    'depends': ['base', 'sale', 'account', 'l10n_in_sale', 'l10n_in', 'point_of_sale'],
+    'data': ['security/ir.model.access.csv',
+             'views/res_users.xml',
+             'security/security.xml',
+             'views/sale_order.xml',
+             'views/account_move.xml',
+             'views/point_of_sale.xml',
+             'views/user_groups.xml'],
+    'license': 'LGPL-3',
+    'images': [],
+    'installable': True,
+    'auto_install': False,
+    'application': False,
+}

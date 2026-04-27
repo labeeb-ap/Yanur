@@ -1,0 +1,9 @@
+<odoo>
+            <record model="ir.rule" id="pos_session_close_multi_company_rule">
+            <field name="name">pos_session_close_multi_company_rule</field>
+            <field name="model_id" ref="model_pos_session_close"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+</odoo>

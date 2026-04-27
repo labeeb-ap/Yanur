@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="view_pos_config_kot_form_inherit" model="ir.ui.view">
+        <field name="name">pos.config.kot.form.view.inherit</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.pos_config_view_form"></field>
+        <field name="arch" type="xml">
+
+            <xpath expr="//div[@id='iface_invoicing']" position="after">
+                <div class="col-12 col-lg-6 o_setting_box" id="iface_invoicing">
+                            <div class="o_setting_left_pane">
+                                <field name="iface_kotbill"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="iface_kotbill"/>
+                                <div class="text-muted" id="invoice_journal">
+                                   Allow to print KOT Bill.
+                                </div>
+                                <div class="content-group mt16" attrs="{'invisible': [('iface_kotbill', '=', False)]}">
+                                    <div class="row mt16">
+                                        <label string="Ip Address" for="ip_address" class="col-lg-3 o_light_label"/>
+                                        <field name="ip_address" attrs="{'required': [('iface_kotbill', '=', True)]}"/>
+<!--                                        <label string="Printer Name" for="ip_address" class="col-lg-3 o_light_label"/>-->
+<!--                                        <field name="printer_name" attrs="{'required': [('iface_kotbill', '=', True)]}"/>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+<!--                <div class="col-xs-12 col-md-6 o_setting_box">-->
+<!--                    <div class="o_setting_left_pane">-->
+<!--                        <field name="iface_kotbill" />-->
+<!--                        <div attrs="{'invisible':[('iface_kotbill','=',False)]}">-->
+<!--                            <field name="ip_address" />-->
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <div>&ndash;&gt;-->
+<!--                            <field name="printer_name"/>-->
+<!--                        </div>-->
+<!--&lt;!&ndash;                        <field name="fileout"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <field name="fileout_filename"/>&ndash;&gt;-->
+<!--                    </div>-->
+<!--                    <div class="o_setting_right_pane">-->
+<!--                        <label for="iface_kotbill" />-->
+<!--                        <div class="text-muted">-->
+<!--                            Allow to print KOT Bill.-->
+<!--                        </div>-->
+
+<!--                    </div>-->
+<!--                </div>-->
+            </xpath>
+        </field>
+    </record>
+</odoo>

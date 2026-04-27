@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="group_pos_special_user" model="res.groups">
+            <field name="name">POS Extra Access</field>
+        </record>
+    </data>
+
+</odoo>

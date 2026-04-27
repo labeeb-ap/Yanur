@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template id="cash_flow.cash_flow_report_template">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+
+                        <table width="100%">
+                            <tr>
+                                <td align="center" style="font-size: 30px; vertical-align: middle;">
+                                    <b>CASHFLOW REPORT</b>
+                                </td>
+                            </tr>
+
+
+                        </table>
+
+                        <t t-if="analytic_account_ids">
+                            <table class=" table-borderless">
+                                <tr>
+                                    <td width="20%"
+                                        style="font-weight: bold;font-size: 18px; padding: 0px 0px 0px 0px;">
+                                        <span>Analytical account</span>
+                                    </td>
+                                    <td width="40%" style="padding: 0px 0px 0px 5px;font-size: 13px;">:&#160;&#160;
+                                        <span t-esc="analytic_account_ids"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </t>
+
+
+                        <table width="100%" class="table table-borderless">
+                            <tr>
+                                <td width="20%" style="font-weight: bold;font-size: 18px; padding: 0px 0px 0px 5px;">
+                                    <span>From Date</span>
+                                </td>
+                                <td width="40%" style="font-size: 18px;padding: 0px 0px 0px 5px; font-weight: 200;">&#160;&#160;
+                                    <span t-esc="from_date"/>
+                                </td>
+                                <td width="20%" style="font-weight: bold;font-size: 18px; padding: 0px 0px 0px 5px;">
+                                    <span>To Date</span>
+                                </td>
+                                <td width="40%" style="padding: 0px 0px 0px 5px;font-size: 18px; background-color: white; font-weight: 300;">&#160;&#160;
+                                    <span t-esc="to_date"/>
+                                </td>
+
+                            </tr>
+
+
+
+
+
+                        </table>
+
+                        <table  style="width:50%; float:left; border:1px solid black;">
+                            <tr>
+                                <td align="center"
+                                    style="font-size: 20px; border-bottom: 1px solid black; border-right: 1px solid black; vertical-align: middle;">
+                                    <b>Cash Inflow</b>
+                                </td>
+
+                                <td align="center"
+                                    style="font-size: 20px; border-bottom: 1px solid black; vertical-align: middle;">
+                                    <b>Amount</b>
+                                </td>
+
+                            </tr>
+
+
+
+
+                            <t t-foreach="values" t-as="val">
+
+                                <t t-if="val['credit'] > 0">
+                                    <tr style="border-bottom: 1px solid black; ">
+                                        <td style="border-right: 1px solid black;">
+
+                                                <span t-esc="val['account_head']"
+                                                      />
+
+                                        </td>
+
+
+                                        <td align="right">
+
+
+                                                <span t-esc="val['credit']"
+                                                      />
+
+                                        </td>
+
+                                    </tr>
+                                </t>
+                                </t>
+
+
+                            <tr>
+                                <td align="center"
+                                    style="background-color: #e5e5e5; font-weight: bold;">
+                                    <b>Total Inflow</b>
+                                </td>
+                                <td align="center"
+                                    style="background-color: #e5e5e5; font-weight: bold;">
+
+                                    <span t-esc="'%.2f'%(total_credit)"/>
+
+                                </td>
+
+
+                            </tr>
+
+                        </table>
+
+
+                        <table style="width:50%; float:left; border:1px solid black;">
+                            <tr>
+                                <td align="center"
+                                    style="font-size: 20px; border-bottom: 1px solid black; border-right: 1px solid black; vertical-align: middle;">
+                                    <b>Cash Outflow</b>
+                                </td>
+
+                                <td align="center"
+                                    style="font-size: 20px; border-bottom: 1px solid black; vertical-align: middle;">
+                                    <b>Amount</b>
+                                </td>
+                            </tr>
+
+
+
+                            <t t-foreach="account" t-as="value">
+
+
+                                    <tr style="border-bottom: 1px solid black;">
+                                        <td style="border-right: 1px solid black;">
+                                            <b>
+                                            <span t-esc="value"
+                                                      style="font-size: 18px; color: #D12500; padding-left: 2px;"/>
+                                            </b>
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                    </tr>
+                                    <t t-foreach="values" t-as="val">
+                                        <t t-if="value == val['account_type']">
+
+                                                                            <t t-if="val['debit'] > 0">
+                                    <tr style="border-bottom: 1px solid black;">
+                                        <td style=" border-right: 1px solid black;">
+
+                                                <span t-esc="val['account_head']"
+                                                      />
+
+                                        </td>
+
+                                        <td align="right">
+
+
+                                                <span t-esc="val['debit']"
+                                                      />
+
+                                        </td>
+
+
+                                    </tr>
+                                </t>
+
+
+                                        </t>
+                                    </t>
+
+
+
+                            </t>
+                            <tr>
+                                                                <td align="center"
+                                    style="background-color: #e5e5e5; font-weight: bold;">
+                                    <b>Total Outflow</b>
+                                </td>
+                                                                <td align="center"
+                                    style="background-color: #e5e5e5; font-weight: bold;">
+
+                                    <span t-esc="'%.2f'%(total_debit)"/>
+
+                                </td>
+
+
+                            </tr>
+
+                        </table>
+
+                        <table style="width:100%;">
+
+                            <tr>
+                                <td align="center" width="50%"
+                                    style="background-color: #e5e5e5; font-weight: bold;">
+                                    <b>Difference</b>
+                                </td>
+
+                                <td align="center" width="50%"
+                                    style="background-color: #e5e5e5; font-weight: bold;">
+
+                                    <span t-esc="'%.2f'%(difference)"/>
+
+                                </td>
+                            </tr>
+
+
+                        </table>
+
+
+                    </div>
+
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

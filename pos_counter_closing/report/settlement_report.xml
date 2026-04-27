@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <record id="paperformat_euro_lowmargin_sale_report_qweb" model="report.paperformat">
+        <field name="name">European thermal low margin</field>
+        <!--        <field name="default" eval="True"/>-->
+        <!--        <field name="format">custom</field>-->
+        <!--        <field name="page_height">0</field>-->
+        <!--        <field name="page_width">0</field>-->
+        <!--        <field name="orientation">Portrait</field>-->
+        <!--        <field name="margin_top">8</field>-->
+        <!--        <field name="margin_bottom">35</field>-->
+        <!--        <field name="margin_left">55</field>-->
+        <!--&lt;!&ndash;        <field name="margin_right">7</field>&ndash;&gt;-->
+        <!--        <field name="header_line" eval="False"/>-->
+        <!--        <field name="dpi">70</field>-->
+        <!--    </record>-->
+        <field name="default" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">350</field>
+        <field name="page_width">100</field>
+        <!--             <field name="page_width">100</field> -->
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="dpi">101</field>
+    </record>
+
+    <record id="paperformat_euro_lowmargin_sale_report_qweb_pdf" model="report.paperformat">
+        <field name="name">European A4 low margin</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">5</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="report_of_event_order_form" model="ir.actions.report">
+        <field name="name">Settlement Report</field>
+        <field name="model">pos.session.close</field>
+        <field name="report_type">qweb-pdf</field>
+        <!--        <field name="context">{'default_type': 'binary'}</field>-->
+        <field name="report_name">pos_counter_closing.report_settkemnt_report</field>
+        <field name="report_file">pos_counter_closing.report_settkemnt_report</field>
+        <field name="paperformat_id" ref="pos_counter_closing.paperformat_euro_lowmargin_sale_report_qweb"/>
+        <field name="binding_model_id" ref="pos_counter_closing.model_pos_session_close"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="report_of_event_order_form_pdf" model="ir.actions.report">
+        <field name="name">Settlement Report A4</field>
+        <field name="model">pos.session.close</field>
+        <field name="report_type">qweb-pdf</field>
+        <!--        <field name="context">{'default_type': 'binary'}</field>-->
+        <field name="report_name">pos_counter_closing.report_settkemnt_report_pdf</field>
+        <field name="report_file">pos_counter_closing.report_settkemnt_report_pdf</field>
+        <field name="paperformat_id" ref="pos_counter_closing.paperformat_euro_lowmargin_sale_report_qweb_pdf"/>
+        <field name="binding_model_id" ref="pos_counter_closing.model_pos_session_close"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

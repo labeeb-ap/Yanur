@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="encashment_report_wizard_form" model="ir.ui.view">
+        <field name="name">encashment.report.wizard.form</field>
+        <field name="model">encashment.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Encashment Report">
+                <separator string="Encashment Report"/>
+                <group>
+                    <group>
+                        <field name="from_date" required="1"/>
+                        <field name="to_date" required="1"/>
+                        <field name="employee_id"/>
+                    </group>
+                </group>
+                <footer>
+                    <button icon="fa-print" string="Report" name="print_encashment_report" type="object"
+                            class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="encashment_report_wizard_action" model="ir.actions.act_window">
+        <field name="name">Encashment Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">encashment.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="encashment_report_wizard_form"/>
+        <field name="target">new</field>
+    </record>
+
+<!--    <menuitem id="report_menu"-->
+<!--              name="Reporting"-->
+<!--              parent="hr_leave_encashment_root"-->
+<!--              sequence="10"/>-->
+
+<!--    <menuitem id="encashment_report_root_menu"-->
+<!--              name="Encashment Report"-->
+<!--              parent="report_menu"-->
+<!--              action="encashment_report_wizard_action"-->
+<!--              sequence="10"/>-->
+
+</odoo>

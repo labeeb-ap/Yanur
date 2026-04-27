@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hr_payslip_form_inherit_unpaid_leave_payroll" model="ir.ui.view">
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="hr_payroll_community.view_hr_payslip_form"/>
+        <field name="arch" type="xml">
+            <field name="number" position="before">
+                <field name="salary_remaining" readonly="1" string="Net Salary"/>
+                <field name="salary_adjustment"
+                       help="Add a rule to use this field: 'result = payslip.salary_adjustment' in python code"/>
+                <field name="partial_paid_amount" readonly="1" invisible="1"/>
+                <field name="salary_cut_first_month" invisible="1"/>
+                <field name="active" invisible="1"/>
+                <field name="salary_payment" invisible="1"/>
+                <field name="total_days_of_month" invisible="0"/>
+                <field name="actual_working_days" invisible="0"/>
+                <field name="paid_time_off_days" invisible="0"/>
+                <field name="unpaid_time_off_days" invisible="0" force_save="1"/>
+            </field>
+            <field name="contract_id" position="after">
+                <field name="employee_code"/>
+                <field name="pf_num"/>
+                <field name="esi_num"/>
+                <field name="gmc_num"/>
+            </field>
+
+<!--            <button name="action_payslip_done" position="after">-->
+<!--                <button string="Partial" name="salary_partial" type="object" states="draft" class="oe_highlight"-->
+<!--                        invisible="1"/>-->
+<!--            </button>-->
+        </field>
+    </record>
+    <record id="view_hr_payslip_tree_inherit_emp_cat" model="ir.ui.view">
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="hr_payroll_community.view_hr_payslip_tree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="salary_remaining"/>
+
+            </field>
+
+        </field>
+    </record>
+<!--    <record id="hr_payslip_run_form_inherit_emp_cat" model="ir.ui.view">-->
+<!--        <field name="model">hr.payslip.run</field>-->
+<!--        <field name="inherit_id" ref="hr_payroll_community.hr_payslip_run_form"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//button[@name='draft_payslip_run']" position="before">-->
+<!--                <button name="payslip_done" type="object" string="Confirm" states="draft" class="oe_highlight"/>-->
+<!--            </xpath>-->
+
+<!--        </field>-->
+<!--    </record>-->
+
+</odoo>

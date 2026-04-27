@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_leave_encashment_report_tree" model="ir.ui.view">
+        <field name="name">hr.leave.encashment.report.tree</field>
+        <field name="model">hr.leave.encashment.report</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="contract_id"/>
+                <field name="contract_id"/>
+                <field name="contract_id"/>
+                <field name="state" widget="badge" decoration-info="state == 'draft'"
+                       decoration-success="state == 'posted'" decoration-warning="state in ('approved','waiting')"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

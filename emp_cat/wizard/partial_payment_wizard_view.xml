@@ -1,0 +1,31 @@
+<odoo>
+    <record id="partial_payment_form_view" model="ir.ui.view">
+        <field name="name">partial.payment.form</field>
+        <field name="model">partial.payment</field>
+            <field name="arch" type="xml">
+                <form string="Partial Payment">
+                    <group>
+                      <group class="oe_title">
+                        <field name="amount"/>
+                        <field name="date" required="1"/>
+                        <field name="payslip_id" invisible="1"/>
+                      </group>
+                      <footer>
+                        <button name="partial_payment" string="Create Payment" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                      </footer>
+                    </group>
+                </form>
+            </field>
+    </record>
+    <record id="partial_payment_wizard_action" model="ir.actions.act_window">
+        <field name="name">Partial Payment</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">partial.payment</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="partial_payment_form_view"/>
+        <field name="target">new</field>
+    </record>
+
+
+</odoo>

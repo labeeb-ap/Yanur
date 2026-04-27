@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_form_inherit_pos_counter_closing" model="ir.ui.view">
+        <field name="name">account.account.view.pos.counter.closing</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_form"/>
+        <field name="arch" type="xml">
+            <field name="user_type_id" position="after">
+                <field name="closing_type"/>
+                <field name="account_type"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_account_tree_inherit_pos_counter_closing" model="ir.ui.view">
+        <field name="name">account.account.view.tree.pos.counter.closing</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_list"/>
+        <field name="arch" type="xml">
+            <field name="company_id" position="after">
+<!--                <field name="closing_type"/>-->
+                <field name="account_type"/>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="account_pax_form">
+        <field name="name">account.pax.tree</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="pax_qty"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

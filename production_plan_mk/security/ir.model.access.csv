@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_production_planning,production.plan,model_production_plan,,1,1,1,1
+access_production_plan_line,production.plan.line,model_production_plan_line,,1,1,1,1
+access_rent_items,rent.items,model_rent_items,,1,1,1,1
+access_rent_items_line,rent.items.line,model_rent_items_line,,1,1,1,1

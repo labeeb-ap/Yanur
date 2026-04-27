@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template id="quote_comparison_report_template">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+                    <style type="text/css">
+                        .value_border{
+                        vertical-align: middle;
+                        border-right: 1px solid black;
+                        border-left: 1px solid black;
+                        border-top: 1px solid black;
+                        border-bottom: 1px solid black;
+                        text-align: center;
+                        }
+                        .product_td_border{
+                        vertical-align: middle;
+                        border-right: 1px solid black;
+                        border-left: 1px solid black;
+                        border-top: 1px solid black;
+                        border-bottom: 1px solid black;
+                        padding-left: 7px;
+                        }
+                        .total_head_border{
+                        text-align: center;
+                        vertical-align: middle;
+                        border-right: 1px solid black;
+                        border-left: 1px solid black;
+                        border-top: 1px solid black;
+                        border-bottom: 1px solid black;
+                        }
+                    </style>
+                    <div class="page">
+                        <table width="100%">
+                            <tr>
+                                <td width="30%" style="vertical-align: middle;">
+                                    <img src='/web/binary/company_logo'
+                                         style="width:45%; max-height:140pt;"
+                                         alt="Logo"/>
+                                </td>
+                                <td align="center" style="font-size: 45px;">
+                                    <b>PRICE COMPARISON</b>
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <table width="100%">
+                            <tr>
+                                <td rowspan="3" class="total_head_border"
+                                    style="font-size: 30px;">
+                                    <b>Product</b>
+                                </td>
+                                <td t-att-colspan="l + l" class="total_head_border"
+                                    style="font-size: 30px; background-color: #FAC379;">
+                                    <b>Vendor</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <t t-foreach="vendors" t-as="v">
+                                    <td colspan="2" class="total_head_border" style="background-color: #F8E241;">
+                                        <span t-esc="v['vendor_name']"/>
+                                    </td>
+                                </t>
+                            </tr>
+                            <tr>
+                                <t t-foreach="vendors" t-as="qty">
+                                    <td class="total_head_border" style="background-color: #D5D5D5;">
+                                        Qty
+                                    </td>
+                                    <td class="total_head_border" style="background-color: #D5D5D5;">
+                                        Unit Rate
+                                    </td>
+                                </t>
+                            </tr>
+                            <t t-foreach="products" t-as="d">
+                                <tr>
+                                    <td class="product_td_border">
+                                        <span t-esc="d['item_name']"/>
+                                    </td>
+                                    <t t-foreach="vendors" t-as="r">
+                                        <td class="value_border">
+                                            <t t-foreach="vals" t-as="s">
+                                                <t t-if="d['item_list_id'] == s['pro_id'] and r['vendor_id'] == s['vendor_id']">
+                                                    <span t-esc="s['quantity']"/>
+                                                </t>
+                                            </t>
+                                        </td>
+                                        <td class="value_border">
+                                            <t t-foreach="vals" t-as="s">
+                                                <t t-if="d['item_list_id'] == s['pro_id'] and r['vendor_id'] == s['vendor_id']">
+                                                    <t t-foreach="color" t-as="co">
+                                                        <t t-if="co['pro_id'] == s['pro_id'] and co['list_price'] == s['list_price']">
+                                                            <span t-esc="s['list_price']" style="color: #D50909;"/>
+                                                        </t>
+                                                        <t t-elif="co['pro_id'] == s['pro_id']">
+                                                            <span t-esc="s['list_price']"/>
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                            </t>
+                                        </td>
+                                    </t>
+                                </tr>
+                            </t>
+                        </table>
+                        <br/>
+                        <table width="100%">
+                            <tr>
+                                <td class="product_td_border"/>
+                                <t t-foreach="terms" t-as="t">
+                                    <td class="product_td_border" style="background-color: #F8E241;">
+                                        <span t-esc="t['rfq_name']"/>
+                                    </td>
+                                </t>
+                            </tr>
+                            <tr>
+                                <td class="product_td_border" style="background-color: #FAC379;">
+                                    <b>Receipt Date</b>
+                                </td>
+                                <t t-foreach="terms" t-as="t">
+                                    <td class="product_td_border">
+                                        <span t-esc="t['receipt_date']"/>
+                                    </td>
+                                </t>
+                            </tr>
+                            <tr>
+                                <td class="product_td_border" style="background-color: #FAC379;">
+                                    <b>Payment Terms</b>
+                                </td>
+                                <t t-foreach="terms" t-as="t">
+                                    <td class="product_td_border">
+                                        <span t-esc="t['payment_terms']"/>
+                                    </td>
+                                </t>
+                            </tr>
+                        </table>
+                        <br/>
+                        <table width="100%">
+                            <tr>
+                                <td class="product_td_border" style="font-size: 20px; background-color: #FAC379;">
+                                    <b>RFQ</b>
+                                </td>
+                                <td class="product_td_border" style="font-size: 20px; background-color: #FAC379;">
+                                    <b>Vendor</b>
+                                </td>
+                                <td class="product_td_border" style="font-size: 20px; background-color: #FAC379;">
+                                    <b>Payment Terms</b>
+                                </td>
+                            </tr>
+                            <t t-foreach="purchase" t-as="p">
+                                <tr>
+                                    <td class="product_td_border">
+                                        <span t-esc="p['rfq_name']"/>
+                                    </td>
+                                    <td class="product_td_border">
+                                        <span t-esc="p['rfq_vendor']"/>
+                                    </td>
+                                    <td class="product_td_border">
+                                        <span t-esc="p['rfq_terms']"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </table>
+                    </div>
+                    <div class="footer o_standard_footer">
+                        <div class="row text-center">
+                            <div class="col col-12 text-center">
+                                <ul class="list-inline">
+                                    <!--                                    <li class="list-inline-item">Dispatch Report</li>-->
+                                    <li class="list-inline-item">
+                                        <span class="page"/>
+                                    </li>
+                                    <li class="list-inline-item">/</li>
+                                    <li class="list-inline-item">
+                                        <span class="topage"/>
+                                    </li>
+                                    <li>
+                                        <span t-esc="user.name"/>&#160;-&#160;
+                                        <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y %H:%M')"/>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

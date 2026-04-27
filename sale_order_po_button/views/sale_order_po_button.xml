@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.ui.view" id="view_order_form_inherited_purchase">
+        <field name="name">purchase.order.in.sale.order</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button string="Create Purchase" class="oe_highlight"
+                        type="object" name="action_create_purchase_order"
+                        attrs="{'invisible': ['|',('state','=','draft'),('is_true', '=', True)]}"/>
+            </xpath>
+            <xpath expr="//button[@name='preview_sale_order']" position="before">
+                <button class="oe_stat_button" type="object" name="create_purchase_order"
+                        icon="fa-exchange" widget="statinfo" attrs="{'invisible': [('is_true', '=', False)]}" string="Purchase">
+<!--                    <field name="purchase_items_count" widget="statinfo" string="Purchase" invisible="1"/>-->
+                    <field name="is_true" invisible="1"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_order_form_inherited_purchase_po">
+        <field name="name">purchase.order.in.sale.order</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_ref']" position="after">
+                    <field name="source_document" invisible="1"/>
+                </xpath>
+        </field>
+    </record>
+
+
+</odoo>

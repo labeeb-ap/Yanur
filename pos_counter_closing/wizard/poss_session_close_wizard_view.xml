@@ -1,0 +1,57 @@
+<odoo>
+    <record id="pos_session_close_wizard_form_view" model="ir.ui.view">
+        <field name="name">pos.session.close.wizard.form</field>
+        <field name="model">pos.session.close.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Attendance Report">
+                <p class="oe_grey">
+                    You Can Select date for the closed sessions.
+                </p>
+                <group>
+                    <group class="oe_title">
+                        <field name="date" required="1"/>
+                    </group>
+                    <footer>
+                        <button name="session_close" string="Done" type="object" class="btn-primary"
+                        />
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </group>
+            </form>
+        </field>
+    </record>
+
+<!--    <record id="view_pos_details_wizard" model="ir.ui.view">-->
+<!--        <field name="name">pos.details.wizard.form</field>-->
+<!--        <field name="model">pos.details.wizard</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <form string="Sales Details">-->
+<!--                <group>-->
+<!--                        <field name="start_date" required="1"/>-->
+<!--                        <field name="end_date" required="1"/>-->
+<!--                </group>-->
+<!--            </form>-->
+<!--        </field>-->
+<!--    </record>-->
+    <record id="pos_session_close_wizard_action" model="ir.actions.act_window">
+        <field name="name">Session Close</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">pos.session.close.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="pos_session_close_wizard_form_view"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="pos_session_close_wizard_main"
+              name="Close Session"
+              parent="point_of_sale.menu_point_root"
+              sequence="2"
+    />
+    <menuitem id="pos_session_close_wizard_sub"
+              name="Session Close"
+              parent="pos_session_close_wizard_main"
+              action="pos_session_close_wizard_action"
+              sequence="0"
+    />
+
+</odoo>

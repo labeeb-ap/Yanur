@@ -1,0 +1,17 @@
+{
+    'name': 'Chart Account',
+    'version': '14.0.1.0.0',
+    'category': 'Accounting',
+    'summary': 'Chart Of Accounts',
+    'author': 'Divergent Catalist ERP Solutions',
+    'company': 'Divergent Catalist ERP Solutions',
+    'maintainer': 'Divergent Catalist ERP Solutions',
+    'website': 'https://www.catalisterp.com/',
+    'depends': ['account'],
+    'data': ['views/chart_account.xml'],
+    'qweb': [],
+    'license': 'LGPL-3',
+    'installable': True,
+    'application': False,
+    'auto_install': False,
+}

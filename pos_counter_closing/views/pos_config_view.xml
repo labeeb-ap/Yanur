@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="pos_config_view_form_inherit_pos_counter_closing">
+            <field name="name">pos.config.form.view.pos.counter.closing</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[4]" position="after">
+                    <br/>
+                    <h2>Closing Mail</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div id="discount_type" class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="mail_user_id" string='Mail User'/>
+                                <field name="mail_user_id" readonly="0" force_save="1"/>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="point_of_sale__kanban_view_inherit_view_hide_menu_user_text" model="ir.ui.view">
+            <field name="name">point.of.sale.kanban.view.inherit.view.hide.menu.user.text</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_config_kanban"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='open_session_cb']" position="after">
+                    <header>
+                        <br/>
+                        <h1 style="font-size:12px;color:#00008B;">Please create the manufacture order</h1>
+                        <h1 style="font-size:12px;color:#00008B;">before close the session</h1>
+                    </header>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

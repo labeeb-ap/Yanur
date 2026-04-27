@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_order_form_inherited_rent_items" model="ir.ui.view">
+        <field name="name">sale.order.inherited.rent.items</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                    <button string="Rent Items" class="oe_highlight"
+                            type="object" name="action_create_rent_items"
+                            attrs="{'invisible': [('rent_items_count', '!=', 0)]}"
+                            />
+                </xpath>
+            <xpath expr="//button[@name='preview_sale_order']" position="before">
+               <button class="oe_stat_button" type="object" name="rent_items_list"
+                            icon="fa-exchange"  widget="statinfo"
+                       attrs="{'invisible': [('rent_items_count', '=', 0)]}">
+                   <field name="rent_items_count" widget="statinfo" string="Rented Items"/>
+               </button>
+            </xpath>
+<!--            <field name="sale_order_template_id" position="before">-->
+<!--                <field name="consignment"/>-->
+<!--            </field>-->
+<!--            <field name="payment_term_id" position="after">-->
+<!--                <field name="exp_delivery_date"/>-->
+<!--            </field>-->
+        <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom_qty']" position="before">
+        <field name="product_expiration" force_save="1" invisible="1"/>
+<!--        <field name="box_count" readonly="1" force_save="1"/>-->
+        <field name="box" invisible="1"/>
+    </xpath>
+        </field>
+    </record>
+</odoo>

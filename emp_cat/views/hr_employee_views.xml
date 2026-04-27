@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="emp_cat" model='ir.ui.view'>
+            <field name="name">emp_period</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='work_email']" position="after">
+                    <field name="period_type" required="1"/>
+                    <field name="max_sick_leave_probation" invisible="1"/>
+                    <field name="max_casual_leave_probation" invisible="1"/>
+                    <field name="max_casual_leave_permanent" invisible="1"/>
+                    <field name="max_sick_leave_permanent" invisible="1"/>
+                    <field name="max_sick_leave_contract" invisible="1"/>
+                    <field name="max_casual_leave_contract" invisible="1"/>
+                    <field name="expiry_date" attrs="{'invisible':[('period_type','=','perm')]}"/>
+                </xpath>
+                <field name="coach_id" position="after">
+                    <field name="pf_num"/>
+                    <field name="esi_num"/>
+                    <field name="gmc_num"/>
+                </field>
+                <field name="mobile_phone" position="before">
+                    <field name="employee_code" required="1"/>
+                    <field name="job_type" required="1"/>
+                    <field name="joining_date"/>
+                </field>
+            </field>
+
+        </record>
+        <record id="view_employee_tree_inherit_emp_cat" model='ir.ui.view'>
+            <field name="name">view.employee.tree.inherit.emp.cat</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_tree"/>
+            <field name="arch" type="xml">
+                <field name="work_phone" position="before">
+                    <field name="employee_code"/>
+                    <field name="job_type"/>
+                    <field name="joining_date"/>
+                </field>
+            </field>
+
+        </record>
+        <record id="hr_kanban_view_employees_inherit_emp_cat" model='ir.ui.view'>
+            <field name="name">kanban.view.employee.tree.inherit.emp.cat</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.hr_kanban_view_employees"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <div>
+                        <span class="o_kanban_record_subtitle">
+                            <field name="employee_code" placeholder="Employee Code"/>
+                        </span>
+                    </div>
+                </field>
+            </field>
+
+        </record>
+    </data>
+</odoo>

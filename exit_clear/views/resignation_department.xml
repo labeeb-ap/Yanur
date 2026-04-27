@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="employee_resignation_department_tree" model="ir.ui.view">
+            <field name="name">employee.resignation.department.tree</field>
+            <field name="model">employee.resignation.department</field>
+            <field name="arch" type="xml">
+                <tree string="Resignation Department">
+                    <field name="name"/>
+                    <field name="approved_user_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="employee_resignation_department_form" model="ir.ui.view">
+            <field name="name">employee.resignation.department.form</field>
+            <field name="model">employee.resignation.department</field>
+            <field name="arch" type="xml">
+                <form string="Resignation Department">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" required="1" placeholder="Resignation Department"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="approved_user_id" required="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="employee_resignation_department_action">
+            <field name="name">Resignation Department</field>
+            <field name="res_model">employee.resignation.department</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Create Resignation Department...</p>
+            </field>
+        </record>
+
+        <menuitem id="employee_resignation_department_action_sub_menu"
+                  name="Resignation Department"
+                  parent="hr_resignation.employee_resignation"
+                  action="employee_resignation_department_action"
+                  sequence="3"/>
+    </data>
+</odoo>
+
+

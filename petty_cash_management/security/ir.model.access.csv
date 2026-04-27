@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_petty_cash_management,access.petty.cash.management,model_petty_cash_management,,1,1,1,1
+access_petty_cash_management_lines,access.petty.cash.management.lines,model_petty_cash_management_lines,,1,1,1,1

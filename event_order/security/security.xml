@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="group_pos_discount_user" model="res.groups">
+            <field name="name">Global Discount In Sales</field>
+        </record>
+        <record id="group_unit_price" model="res.groups">
+            <field name="name">Unit Price in Sales</field>
+        </record>
+
+        <record id="group_subtotal" model="res.groups">
+            <field name="name">Sub Total in Sales</field>
+        </record>
+        <record id="group_receivables" model="res.groups">
+            <field name="name">Receivable Crm</field>
+        </record>
+    </data>
+
+</odoo>

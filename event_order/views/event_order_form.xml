@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sale_order_form_view_custom" model="ir.ui.view">
+        <field name="name">sale.order.form.view.custom</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="venue" required="1" attrs="{'readonly':[('state','in',['done','sale'])]}"/>
+                <field name="ph_no" attrs="{'readonly':[('state','in',['done','sale'])]}"/>
+                <field name="ic_number_customer" attrs="{'readonly':[('state','in',['done','sale'])]}"/>
+                <field name="email_id" attrs="{'readonly':[('state','in',['done','sale'])]}"/>
+                <field name="fax" attrs="{'readonly':[('state','in',['done','sale'])]}"/>
+            </xpath>
+
+            <xpath expr="//div[@class='o_row']" position="after">
+                <field name="notes" attrs="{'readonly':[('state','in',['done','sale'])]}"/>
+                <field name="nature_of_function" attrs="{'readonly':[('state','in',['done','sale'])]}"/>
+                <field name="location_id" attrs="{'readonly':[('state','in',['done','sale'])]}"/>
+                <field name="discount_type" force_save="1" groups="event_order.group_pos_discount_user"/>
+                <field name="discount_amount" attrs="{'invisible': [('discount_type', '=', False)]}" force_save="1"
+                       groups="event_order.group_pos_discount_user"/>
+<!--                <field name="food_type" attrs="{'readonly':[('state','in',['done','sale'])]}"/>-->
+                <field name="price_amount" required="1" force_save="1"
+                       attrs="{'readonly':[('state','in',['done','sale'])]}"/>
+                <field name="price_amount_min" required="1" force_save="1"
+                       attrs="{'readonly':[('state','in',['done','sale'])]}"/>
+                <field name="pax_child_amount" force_save="1"
+                       attrs="{'readonly':[('state', 'in', ['sale', 'done'])],'invisible': [('company_id', '=', 5)]}"/>
+                <field name="pax_child_amount"
+                       string="Price per VIP pax"
+                       force_save="1"
+                       attrs="{
+               'readonly': [('state', 'in', ['sale', 'done'])],
+               'invisible': [('company_id', '!=', 5)]
+           }"/>
+                <field name="pax_child_qty" force_save="1"
+                       attrs="{'readonly':[('state', 'in', ['sale', 'done'])],'invisible': [('company_id', '=', 5)]}"/>
+                <field name="pax_child_qty" string="No Of VIP Pax" force_save="1"
+                       attrs="{'readonly':[('state', 'in', ['sale', 'done'])],'invisible': [('company_id', '!=', 5)]}"/>
+
+            </xpath>
+            <!--            <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="after">-->
+            <!--                <field name="is_rental_item" optional="hide"/>-->
+            <!--            </xpath>-->
+
+            <xpath expr="//field[@name='date_order']" position="attributes">
+                <attribute name="string">Order Date</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='amount_untaxed']" position="after">
+                <field name="additional_amount"/>
+                <field name="discount_line" force_save="1" attrs="{'invisible': [('discount_type', '=', False)]}"
+                       groups="event_order.group_pos_discount_user"/>
+
+            </xpath>
+            <xpath expr="//notebook" position="before">
+                <button string="Add Multiple Products" name="%(open_view_multiple_product_sale_action)d" type="action"
+                        class="oe_highlight" attrs="{'invisible': [('state', 'in', ['sale', 'done', 'cancel'])]}"/>
+            </xpath>
+
+            <xpath expr="//field[@name='payment_term_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='validity_date']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom_qty']" position="attributes">
+                <attribute name="required">0</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">
+                <attribute name="required">0</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/tree/field[@name='price_subtotal']" position="attributes">
+                <attribute name="required">0</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="attributes">
+                <attribute name="required">0</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom']" position="attributes">
+                <attribute name="required">0</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">
+                <attribute name="groups">event_order.group_unit_price</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='price_subtotal']" position="attributes">
+                <attribute name="groups">event_order.group_subtotal</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="after">
+                <field name="addi_true" optional="hide" readonly="1" force_save="1"/>
+            </xpath>
+            <xpath expr="//button[@name='preview_sale_order']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//notebook/page[@name='order_lines']" position="after">
+                <page string="Notes">
+                    <field name="notes_notebook"/>
+                </page>
+            </xpath>
+
+
+
+<!--            <xpath expr="//notebook/page[@name='other_information']" position="after">-->
+<!--                <page string="Complementry Details" name="complementory_detsils">-->
+<!--                    <field name="complimentory_food_id">-->
+<!--                        <tree editable="bottom">-->
+<!--                            <field name="product_id"/>-->
+<!--                        </tree>-->
+<!--                    </field></page></xpath>-->
+
+
+
+
+
+<!--            <xpath expr="//notebook/page[@name='order_lines']" position="after">-->
+<!--                <page string="Complementry Details" name="complementory_detsils">-->
+
+<!--                    <group>-->
+<!--                        <group>-->
+<!--&lt;!&ndash;                            <field name="complementory_product_id"/>&ndash;&gt;-->
+<!--                            <field name="total_pax_com"/>-->
+<!--                            <field name="complementry_price_per_pax"/>-->
+<!--                            <field name="remarks_com"/>-->
+<!--                        </group>-->
+<!--                        <group>-->
+<!--                            <field name="venue_com"/>-->
+<!--                            <field name="events_date_complementory"/>-->
+<!--                            <label for="event_time_complementory"/>-->
+<!--                            <div>-->
+<!--                                <field name="event_time_complementory" widget="float_time" class="oe_inline"/>&#160;-->
+<!--                                <field name="event_time_complementory_1" style="padding:3px;" class="oe_inline"/>-->
+<!--                            </div>-->
+<!--                            <label for="event_time_ynr_complementory"/>-->
+<!--                            <div>-->
+<!--                                <field name="event_time_ynr_complementory" widget="float_time" class="oe_inline"/>&#160;-->
+<!--                                <field name="event_time_ynr_complementory_1" style="padding:3px;" class="oe_inline"/>-->
+<!--                            </div>-->
+<!--                        </group>-->
+<!--                    </group>-->
+<!--                </page>-->
+<!--            </xpath>-->
+<!--            <xpath expr="//notebook/page[@name='order_lines']" position="after">-->
+<!--                <page string="Food Tasting Details" name="food_tastin">-->
+<!--                    <group>-->
+<!--                        <group>-->
+<!--                            <field name="total_pax_food"/>-->
+<!--                            <field name="food_price_per_pax"/>-->
+<!--                            <field name="remarks_food"/>-->
+<!--                        </group>-->
+<!--                        <group>-->
+<!--                            <field name="food_venue"/>-->
+<!--                            <field name="events_date_food"/>-->
+<!--                            <label for="event_time_food"/>-->
+<!--                            <div>-->
+<!--                                <field name="event_time_food" widget="float_time" class="oe_inline"/>&#160;-->
+<!--                                <field name="event_time_food_format_1" style="padding:3px;" class="oe_inline"/>-->
+<!--                            </div>-->
+<!--                            <label for="event_time_food_yanur"/>-->
+<!--                            <div>-->
+<!--                                <field name="event_time_food_yanur" widget="float_time" class="oe_inline"/>&#160;-->
+<!--                                <field name="event_time_food_yanur_format_1" style="padding:3px;" class="oe_inline"/>-->
+<!--                            </div>-->
+<!--                        </group>-->
+<!--                    </group>-->
+<!--                </page>-->
+<!--            </xpath>-->
+            <xpath expr="//field[@name='order_line']" position="attributes">
+                <attribute name="attrs">{'readonly':[('state','in',['sale','done'])]}</attribute>
+
+            </xpath>
+
+            <xpath expr="//notebook/page[@name='order_lines']" position="after">
+                <page string="Additional Rental Orders">
+                    <field name="rental_item_ids">
+                        <tree editable="bottom">
+                            <field name="rental_product" required="1"/>
+                            <field name="description"/>
+                            <field name="product_quantity"/>
+                            <field name="product_price"/>
+                            <field name="product_sub_total"/>
+                        </tree>
+                    </field>
+                    <group class="oe_total_footer oe_right" name="sum_lines">
+                        <h1>
+                            <group style="font-size:15px;">
+                                <field name="total_amounts" readonly="1"/>
+                            </group>
+                        </h1>
+                    </group>
+                </page>
+            </xpath>
+            <xpath expr="//notebook/page[@name='optional_products']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='tax_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='amount_tax']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='amount_untaxed']" position="replace">
+                <field name="sub_total" force_save="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale_order_tree_view_event_order" model="ir.ui.view">
+        <field name="name">sale.order.tree.view.event.order</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="before">
+                <field name="venue" optional="hide"/>
+                <field name="ph_no" optional="hide"/>
+                <field name="ic_number_customer" optional="hide"/>
+                <field name="email_id" optional="hide"/>
+                <field name="fax" optional="hide"/>
+                <field name="nature_of_function" optional="hide"/>
+
+                <field name="notes" optional="hide"/>
+                <field name="location_id" optional="hide"/>
+                <field name="discount_type" optional="hide"/>
+                <field name="discount_amount" optional="hide"/>
+<!--                <field name="food_type" optional="hide"/>-->
+                <field name="price_amount" optional="hide"/>
+                <field name="price_amount_min" optional="hide"/>
+                <field name="pax_child_amount" optional="hide"/>
+                <field name="pax_child_qty" optional="hide"/>
+
+                <field name="discount_line" optional="hide"/>
+            </xpath>
+            <xpath expr="//field[@name='amount_total']" position="before">
+                <field name="event_title" optional="show"/>
+                <field name="additional_amount" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="quote_order_tree_view_event_order" model="ir.ui.view">
+        <field name="name">quote.order.tree.view.event.order</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="before">
+                <field name="venue" optional="hide"/>
+                <field name="ph_no" optional="hide"/>
+                <field name="ic_number_customer" optional="hide"/>
+                <field name="email_id" optional="hide"/>
+                <field name="fax" optional="hide"/>
+                <field name="nature_of_function" optional="hide"/>
+
+                <field name="notes" optional="hide"/>
+                <field name="location_id" optional="hide"/>
+                <field name="discount_type" optional="hide"/>
+                <field name="discount_amount" optional="hide"/>
+<!--                <field name="food_type" optional="hide"/>-->
+                <field name="price_amount" optional="hide"/>
+                <field name="price_amount_min" optional="hide"/>
+                <field name="pax_child_amount" optional="hide"/>
+                <field name="pax_child_qty" optional="hide"/>
+
+                <field name="discount_line" optional="hide"/>
+            </xpath>
+            <xpath expr="//field[@name='amount_total']" position="before">
+                <field name="event_title" optional="show"/>
+                <field name="additional_amount" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!--    <record id="purchase_tax_view" model="ir.ui.view">-->
+    <!--        <field name="name">purchase.tax.view</field>-->
+    <!--        <field name="model">purchase.order</field>-->
+    <!--        <field name="inherit_id" ref="purchase.purchase_order_form"/>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <xpath expr="//field[@name='order_line']/tree/field[@name='taxes_id']" position="attributes">-->
+    <!--                <attribute name="invisible">1</attribute>-->
+    <!--            </xpath>-->
+    <!--            <xpath expr="//field[@name='amount_tax']" position="attributes">-->
+    <!--                <attribute name="invisible">1</attribute>-->
+    <!--            </xpath>-->
+    <!--            <xpath expr="//field[@name='amount_untaxed']" position="attributes">-->
+    <!--                <attribute name="invisible">1</attribute>-->
+    <!--            </xpath>-->
+    <!--        </field>-->
+    <!--    </record>-->
+
+    <record id="account_tax_view" model="ir.ui.view">
+        <field name="name">account.tax.view</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='journal_div']" position="after">
+                <field name="price_amount" readonly="1" force_save="1"/>
+                <field name="price_amount_min" readonly="1" force_save="1"/>
+                <field name="pax_child_amount" readonly="1" force_save="1"/>
+                <field name="pax_child_qty" readonly="1" force_save="1"/>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='name']" position="after">
+                <field name="is_rental_item" force_save="1" readonly="1" optional="hide"/>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='tax_ids']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='price_unit']" position="attributes">
+                <attribute name="groups">event_order.group_unit_price</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='price_subtotal']" position="attributes">
+                <attribute name="groups">event_order.group_subtotal</attribute>
+            </xpath>
+
+            <!--            <xpath expr="//field[@name='line_ids']/tree/field[@name='tax_tag_ids']" position="after">-->
+            <!--                <field name="event_type" optional="hide"/>-->
+            <!--            </xpath>-->
+
+            <xpath expr="//field[@name='amount_untaxed']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='discount']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='discount_line_type']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='invoice_date']" position="attributes">
+                <attribute name="attrs">{'required':[('move_type','=','out_receipt')]}</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='amount_total']" position="before">
+                <field name="additional_amount" attrs="{'invisible':[('move_type', '!=', 'out_invoice')]}"/>
+                <field name="sub_total" attrs="{'invisible':[('move_type', '!=', 'out_invoice')]}"/>
+                <field name="discount" attrs="{'invisible':[('move_type', '!=', 'out_invoice')]}"
+                       groups="event_order.group_pos_discount_user"/>
+            </xpath>
+
+            <xpath expr="//field[@name='payment_reference']" position="before">
+                <field name="event_id" attrs="{'required':[('move_type','=','out_invoice')]}"/>
+                <field name="compl_food_pric"/>
+                <field name="food_tast"/>
+            </xpath>
+            <xpath expr="//field[@name='line_ids']/tree/field[@name='tax_tag_ids']" position="after">
+                <field name="event_type_id" optional="hide"/>
+
+            </xpath>
+
+
+            <xpath expr="//field[@name='payment_reference']" position="before">
+                <field name="event_date" attrs="{'invisible':[('move_type', '!=', 'out_invoice')]}"/>
+                <!--                <field name="event_type"/>-->
+                <!--                <field name="compl_food_pric"/>-->
+                <!--                <field name="food_tast"/>-->
+
+            </xpath>
+
+            <xpath expr="//field[@name='amount_total']" position="attributes">
+                <attribute name="string">Net Amount</attribute>
+            </xpath>
+            <xpath expr="//field[@name='amount_residual']" position="attributes">
+                <attribute name="string">Balance Amount</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="account_tax_view_tree" model="ir.ui.view">
+        <field name="name">account.tax.view.tree</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_out_invoice_tree"/>
+        <field name="arch" type="xml">
+
+            <field name="invoice_date" position="after">
+                <field name="event_date"/>
+            </field>
+
+            <field name="name" position="after">
+                <field name="invoice_origin" string="Event Reference"/>
+            </field>
+            <field name="payment_state" position="after">
+                <field name="amount_residual"/>
+            </field>
+
+
+        </field>
+    </record>
+
+
+</odoo>

@@ -1,0 +1,20 @@
+{'name': ' crm_confirm_visibility',
+ 'version': '14.0.1.0.0',
+ 'summary': 'crm confirm visibility',
+ 'sequence': -100,
+ 'category': 'Tools',
+ 'author': 'Catalist Divergent ERP',
+ 'maintainer': 'Catalist Divergent ERP',
+ 'company': 'Catalist Divergent ERP',
+ 'website': 'https://www.catalisterp.com/',
+ 'depends': ['base', 'crm', 'sale_management'],
+ 'data': [
+        'security/security.xml',
+        'views/crm_confirm_visibility_view.xml',],
+
+ 'images': [],
+ 'license': 'AGPL-3',
+ 'installable': True,
+ 'application': False,
+ 'auto_install': False,
+ }

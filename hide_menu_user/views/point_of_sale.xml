@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="point_of_sale__kanban_view_inherit_view_hide_menu_user" model="ir.ui.view">
+            <field name="name">point.of.sale.kanban.view.inherit.view.hide.menu.user</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_config_kanban"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@class='o_kanban_manage_button_section']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="point_of_sale__kanban_view_inherit_hide_menu_user" model="ir.ui.view">
+            <field name="name">point.of.sale.kanban.view.inherit.hide.menu.user</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_config_kanban"/>
+            <field name="groups_id" eval="[(4, ref('hide_menu_user.group_pos_hide_three_dots'))]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@class='o_kanban_manage_button_section']" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

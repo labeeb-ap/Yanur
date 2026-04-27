@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="cash_flow_report_wizard_action_form" model="ir.ui.view">
+        <field name="name">cash.flow.report.wizard.form</field>
+        <field name="model">cash.flow.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Profit &amp; Loss">
+                <group>
+                    <group>
+                        <field name="start_date" required="1"/>
+                    </group>
+                    <group>
+                        <field name="end_date" required="1"/>
+                    </group>
+                    <group>
+<!--                        <field name="company_ids" widget="many2many_tags" options="{'no_create': True}"/>-->
+                    </group>
+                    <group>
+                        <field name="analytic_account_ids" widget="many2many_tags" options="{'no_create': True}"/>
+<!--                        <field name="detailed_summary"  />-->
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_print_cash_flow" string="PDF" class="btn-primary" type="object"
+                            icon="fa-print"/>
+<!--                    <button icon="fa-print" string="Excel"  type="object"-->
+<!--                            class="oe_highlight"/>-->
+<!--                    <button string="Cancel" class="btn-secondary" special="cancel"/>-->
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="cash_flow_report_wizard_action" model="ir.actions.act_window">
+        <field name="name">Cash Flow</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cash.flow.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="cash_flow_report_wizard_action_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="cash_flow_report_wizard_menu"
+              name="Cash flow Report"
+              parent="account.account_reports_management_menu"
+              action="cash_flow_report_wizard_action"
+              sequence="6"/>
+
+
+
+
+</odoo>

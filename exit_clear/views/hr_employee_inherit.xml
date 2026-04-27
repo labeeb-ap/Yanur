@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="hr_form_view_inherit_exit_clear" model='ir.ui.view'>
+            <field name="name">hr.form.view.inherit.exit.clear</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='identification_group']"
+                       position="after">
+                    <group string="Resignation Department" name="resignation_department_group">
+                        <field name="resignation_department_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

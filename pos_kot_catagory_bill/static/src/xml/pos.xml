@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" inherit_id="pos_kot_bill.template">
+    <t t-name="KotBillScreenCatagory" t-inherit="pos_kot_bill.KotBillScreen" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('pos-receipt-container')]" position="replace">
+            <div class="pos-receipt-container">
+                <t t-if="changes.new.length == 0 and changes.cancelled.length == 0">
+                    <div class="pos-sale-ticket">
+                        <div class="pos-center-align">
+                            <t t-esc="receipt.name" />
+                        </div>
+                        <br />
+                        Floor :
+                        <t t-esc="receipt.floor" /><br />
+                        <t t-if='receipt.table'>
+                            Table :
+                            <t t-esc='receipt.table' /><br />
+                        </t>
+                        Waiter:
+                        <t t-esc="receipt.cashier" /><br />
+                        <br />
+                        <div class="pos-center-align">No Pending Orders</div>
+                    </div>
+                </t>
+                <t t-foreach="changes" t-as="change_val">
+                    <t t-if="change_val == 'new' or change_val == 'cancelled'">
+                        <t t-if="change_val.length > 0">
+                            <t t-foreach="change_val_value" t-as="change">
+                                <t t-foreach="change" t-as="c">
+                                    <Kitchen_Recipt_Screen changes_value="c_value" change_type="change_val" categ="c" order="currentOrder" />
+                                </t>
+                            </t>
+                        </t>
+                    </t>
+                </t>
+            </div>
+        </xpath>
+    </t>
+    <t t-name="KOTReciptCatagory" t-inherit="pos_kot_bill.KOTRecipt" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('pos-receipt')]/t[@t-if='changes.length > 0']" position="replace">
+            <div style="page-break-before:always">
+                <div class="pos-sale-ticket">
+                    <div class="pos-center-align">
+                        <t t-esc="receipt.name" />
+                    </div>
+                    <br />
+                    Floor :
+                    <t t-esc="receipt.floor" /><br />
+                    <t t-if='receipt.table'>
+                        Table :
+                        <t t-esc='receipt.table' /><br />
+                    </t>
+                    Waiter:
+                    <t t-esc="receipt.cashier" /><br />
+                    Category:
+                    <t t-esc="category" /><br />
+                    <br />
+                    <br />
+                    <div bold='on' size='double' class="pos-center-align change_type">
+                        <t t-esc="change_type" />
+                    </div>
+                    <br />
+                    <table class='receipt-orderlines'>
+                        <colgroup>
+                            <col width='70%' />
+                            <col width='35%' />
+                        </colgroup>
+                        <tr style="border-bottom:1px dashed black; border-top:1px dashed black;">
+                            <td>Product Name</td>
+                            <td class="pos-right-align">Quantity</td>
+                        </tr>
+                        <tr t-foreach="changes" t-as="change">
+                            <td>
+                                <t t-esc="change.name_wrapped[0]" />
+                                <t t-if="change.note">
+                                    <div><span class="pos-kot-note">Note:
+                                            <t t-esc="change.note" /></span></div>
+                                </t>
+                            </td>
+                            <td class="pos-right-align">
+                                <t t-esc="change.qty" />
+                                <t t-esc="change.uom" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </xpath>
+    </t>
+</templates>

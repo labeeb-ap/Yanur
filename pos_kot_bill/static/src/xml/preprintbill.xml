@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="KotBill" owl="1">
+        <span class="control-button">
+            <i class="fa fa-cutlery"></i>
+            Kitchen Order
+        </span>
+    </t>
+    <t t-name="KOTRecipt" owl="1">
+        <div class="pos-receipt">
+            <t t-if="changes.length > 0">
+                <div style="page-break-before:always">
+                    <div class="pos-sale-ticket">
+                        <div class="pos-center-align">
+                            <t t-esc="receipt.name" />
+                        </div>
+                        <br />
+                        <t t-if="receipt.floor">
+                            Floor :
+                            <t t-esc="receipt.floor" /><br />
+                        </t>
+                        <t t-if='receipt.table'>
+                            Table :
+                            <t t-esc='receipt.table' /><br />
+                        </t>
+                        Waiter:
+                        <t t-esc="receipt.cashier" /><br />
+                        <br />
+                        <div bold='on' size='double' class="pos-center-align change_type">
+                            <t t-esc="change_type" />
+                        </div>
+                        <br />
+                        <table class='receipt-orderlines'>
+                            <colgroup>
+                                <col width='70%' />
+                                <col width='35%' />
+                            </colgroup>
+                            <tr style="border-bottom:1px dashed black; border-top:1px dashed black;">
+                                <td>Product Name</td>
+                                <td class="pos-right-align">Quantity</td>
+                            </tr>
+                            <tr t-foreach="changes" t-as="change">
+                                <td>
+                                    <t t-esc="change.name_wrapped[0]" />
+                                    <t t-if="change.note">
+                                        <div><span class="pos-kot-note">Note:
+                                                <t t-esc="change.note" /></span></div>
+                                    </t>
+                                </td>
+                                <td class="pos-right-align">
+                                    <t t-esc="change.qty" />
+                                    <t t-esc="change.uom" />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </t>
+    <t t-name="KotBillScreen" owl="1">
+        <div class="receipt-screen screen">
+            <div class="screen-content">
+                <div class="top-content">
+                    <span class="button back" t-on-click="whenClosing">
+                        <i class="fa fa-angle-double-left"></i>
+                        <span> </span>
+                        <span>Back</span>
+                    </span>
+                    <div class="top-content-center">
+                        <h1>Kitchen Order Printing</h1>
+                    </div>
+                    <span class="button next highlight" t-on-click="confirm">
+                        <span>Ok</span>
+                        <span> </span>
+                        <i class="fa fa-angle-double-right"></i>
+                    </span>
+                </div>
+                <div class="centered-content">
+                    <div class="button print" t-on-click="printReceiptKot">
+                        <i class="fa fa-print"></i>
+                        <span> </span>
+                        <span>KOT-Print</span>
+                    </div>
+                    <div class="pos-receipt-container pos-kot-receipt">
+                        <t t-if="changes.new.length == 0 and changes.cancelled.length == 0">
+                            <div class="pos-sale-ticket">
+                                <div class="pos-center-align">
+                                    <t t-esc="receipt.name" />
+                                </div>
+                                <br />
+                                Floor :
+                                <t t-esc="receipt.floor" /><br />
+                                <t t-if='receipt.table'>
+                                    Table :
+                                    <t t-esc='receipt.table' /><br />
+                                </t>
+                                Waiter:
+                                <t t-esc="receipt.cashier" /><br />
+                                <br />
+                                <div class="pos-center-align">No Pending Orders</div>
+                            </div>
+                        </t>
+                        <t t-foreach="changes" t-as="c">
+                            <t t-if="c_value.length > 0">
+                                <Kitchen_Recipt_Screen changes_value="c_value" change_type="c" order="currentOrder" />
+                            </t>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

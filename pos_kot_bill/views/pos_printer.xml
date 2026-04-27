@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="printer_ord_form" model="ir.ui.view">
+        <field name="name">printer.form</field>
+        <field name="model">pos.printer</field>
+        <field name="arch" type="xml">
+            <form string="Pos Printer">
+                <sheet>
+                    <group>
+                        <field name="printer_name" required='True'/>
+                        <field name="category_ids" required='True'/>
+                        <field name="company_id" invisible="1"/>
+                    </group>
+                    <group> <field name="billing_printer" required="True"/> </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="printer_ord_tree" model="ir.ui.view">
+        <field name="name">printer.ord.tree</field>
+        <field name="model">pos.printer</field>
+        <field name="arch" type="xml">
+            <tree string="Pos Printer">
+                <field name="printer_name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="printer_category_action" model="ir.actions.act_window">
+        <field name="name">Printer Category</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">pos.printer</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create New...
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="pos_printer_menu_id"
+              name="Kot Print Order"
+              parent="point_of_sale.menu_point_of_sale"
+              action="printer_category_action"
+              sequence="10"/>
+</odoo>

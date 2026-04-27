@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="employee_exit_clearance_tree" model="ir.ui.view">
+            <field name="name">employee.exit.clearance.tree</field>
+            <field name="model">employee.exit.clearance</field>
+            <field name="arch" type="xml">
+                <tree string="Exit Clearance" create="false" edit="false" delete="false">
+                    <field name="reference"/>
+                    <field name="resig_department_id"/>
+                    <field name="user_id"/>
+                    <field name="employee_id"/>
+                    <field name="last_day"/>
+                    <field name="notice_period"/>
+                    <field name="state" widget="badge" decoration-success="state == 'approved'"
+                           decoration-info="state == 'in_progress'" decoration-danger="state == 'reject'"
+                           decoration-warning="state == 'hold'"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="employee_exit_clearance_form" model="ir.ui.view">
+            <field name="name">employee.exit.clearance.form</field>
+            <field name="model">employee.exit.clearance</field>
+            <field name="arch" type="xml">
+                <form string="Exit Clearance" create="false" delete="false">
+                    <header>
+                        <button name="button_in_progress" string="In Progress" type="object" states="hold"/>
+                        <button name="button_on_hold" string="On Hold" type="object" states="in_progress"/>
+                        <button name="button_approve" string="Approve" type="object" states="in_progress"
+                                groups="exit_clear.group_exit_clearance_approval_button"/>
+                        <button name="button_reject" string="Reject" type="object" states="in_progress"/>
+                        <field name="state" widget="statusbar" statusbar_visible="in_progress,hold"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="reference" readonly="1"/>
+                            </h1>
+                            <h2>
+                                <field name="resig_department_id" required="1" readonly="1"/>
+                            </h2>
+                            <h3>
+                                <field name="user_id" required="1" readonly="1"/>
+                            </h3>
+                        </div>
+                        <group>
+                            <group string="Employee Details">
+                                <field name="employee_id" readonly="1"/>
+                                <field name="last_day" readonly="1"/>
+                                <field name="notice_period" readonly="1"/>
+                                <field name="reason" readonly="1"/>
+                            </group>
+                            <group string="Remarks">
+                                <field name="remarks" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                                <field name="resignation_id" readonly="1" invisible="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="employee_exit_clearance_action">
+            <field name="name">Exit Clearance</field>
+            <field name="res_model">employee.exit.clearance</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Create Employee Exit Clearance...</p>
+            </field>
+        </record>
+
+        <menuitem id="employee_exit_clearance_action_menu"
+                  name="Exit Clearance"
+                  parent="hr_resignation.employee_resignation"
+                  action="employee_exit_clearance_action"
+                  sequence="2"/>
+    </data>
+</odoo>
+
+

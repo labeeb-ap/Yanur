@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="AuthenticationPopup" owl="1">
+        <div role="dialog" class="modal-dialog">
+            <Draggable>
+                <div class="popup popup-confirm">
+                    <header class="title drag-handle">
+                        <t t-esc="props.title"/>
+                    </header>
+                    <main class="body">
+                        <img src="/aspl_pos_order_sync/static/src/img/scan.png"/>
+                        <br/>
+                        <div style="margin-left:30px;">
+                            <span style="font-weight:bold;">Manager Authentication Required.</span>
+                            <input style="margin-top:10px;" type="text" t-model="state.pin" t-ref="input"
+                                   placeholder="Enter Barcode"/>
+                        </div>
+                    </main>
+                    <footer class="footer">
+                        <div class="button confirm" t-on-click="confirm">
+                            <t t-esc="props.confirmText"/>
+                        </div>
+                        <div class="button cancel" t-on-click="cancel">
+                            <t t-esc="props.cancelText"/>
+                        </div>
+                    </footer>
+                </div>
+            </Draggable>
+        </div>
+    </t>
+
+</templates>

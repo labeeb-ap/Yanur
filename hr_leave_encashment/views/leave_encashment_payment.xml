@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_leave_encashment_payment_tree" model="ir.ui.view">
+        <field name="name">hr.leave.encashment.payment.tree</field>
+        <field name="model">hr.leave.encashment.payment</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="department_id" optional="hide"/>
+                <field name="current_user" optional="hide"/>
+                <field name="job_id" optional="hide"/>
+                <field name="manager_id" optional="hide"/>
+<!--                <field name="project_id" optional="hide"/>-->
+                <field name="contract_id"/>
+                <field name="state" widget="badge" decoration-info="state == 'draft'"
+                       decoration-success="state == 'posted'" decoration-warning="state in ('approved','waiting')"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hr_leave_encashment_payment_form" model="ir.ui.view">
+        <field name="name">hr.leave.encashment.payment.form</field>
+        <field name="model">hr.leave.encashment.payment</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button type="object" class="btn btn-primary" name="encashment_submit" string="Submit"
+                            states="draft" groups="hr_leave_encashment.group_encashment_user"/>
+                    <button type="object" class="btn btn-primary" name="encashment_approve" string="Approve"
+                            states="waiting" groups="hr_leave_encashment.group_encashment_manager"/>
+                    <button type="object" class="btn btn-primary" name="encashment_post" string="Post"
+                            states="approved" groups="hr_leave_encashment.group_encashment_admin"/>
+                    <button type="object" name="encashment_refused" string="Refuse" states="waiting" groups="hr_leave_encashment.group_encashment_manager"/>
+                    <button type="object" class="btn btn-primary" name="encashment_reset_draft" string="Reset to Draft"
+                            states="refused,cancel" groups="hr_leave_encashment.group_overtime_user"/>
+                    <button type="object" name="encashment_cancel" string="Cancel"
+                            states="draft, waiting,refused" groups="hr_leave_encashment.group_encashment_user"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,waiting,approved,posted,refused"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="employee_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="department_id" attrs="{'readonly': [('state', '!=', 'draft')]}" force_save="1"/>
+                            <field name="job_id" attrs="{'readonly': [('state', '!=', 'draft')]}" force_save="1"/>
+                            <field name="manager_id" attrs="{'readonly': [('state', '!=', 'draft')]}" force_save="1"/>
+                            <field name="company_id" invisible="1"/>
+                            <field name="date"/>
+                        </group>
+                        <group>
+                            <field name="contract_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+<!--                            <field name="project_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>-->
+                            <field name="debit_account_id"
+                                   attrs="{'invisible': [('state', 'not in', ['approved','posted'])], 'readonly': [('state', '!=', 'approved')]}"/>
+                            <field name="credit_account_id"
+                                   attrs="{'invisible': [('state', 'not in', ['approved','posted'])], 'readonly': [('state', '!=', 'approved')]}"/>
+                            <field name="journal_id"
+                                   attrs="{'invisible': [('state', 'not in', ['approved','posted'])], 'readonly': [('state', '!=', 'approved')]}"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="leave_encashment_req" attrs="{'readonly': [('state', '!=', 'draft')]}" domain="[('is_posted','=',True),('employee_id', '=', employee_id), ('encashment_amount_balance', '!=', 0)]"/>
+                            <field name="encashment_amount_total" readonly="1" force_save="1"/>
+                            <field name="encashment_amount_balance" readonly="1" force_save="1"/>
+                            <field name="amount_to_post" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description" name="description">
+                            <field name="note" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"
+                           widget="mail_followers"
+                           groups="base.group_user"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="hr_leave_encashment_payment_action" model="ir.actions.act_window">
+        <field name="name">Encashment Payment</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hr.leave.encashment.payment</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="hr_leave_encashment_payment_root_menu"
+              name="Payment"
+              parent="hr_leave_encashment_menu_root"
+              action="hr_leave_encashment_payment_action"
+              sequence="10"/>
+
+</odoo>

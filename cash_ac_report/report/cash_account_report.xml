@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="paperformat_cash_account_report" model="report.paperformat">
+        <field name="name">Cash A/c Report format</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">12</field>
+    </record>
+
+    <record id="cash_account_report_pdf" model="ir.actions.report">
+        <field name="name">Cash A/c Report</field>
+        <field name="model">cash.account.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">cash_ac_report.cash_account_report_temp</field>
+        <field name="report_file">cash_ac_report.cash_account_report_temp</field>
+        <field name="paperformat_id" ref="cash_ac_report.paperformat_cash_account_report"/>
+    </record>
+
+    <record id="cash_account_report_all_pdf" model="ir.actions.report">
+        <field name="name">Cash A/c Report</field>
+        <field name="model">cash.account.report.all.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">cash_ac_report.cash_account_report_general_temp</field>
+        <field name="report_file">cash_ac_report.cash_account_report_general_temp</field>
+        <field name="paperformat_id" ref="cash_ac_report.paperformat_cash_account_report"/>
+    </record>
+
+</odoo>

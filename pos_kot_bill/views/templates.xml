@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="assets" inherit_id="point_of_sale.assets">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/pos_kot_bill/static/src/js/Kitchen_Recipt_Screen.js"></script>
+                <script type="text/javascript" src="/pos_kot_bill/static/src/js/print_bill.js"></script>
+                <script type="text/javascript" src="/pos_kot_bill/static/src/js/preBillScreen.js"></script>
+                <script type="text/javascript" src="/pos_kot_bill/static/src/js/preprintbill.js"></script>
+                <script type="text/javascript" src="/pos_kot_bill/static/src/js/models.js"></script>
+                <script type="text/javascript" src="/pos_kot_bill/static/src/js/NumpadWidget.js"></script>
+                <script type="text/javascript" src="/pos_kot_bill/static/src/js/cancel_reason_popup.js"></script>
+            </xpath>
+            <xpath expr="//link[@id='pos-stylesheet']" position="after">
+                <link rel="stylesheet" href="/pos_kot_bill/static/src/css/preprintbill.css" />
+            </xpath>
+        </template>
+    </data>
+</odoo>

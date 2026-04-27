@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="crm_confirm_button_visibility" model="res.groups">
+        <field name="name">Confirm Visibility(Sales)</field>
+    </record>
+</odoo>

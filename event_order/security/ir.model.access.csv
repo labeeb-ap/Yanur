@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_rental_items,access.rental.items,model_rental_items,,1,1,1,1
+access_multiple_product_sale,access_multiple_product_sale,model_multiple_product_sale,,1,1,1,1
+access_event_type_sale,access.event.type.sale,model_event_type_sale,,1,1,1,1
+access_event_acces_complimentry_line,complimentory.order.line,model_complimentory_order_line,,1,1,1,1
+access_event_tasting_line,food.tasting.details,model_food_tasting_details,,1,1,1,1
+access_event_vip_tasting_line,vip.food.details,model_vip_food_details,,1,1,1,1
+
+
+

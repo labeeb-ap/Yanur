@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ReOrderPopupSync" owl="1">
+        <div role="dialog" class="modal-dialog">
+            <Draggable>
+                <div class="popup popup-reorder-product"
+                     style="height: auto !important;max-height: 370px;max-width: 70%;">
+                    <header class="title drag-handle">
+                        <t t-esc="props.title"/>
+                    </header>
+                    <div class="reorder-table-div">
+                        <table class="popup-product-list table">
+                             <thead>
+                               <tr class="reorder-tr">
+                                   <th>Product</th>
+                                   <th>Unit Price</th>
+                                   <th>Quantity</th>
+                                   <th></th>
+                               </tr>
+                           </thead>
+                            <tbody class="popup-product-list-contents">
+                               <t t-if="props.orderlines">
+                                   <t t-foreach="state.OrderLines" t-as="line">
+                                       <PopupProductLines line="line"/>
+                                   </t>
+                               </t>
+                           </tbody>
+                        </table>
+                    </div>
+                    <footer class="footer">
+                        <div class="button confirm" t-on-click="confirm">
+                            <t t-esc="props.confirmText"/>
+                        </div>
+                        <div class="button cancel" t-on-click="cancel">
+                            <t t-esc="props.cancelText"/>
+                        </div>
+                    </footer>
+                </div>
+            </Draggable>
+        </div>
+    </t>
+
+</templates>

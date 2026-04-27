@@ -1,0 +1,4 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_hr_leave_encashment","hr.leave.encashment","model_hr_leave_encashment",,1,1,1,1
+"access_hr_leave_encashment_payment","hr.leave.encashment.payment","model_hr_leave_encashment_payment",,1,1,1,1
+"access_encashment_report_wizard","hr.encashment.report.wizard","model_encashment_report_wizard",,1,1,1,1

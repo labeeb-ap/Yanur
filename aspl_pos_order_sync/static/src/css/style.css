@@ -1,0 +1,118 @@
+/* draft order screen*/
+.draft_order-screen {
+    font-size: medium;
+    overflow: auto;
+}
+
+.draft_order-screen .orders {
+    display: flex;
+    flex-flow: column nowrap;
+    overflow: hidden;
+    overflow-y: hidden;
+    /*overflow-y: auto;*/
+    max-height:100%;
+}
+
+.draft_order-screen .orders .header-row{
+    display: flex;
+    flex-flow: row nowrap;
+    flex: 1;
+    justify-content: space-evenly;
+    background: #868686;
+    color: white;
+}
+
+.draft_order-screen .orders .order-row {
+    display: flex;
+    flex-flow: row nowrap;
+    flex: 1;
+    justify-content: space-evenly;
+}
+
+.draft_order-screen .orders .col {
+    display: flex;
+    flex: 1;
+    padding: 10px;
+}
+.draft_order-screen .orders .col.start {
+    justify-content: flex-start;
+}
+.draft_order-screen .orders .col.center {
+    justify-content: center;
+}
+.draft_order-screen .orders .col.end {
+    justify-content: flex-end;
+}
+.draft_order-screen .orders .col.very-narrow {
+    flex: 0.2;
+}
+.draft_order-screen .orders .col.narrow {
+    flex: 0.5;
+}
+.draft_order-screen .orders .col.wide {
+    flex: 1.5;
+}
+.draft_order-screen .order-row:nth-child(odd) {
+    background: #DDD;
+}
+.draft_order-screen .order-row:nth-child(even) {
+    background: white;
+}
+.draft_order-screen .order-row:hover {
+    background: rgb(110,200,155);
+    color: white;
+}
+.draft_order-screen .pointer {
+    cursor: pointer;
+}
+.draft_order-screen .controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0px 20px;
+    border-bottom: dashed 1px rgb(215,215,215);
+    flex: 0 0 80px;
+}
+.draft_order-screen .controls button {
+    font-size: medium;
+    padding: 7px;
+    margin: 5px;
+    font-weight: bold;
+}
+.minus, .plus{
+    width:20px;
+    height:20px;
+    padding:8px 5px 8px 5px;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    margin:2px;
+}
+.reorder-table-div{
+    max-height: 246px;
+    height:auto;
+    overflow: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.popup-product-list{
+    border: 3px solid #e6e6e6;
+    margin: 8px 0px;
+}
+.reorder-tr{
+    height: 34px;
+    background: #868686;
+    color:white;
+}
+.popup-product-list-contents{
+    font-size:18px;
+    font-weight:500
+}
+#custom_popup_input{
+	width: 25% !important;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    min-height: 12px;
+    max-height: 30px;
+}

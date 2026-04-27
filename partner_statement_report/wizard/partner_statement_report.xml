@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="partner_statement_report_form" model="ir.ui.view">
+        <field name="name">partner.statement.report.form</field>
+        <field name="model">partner.statement.report</field>
+        <field name="arch" type="xml">
+            <form string="Partner Statement Report">
+                <separator string="Partner Statement Report"/>
+                <group>
+                    <group>
+                        <field name="partner_id" required="1"/>
+                        <field name="from_date" required="1"/>
+                        <field name="to_date" required="1"/>
+                        <field name="account_type" required="1"/>
+                    </group>
+                    <!--                    <group>-->
+                    <!--                        <field name="type_selection"/>-->
+                    <!--                        <field name="date_selection" required="1"/>-->
+                    <!--                    </group>-->
+                </group>
+                <footer>
+                    <button icon="fa-print" string="xlsx" name="print_xlsx_report" type="object"
+                            class="oe_highlight"/>
+                    or
+                    <button icon="fa-print" string="PDF" name="print_pdf_report" type="object"
+                            class="oe_highlight"/>
+                    or
+                    <button icon="fa-print" string="Send Mail" name="mail_report" type="object"
+                            class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="partner_statement_report_action" model="ir.actions.act_window">
+        <field name="name">Partner Statement Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">partner.statement.report</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="partner_statement_report_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="partner_statement_report_menu"
+              name="Partner Statement Report"
+              parent="account.menu_finance_reports"
+              sequence="10"/>
+
+    <menuitem id="partner_statement_report_root_menu"
+              name="Partner Statement Report"
+              parent="partner_statement_report_menu"
+              action="partner_statement_report_action"
+              sequence="10"/>
+
+</odoo>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="paperformat_statement_report" model="report.paperformat">
+        <field name="name">Statement Report format</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">12</field>
+        </record>
+
+      <record id="partner_statement_report_pdf_print" model="ir.actions.report">
+           <field name="name">Partner Statment Pdf Report</field>
+           <field name="model">partner.statement.report</field>
+           <field name="report_type">qweb-pdf</field>
+           <field name="report_name">partner_statement_report.partner_statement</field>
+           <field name="report_file">partner_statement_report.partner_statement</field>
+          <field name="binding_model_id" ref="model_partner_statement_report"/>
+          <field name="paperformat_id" ref="partner_statement_report.paperformat_statement_report"/>
+      </record>
+    </data>
+</odoo>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="pos_config_view_form_inherit_pos_discount_inherit_pos_fixed_discount" model="ir.ui.view">
+        <field name="name">pos.config.form.inherit.pos.discount.inherit.pos.fixed.discount</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="pos_discount.pos_config_view_form_inherit_pos_discount"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='pricing']/div[4]/div[2]/div[2]" position="after">
+                <div class="row" attrs="{'invisible': [('module_pos_discount', '=', False)]}">
+<!--                    <t t-if="discount_amt > 5">-->
+                        <label string="Discount Amount" for="discount_amt" class="col-lg-3 o_light_label"/>
+                        <field name="discount_amt" attrs="{'required': [('module_pos_discount', '=', True)], 'invisible': [('module_pos_discount', '=', False)]}"/>
+<!--                    </t>-->
+<!--                    <t t-else="">-->
+<!--                         <label string="Round off" for="discount_amt" class="col-lg-3 o_light_label"/>-->
+<!--                         <field name="discount_amt" attrs="{'required': [('module_pos_discount', '=', True)], 'invisible': [('module_pos_discount', '=', False)]}"/>-->
+<!--                    </t>-->
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

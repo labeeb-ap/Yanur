@@ -1,0 +1,19 @@
+<odoo>
+
+    <record id="hr_leave_encashment_sequence" model="ir.sequence">
+        <field name="name">Leave Encashment</field>
+        <field name="code">hr.leave.encashment</field>
+        <field name="prefix">LER</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="hr_leave_encashment_payment_sequence" model="ir.sequence">
+        <field name="name">Leave Encashment Payment</field>
+        <field name="code">hr.leave.encashment.payment</field>
+        <field name="prefix">LEP</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+</odoo>

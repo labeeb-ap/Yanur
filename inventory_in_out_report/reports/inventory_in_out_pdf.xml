@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+
+    <data>
+
+        <record id="paperformat_euro_lowmargin_inventory_in_out_pdf" model="report.paperformat">
+            <field name="name">European A4 low margin</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">15</field>
+            <field name="margin_bottom">15</field>
+        </record>
+
+        <record id="record_inventory_in_out_report_print" model="ir.actions.report">
+            <field name="name">Inventory Report</field>
+            <field name="model">inventory.in.out.report.wizard</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">inventory_in_out_report.record_inventory_in_out_report_print_template</field>
+            <field name="report_file">inventory_in_out_report.record_inventory_in_out_report_print_template</field>
+            <field name="paperformat_id" ref="inventory_in_out_report.paperformat_euro_lowmargin_inventory_in_out_pdf"/>
+        </record>
+
+    </data>
+
+</odoo>
+

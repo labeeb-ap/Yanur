@@ -1,0 +1,10 @@
+<odoo>
+    <template id="assets" name="xls_assets" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript"
+                    src="pos_auto_cash_drawer/static/src/js/screen_extend.js"/>
+            <script type="text/javascript"
+                    src="pos_auto_cash_drawer/static/src/js/reference_code.js"/>
+        </xpath>
+    </template>
+</odoo>

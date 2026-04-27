@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.ui.view" id="view_calendar_sale_order">
+        <field name="name">view.calender.sale</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sale_order_calendar"/>
+        <field name="arch" type="xml">
+            <calendar position="attributes">
+                <attribute name="date_start">exp_delivery_date</attribute>
+                <attribute name="mode">month</attribute>
+            </calendar>
+        </field>
+    </record>
+</odoo>

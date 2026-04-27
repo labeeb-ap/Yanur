@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_balance_sheet_report_wizard,access.balance.sheet.report.wizard,model_balance_sheet_report_wizard,,1,1,1,1
+access_profit_loss_report_wizard,access.profit.loss.report.wizard,model_profit_loss_report_wizard,,1,1,1,1

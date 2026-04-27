@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="ReferenceCodePopup" owl="1">
+        <div role="dialog" class="modal-dialog">
+            <div class="popup">
+                <header class="title">
+                    <t t-esc="props.title"/>
+                </header>
+                <div class="div">
+                    <div class="flex-justify-content">
+                        <div class="note-save-quotation">Reference:</div>
+                        <div>
+                             <textarea id="text_area" t-model="state.inputValue" t-ref="textarea" rows="2" cols="30"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer">
+                    <div>
+                        <div class="button cancel" t-on-click="cancel">
+                            <t t-esc="props.cancelText"/>
+                        </div>
+                        <div class="button confirm" t-on-click="confirm">
+                            <t t-esc="props.confirmText"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

@@ -1,0 +1,24 @@
+<odoo>
+    <data>
+        <record id="paperformat_euro_quote_comparison_report" model="report.paperformat">
+            <field name="name">European A4 low margin</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">15</field>
+        </record>
+
+
+        <record id="quote_comparison_report_pdf" model="ir.actions.report">
+            <field name="name">Price Comparison</field>
+            <field name="model">purchase.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">quote_comparison_report.quote_comparison_report_template</field>
+            <field name="report_file">quote_comparison_report.quote_comparison_report_template</field>
+            <field name="paperformat_id" ref="quote_comparison_report.paperformat_euro_quote_comparison_report"/>
+            <field name="binding_model_id" ref="purchase.model_purchase_order"/>
+            <field name="binding_view_types">list</field>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>

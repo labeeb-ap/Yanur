@@ -1,0 +1,20 @@
+{'name': ' company_post',
+ 'version': '14.0.1.0.0',
+ 'summary': 'company post',
+ 'sequence': -1,
+ 'category': 'Tools',
+ 'author': 'Catalist Divergent ERP',
+ 'maintainer': 'Catalist Divergent ERP',
+ 'company': 'Catalist Divergent ERP',
+ 'website': 'https://www.catalisterp.com/',
+ 'depends': ['base', 'purchase','mail','sale_management'],
+ 'data': [
+     'security/security.xml',
+     'views/position_view.xml'],
+
+ 'images': [],
+ 'license': 'AGPL-3',
+ 'installable': True,
+ 'application': False,
+ 'auto_install': False,
+ }

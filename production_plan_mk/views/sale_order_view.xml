@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_order_form_inherited_production_plan_mk" model="ir.ui.view">
+        <field name="name">sale.order.inherited.production.plan</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button string="Production Plan" class="oe_highlight"
+                        type="object" name="action_create_production_plan"
+                        attrs="{'invisible': ['|', ('plan_count', '!=', 0), ('state', '!=', 'sale')]}"
+                />
+            </xpath>
+            <xpath expr="//button[@name='preview_sale_order']" position="before">
+                <button class="oe_stat_button" type="object" name="planned_list"
+                        icon="fa-wrench" widget="statinfo"
+                        invisible="1">
+                    <field name="plan_count" widget="statinfo" string="Planned"/>
+                </button>
+            </xpath>
+            <field name="sale_order_template_id" position="before">
+                <field name="exp_delivery_date" required="1" attrs="{'readonly':[('state', 'in', ['sale', 'done'])]}"/>
+                <label for="time_site"/>
+                <div>
+                    <field name="time_site"  widget="float_time" class="oe_inline" attrs="{'readonly':[('state', 'in', ['sale', 'done'])]}"/>&#160;
+                    <field name="event_time_format_1" style="padding:3px;" class="oe_inline" attrs="{'readonly':[('state', 'in', ['sale', 'done'])]}"/>
+                </div>
+                <label for="time_yanur"/>
+                <div>
+                    <field name="time_yanur"  widget="float_time" class="oe_inline" attrs="{'readonly':[('state', 'in', ['sale', 'done'])]}"/>&#160;
+                    <field name="event_time_format_2" style="padding:3px;" class="oe_inline" attrs="{'readonly':[('state', 'in', ['sale', 'done'])]}"/>
+                </div>
+                <field name="event_title" attrs="{'readonly':[('state', 'in', ['sale', 'done'])]}"/>
+                <field name="sales_man" attrs="{'readonly':[('state', 'in', ['sale', 'done'])]}"/>
+            </field>
+
+            <field name="sale_order_template_id" position="before">
+                <field name="consignment" invisible="1"/>
+            </field>
+
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom_qty']" position="before">
+                <field name="product_expiration" force_save="1" invisible="1"/>
+                <!--        <field name="box_count" readonly="1" force_save="1"/>-->
+                <field name="box" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="sale_order_tree_view_custom">
+        <field name="name">sale.order.form.view.custom</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
+        <field name="arch" type="xml">
+            <xpath expr="field[@name='create_date']" position="replace">
+                <field name="exp_delivery_date"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

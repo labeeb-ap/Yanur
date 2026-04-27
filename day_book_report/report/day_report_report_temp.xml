@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template id="day_book_report_pdf_temp">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+                    <div class="page">
+                        <table width="100%">
+                            <tr>
+                                <td align="center" colspan="3" style="font-size: 30px;">
+                                    <b>Day Book Report</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-top: 5%; font-size: 22px;">Date:
+                                    <b>
+                                        <t t-esc="date"/>
+                                    </b>
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <table width="100%" class="table table-bordered">
+                            <tr>
+                                <td style="background-color: #B5B6B5;">
+                                    <b>Doc No</b>
+                                </td>
+                                <td align="center" style="background-color: #B5B6B5;">
+                                    <b>Doc Type</b>
+                                </td>
+                                <td style="background-color: #B5B6B5;">
+                                    <b>A/c head</b>
+                                </td>
+                                <td align="center" style="background-color: #B5B6B5;">
+                                    <b>Dr</b>
+                                </td>
+                                <td align="center" style="background-color: #B5B6B5;">
+                                    <b>Cr</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" align="center" style="background-color: #EDEDED;">
+                                    <b>Customer Invoices</b>
+                                </td>
+                            </tr>
+                            <t t-foreach="val" t-as="v">
+                                <t t-if="v['day_book_move'] == 'out_invoice'">
+                                    <tr>
+                                        <td>
+                                            <span t-esc="v['day_book_no']"/>
+                                        </td>
+                                        <td align="center">
+                                            <t t-if="v['day_book_type'] == 'sale'">
+                                                Sales
+                                            </t>
+                                            <t t-elif="v['day_book_type'] == 'purchase'">
+                                                Purchase
+                                            </t>
+                                            <t t-elif="v['day_book_type'] == 'cash'">
+                                                Cash
+                                            </t>
+                                            <t t-elif="v['day_book_type'] == 'bank'">
+                                                Bank
+                                            </t>
+                                            <t t-elif="v['day_book_type'] == 'general'">
+                                                Miscellaneous
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <span t-esc="v['day_book_partner']"/>
+                                        </td>
+                                        <td align="center"/>
+                                        <td align="center">
+                                            <span t-esc="v['day_book_amount']"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </t>
+                            <tr>
+                                <td colspan="5" align="center" style="background-color: #EDEDED;">
+                                    <b>Vendor Bills</b>
+                                </td>
+                            </tr>
+                            <t t-foreach="val" t-as="v">
+                                <t t-if="v['day_book_move'] == 'in_invoice'">
+                                    <tr>
+                                        <td>
+                                            <span t-esc="v['day_book_no']"/>
+                                        </td>
+                                        <td align="center">
+                                            <t t-if="v['day_book_type'] == 'sale'">
+                                                Sales
+                                            </t>
+                                            <t t-elif="v['day_book_type'] == 'purchase'">
+                                                Purchase
+                                            </t>
+                                            <t t-elif="v['day_book_type'] == 'cash'">
+                                                Cash
+                                            </t>
+                                            <t t-elif="v['day_book_type'] == 'bank'">
+                                                Bank
+                                            </t>
+                                            <t t-elif="v['day_book_type'] == 'general'">
+                                                Miscellaneous
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <span t-esc="v['day_book_partner']"/>
+                                        </td>
+                                        <td align="center">
+                                            <span t-esc="v['day_book_amount']"/>
+                                        </td>
+                                        <td align="center"/>
+                                    </tr>
+                                </t>
+                            </t>
+                            <tr>
+                                <td colspan="5" align="center" style="background-color: #EDEDED;">
+                                    <b>Credit Notes</b>
+                                </td>
+                            </tr>
+                            <t t-foreach="val" t-as="v">
+                                <t t-if="v['day_book_move'] == 'out_refund'">
+                                    <tr>
+                                        <td>
+                                            <span t-esc="v['day_book_no']"/>
+                                        </td>
+                                        <td align="center">
+                                            <t t-if="v['day_book_type'] == 'sale'">
+                                                Sales
+                                            </t>
+                                            <t t-elif="v['day_book_type'] == 'purchase'">
+                                                Purchase
+                                            </t>
+                                            <t t-elif="v['day_book_type'] == 'cash'">
+                                                Cash
+                                            </t>
+                                            <t t-elif="v['day_book_type'] == 'bank'">
+                                                Bank
+                                            </t>
+                                            <t t-elif="v['day_book_type'] == 'general'">
+                                                Miscellaneous
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <span t-esc="v['day_book_partner']"/>
+                                        </td>
+                                        <td align="center">
+                                            <span t-esc="v['day_book_amount']"/>
+                                        </td>
+                                        <td align="center"/>
+                                    </tr>
+                                </t>
+                            </t>
+                            <tr>
+                                <td colspan="5" align="center" style="background-color: #EDEDED;">
+                                    <b>Refunds</b>
+                                </td>
+                            </tr>
+                            <t t-foreach="val" t-as="v">
+                                <t t-if="v['day_book_move'] == 'in_refund'">
+                                    <tr>
+                                        <td>
+                                            <span t-esc="v['day_book_no']"/>
+                                        </td>
+                                        <td align="center">
+                                            <t t-if="v['day_book_type'] == 'sale'">
+                                                Sales
+                                            </t>
+                                            <t t-elif="v['day_book_type'] == 'purchase'">
+                                                Purchase
+                                            </t>
+                                            <t t-elif="v['day_book_type'] == 'cash'">
+                                                Cash
+                                            </t>
+                                            <t t-elif="v['day_book_type'] == 'bank'">
+                                                Bank
+                                            </t>
+                                            <t t-elif="v['day_book_type'] == 'general'">
+                                                Miscellaneous
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <span t-esc="v['day_book_partner']"/>
+                                        </td>
+                                        <td align="center"/>
+                                        <td align="center">
+                                            <span t-esc="v['day_book_amount']"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </t>
+                            <tr>
+                                <td colspan="5" align="center" style="background-color: #EDEDED;">
+                                    <b>Journal Items</b>
+                                </td>
+                            </tr>
+                            <t t-foreach="entry" t-as="e">
+                                <tr>
+                                    <td>
+                                        <span t-esc="e['entry_book_no']"/>
+                                    </td>
+                                    <td align="center">
+                                        <t t-if="e['entry_book_type'] == 'general'">
+                                            Miscellaneous
+                                        </t>
+                                    </td>
+                                    <td>
+                                        <span t-esc="e['entry_acc_code']"/>
+                                        <span t-esc="e['entry_acc_name']"/>
+                                        <t t-if="e['entry_book_partner']">
+                                            &#160;-&#160;<span t-esc="e['entry_book_partner']"/>
+                                        </t>
+                                    </td>
+                                    <td align="center">
+                                        <t t-if="e['entry_book_debit'] != 0">
+                                            <span t-esc="e['entry_book_debit']"/>
+                                        </t>
+                                    </td>
+                                    <td align="center">
+                                        <t t-if="e['entry_book_credit'] != 0">
+                                            <span t-esc="e['entry_book_credit']"/>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </t>
+                            <tr>
+                                <td colspan="5" align="center" style="background-color: #EDEDED;">
+                                    <b>Customer Payments</b>
+                                </td>
+                            </tr>
+                            <t t-foreach="payment" t-as="p">
+                                <t t-if="p['payment_book_partner_type'] == 'customer'">
+                                    <tr>
+                                        <td>
+                                            <span t-esc="p['payment_book_no']"/>
+                                        </td>
+                                        <td align="center">
+                                            <t t-if="p['payment_book_type'] == 'sale'">
+                                                Sales
+                                            </t>
+                                            <t t-elif="p['payment_book_type'] == 'purchase'">
+                                                Purchase
+                                            </t>
+                                            <t t-elif="p['payment_book_type'] == 'cash'">
+                                                Cash
+                                            </t>
+                                            <t t-elif="p['payment_book_type'] == 'bank'">
+                                                Bank
+                                            </t>
+                                            <t t-elif="p['payment_book_type'] == 'general'">
+                                                Miscellaneous
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <span t-esc="p['payment_book_partner']"/>
+                                        </td>
+                                        <td align="center">
+                                            <t t-if="p['payment_book_partner_type'] == 'customer'">
+                                                <span t-esc="p['payment_book_amount']"/>
+                                            </t>
+                                        </td>
+                                        <td align="center">
+                                            <t t-if="p['payment_book_partner_type'] == 'supplier'">
+                                                <span t-esc="p['payment_book_amount']"/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </t>
+                            <tr>
+                                <td colspan="5" align="center" style="background-color: #EDEDED;">
+                                    <b>Vendor Payments</b>
+                                </td>
+                            </tr>
+                            <t t-foreach="payment" t-as="p">
+                                <t t-if="p['payment_book_partner_type'] == 'supplier'">
+                                    <tr>
+                                        <td>
+                                            <span t-esc="p['payment_book_no']"/>
+                                        </td>
+                                        <td align="center">
+                                            <t t-if="p['payment_book_type'] == 'sale'">
+                                                Sales
+                                            </t>
+                                            <t t-elif="p['payment_book_type'] == 'purchase'">
+                                                Purchase
+                                            </t>
+                                            <t t-elif="p['payment_book_type'] == 'cash'">
+                                                Cash
+                                            </t>
+                                            <t t-elif="p['payment_book_type'] == 'bank'">
+                                                Bank
+                                            </t>
+                                            <t t-elif="p['payment_book_type'] == 'general'">
+                                                Miscellaneous
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <span t-esc="p['payment_book_partner']"/>
+                                        </td>
+                                        <td align="center">
+                                            <t t-if="p['payment_book_partner_type'] == 'customer'">
+                                                <span t-esc="p['payment_book_amount']"/>
+                                            </t>
+                                        </td>
+                                        <td align="center">
+                                            <t t-if="p['payment_book_partner_type'] == 'supplier'">
+                                                <span t-esc="p['payment_book_amount']"/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </t>
+                        </table>
+                    </div>
+                    <div class="footer o_standard_footer" style="border-top: 1px solid black;">
+                        <div class="row text-center">
+                            <div class="col col-12 text-center">
+                                <ul class="list-inline">
+                                    <li class="list-inline-item">
+                                        <span class="page"/>
+                                    </li>
+                                    <li class="list-inline-item">/</li>
+                                    <li class="list-inline-item">
+                                        <span class="topage"/>
+                                    </li>
+                                    <li>
+                                        <span t-esc="user.name"/>&#160;-&#160;
+                                        <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y %H:%M')"/>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

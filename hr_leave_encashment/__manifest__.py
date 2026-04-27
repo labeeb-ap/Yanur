@@ -1,0 +1,20 @@
+{
+    'name': 'Hr Leave Encashment',
+    'version': '14.0.1.0.0',
+    'summary': """Hr Leave Encashment""",
+    'description': 'Hr Leave Encashment.',
+    'category': 'Generic Modules/Human Resources',
+    'depends': ['base', 'hr', 'mail', 'project'],
+    'data': [
+        'security/ir.model.access.csv',
+        'security/security.xml',
+        'data/sequence.xml',
+        'wizard/encashment_report_wizard_views.xml',
+        'views/hr_leave_encashment_views.xml',
+        'views/leave_encashment_payment.xml',
+    ],
+    'license': 'AGPL-3',
+    'installable': True,
+    'auto_install': False,
+    'application': False,
+}

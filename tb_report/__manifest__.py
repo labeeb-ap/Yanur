@@ -1,0 +1,27 @@
+# -*- coding: utf-8 -*-
+# Part of Odoo. See LICENSE file for full copyright and licensing details.
+{
+    'name': 'TB Report(PDF & Excel)',
+    'version': '14.0.1.0.0',
+    'summary': 'TB Report(PDF & Excel) Through Wizard',
+    'author': 'Divergent Catalist ERP Solutions',
+    'company': 'Divergent Catalist ERP Solutions',
+    'maintainer': 'Divergent Catalist ERP Solutions',
+    'sequence': 10,
+    'description': """Print TB Report(PDF & Excel) Through Wizard,
+        Filter Report Details by Date, Company,....""",
+    'category': 'Accounting',
+    'website': 'https://www.catalisterp.com/',
+    'depends': ['base', 'account', 'contacts'],
+    'data': ['security/ir.model.access.csv',
+             'views/account_account_type.xml',
+             'wizard/tb_report_wizard.xml',
+             'report/report.xml',
+             'report/tb_report.xml'],
+    'demo': [],
+    'qweb': [],
+    'licenSe': 'LGPL-3',
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+}

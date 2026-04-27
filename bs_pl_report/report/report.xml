@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="paperformat_tally_reports" model="report.paperformat">
+        <field name="name">Tally Reports format</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">40</field>
+    </record>
+
+    <record id="balance_sheet_report_pdf" model="ir.actions.report">
+        <field name="name">Balance Sheet Report</field>
+        <field name="model">balance.sheet.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">bs_pl_report.balance_sheet_report_template</field>
+        <field name="report_file">bs_pl_report.balance_sheet_report_template</field>
+        <field name="paperformat_id" ref="bs_pl_report.paperformat_tally_reports"/>
+    </record>
+
+    <record id="profit_loss_report_pdf" model="ir.actions.report">
+        <field name="name">Profit &amp; Loss Report</field>
+        <field name="model">profit.loss.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">bs_pl_report.profit_loss_report_template</field>
+        <field name="report_file">bs_pl_report.profit_loss_report_template</field>
+        <field name="paperformat_id" ref="bs_pl_report.paperformat_tally_reports"/>
+    </record>
+
+</odoo>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="aspl_pos_order_sync_assets" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/aspl_pos_order_sync/static/src/css/style.css"/>
+            <script type="text/javascript"
+                    src="/aspl_pos_order_sync/static/src/js/Screens/ProductScreen/ProductScreen.js"></script>
+            <script type="text/javascript"
+                    src="/aspl_pos_order_sync/static/src/js/Screens/ProductScreen/NumpadWidget.js"></script>
+            <script type="text/javascript" src="/aspl_pos_order_sync/static/src/js/models.js"></script>
+            <script type="text/javascript" src="/aspl_pos_order_sync/static/src/js/db.js"></script>
+            <script type="text/javascript" src="/aspl_pos_order_sync/static/src/js/Chrome.js"></script>
+            <script type="text/javascript"
+                    src="/aspl_pos_order_sync/static/src/js/Popups/CreateDraftOrderPopup.js"></script>
+            <script type="text/javascript" src="/aspl_pos_order_sync/static/src/js/Popups/ReOrderPopup.js"></script>
+            <script type="text/javascript"
+                    src="/aspl_pos_order_sync/static/src/js/Popups/AuthenticationPopup.js"></script>
+            <script type="text/javascript"
+                    src="/aspl_pos_order_sync/static/src/js/Screens/ChromeWidgets/OrdersIconChrome.js"></script>
+            <script type="text/javascript"
+                    src="/aspl_pos_order_sync/static/src/js/Screens/ProductScreen/ControlButtons/OrderScreenButton.js"></script>
+            <script type="text/javascript"
+                    src="/aspl_pos_order_sync/static/src/js/Screens/OrderScreen/OrderScreen.js"></script>
+            <script type="text/javascript"
+                    src="/aspl_pos_order_sync/static/src/js/Screens/OrderScreen/PopupProductLines.js"></script>
+            <script type="text/javascript"
+                    src="/aspl_pos_order_sync/static/src/js/Screens/PaymentScreen/PaymentScreen.js"></script>
+        </xpath>
+    </template>
+</odoo>

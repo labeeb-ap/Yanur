@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<odoo>
+     <record model="ir.rule" id="record_biometric_settings_rule">
+        <field name="name">record_complaint_register_rule</field>
+        <field name="model_id" ref="model_biometric_settings"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">
+            [('company_id', 'in', company_ids)]
+        </field>
+    </record>
+</odoo>

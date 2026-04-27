@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="res_users_pos_manager_view_form_inherit_aspl_pos_order_sync" model="ir.ui.view">
+            <field name="name">res.users.pos.manager.view.form.inherit.aspl.pos.order.sync</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="pos_manager_validation_mac5.res_users_pos_manager_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='point_of_sale_user_extra_details']/group[1]" position='after'>
+                    <group string="Order Sync" name="order_sync'">
+                        <group>
+                            <field name="pos_user_type"/>
+                            <field name="sales_persons" widget="many2many_tags"
+                                   attrs="{'invisible' : [('pos_user_type' ,'!=', 'cashier')]}"
+                                   context="{'from_sales_person': True}"/>
+                        </group>
+                        <group invisible="1">
+                            <group invisible="1">
+                                <field name="based_on" required="1"/>
+                                <field name="barcode"
+                                       attrs="{'invisible' : [('based_on' ,'!=', 'barcode')]}"/>
+                                <field name="custom_security_pin"
+                                       attrs="{'invisible' : [('based_on' ,'!=', 'pin')]}"
+                                />
+                            </group>
+                            <group invisible="1">
+                                <field name="can_change_price"/>
+                                <field name="can_give_discount"/>
+                                <field name="discount_limit"
+                                       attrs="{'invisible' : [('can_give_discount' ,'!=', True)]}"/>
+                            </group>
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <!--        <record id="pos_order_sync_res_users_form_view" model="ir.ui.view">-->
+        <!--            <field name="name">res.users.form.view</field>-->
+        <!--            <field name="model">res.users</field>-->
+        <!--            <field name="inherit_id" ref="base.view_users_form"/>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <xpath expr="//page[2]" position='after'>-->
+        <!--                    <page string='Point of Sale'>-->
+        <!--                        <h3>Operation Restriction</h3>-->
+        <!--                        <group>-->
+        <!--                            <group>-->
+        <!--                                <field name="based_on" required="1"/>-->
+        <!--                                <field name="barcode"-->
+        <!--                                       attrs="{'invisible' : [('based_on' ,'!=', 'barcode')]}"/>-->
+        <!--                                <field name="custom_security_pin"-->
+        <!--                                       attrs="{'invisible' : [('based_on' ,'!=', 'pin')]}"-->
+        <!--                                />-->
+        <!--                            </group>-->
+        <!--                            <group>-->
+        <!--                                <field name="can_change_price"/>-->
+        <!--                                <field name="can_give_discount"/>-->
+        <!--                                <field name="discount_limit"-->
+        <!--                                       attrs="{'invisible' : [('can_give_discount' ,'!=', True)]}"/>-->
+        <!--                            </group>-->
+        <!--                        </group>-->
+        <!--                        <h3>Order Sync</h3>-->
+        <!--                        <group>-->
+        <!--                            <group>-->
+        <!--                                <field name="pos_user_type"/>-->
+        <!--                                <field name="sales_persons" widget="many2many_tags"-->
+        <!--                                       attrs="{'invisible' : [('pos_user_type' ,'!=', 'cashier')]}"-->
+        <!--                                       context="{'from_sales_person': True}"/>-->
+        <!--                            </group>-->
+        <!--                        </group>-->
+        <!--                    </page>-->
+        <!--                </xpath>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+    </data>
+</odoo>

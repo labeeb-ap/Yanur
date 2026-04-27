@@ -1,0 +1,25 @@
+{'name': 'HR Biotime Attendance',
+ 'version': '14.0.1.0.0',
+ 'summary': 'This module is used for display the check in/out of biometric device',
+ 'sequence': -1,
+ 'category': 'Tools',
+ 'author': 'Catalist Divergent ERP',
+ 'maintainer': 'Catalist Divergent ERP',
+ 'company': 'Catalist Divergent ERP',
+ 'website': 'https://www.catalisterp.com/',
+ 'depends': ['base', 'hr', 'hr_attendance'],
+ 'data': [
+     'security/ir.model.access.csv',
+     'security/security.xml',
+     'data/attendance_cron.xml',
+     'data/cron.xml',
+     'views/hr_attendance.xml',
+     'views/biometric_settings.xml'
+     ],
+
+ 'images': [],
+ 'license': 'AGPL-3',
+ 'installable': True,
+ 'application': False,
+ 'auto_install': False,
+ }

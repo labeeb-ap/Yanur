@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="view_account_journal_form_inherit_journal_branch_transfer" model="ir.ui.view">
+            <field name="name">account.journal.form.inherit.journal.branch.transfer</field>
+            <field name="model">account.journal</field>
+            <field name="inherit_id" ref="account.view_account_journal_form"/>
+            <field name="arch" type="xml">
+                <field name="type" position="after">
+                    <field name="is_inter_branch"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_account_move_form_inherit_journal_branch_transfer" model="ir.ui.view">
+            <field name="name">account.move.form.inherit.journal.branch.transfer</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <field name="ref" position="after">
+                    <field name="inter_branch_ref" attrs="{'invisible': [('move_type', '!=', 'entry')]}"/>
+                    <field name="remarks" attrs="{'invisible': [('move_type', '!=', 'entry')]}"
+                           placeholder="Enter the remarks..."/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="account_move_tree_inherit">
+            <field name="name">account.move.tree.inherit</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_tree"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="before">
+                    <field name="inter_branch_ref"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="account_move_custom_search_filter">
+            <field name="name">account.move.custom.search.filter</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_account_move_filter"/>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="inter_branch_ref" string="Internal Ref"/>
+                </search>
+            </field>
+        </record>
+
+    </data>
+</odoo>

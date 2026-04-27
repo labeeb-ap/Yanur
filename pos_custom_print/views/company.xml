@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.ui.view" id="product_pos">
+        <field name="name">Product</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='pos_categ_id']" position="after">
+                <field name="fssai"/>
+                <field name="tax_rel"/>
+                <field name="discount_product"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
+

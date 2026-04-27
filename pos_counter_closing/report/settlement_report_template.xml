@@ -1,0 +1,822 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <template id="report_settkemnt_report">
+        <t t-call="web.basic_layout">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <div class="page" style="margin:0; padding:0;">
+                        <table width="95%" style="margin-bottom:1px;">
+                            <tr>
+                                <td width="18%" align="center" style="padding-right:20px:">
+                                    <img src='/web/binary/company_logo'
+                                         style="width:50%;height:80%;"
+                                         alt="Logo" align="center" valign="middle"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <t t-set="val_tot" t-value="0"/>
+
+                        <table width="95%" style="margin-bottom:1px;margin-top:1px;">
+                            <tr>
+                                <td style="vertical-align:top; font-weight: bold;line-height:15px;"
+                                    width="25%" align="left">
+                                    <b>
+                                        <span style="text-size:15px;">YA - NUR RESTAURANT AND CATERING</span>
+                                    </b>
+                                </td>
+                            </tr>
+                            <!--                            <tr>-->
+                            <!--                                <td>-->
+                            <!--                                    <b>-->
+                            <!--                                        <span style="text-size:15px;"></span>-->
+                            <!--                                    </b>-->
+                            <!--                                </td>-->
+                            <!--                            </tr>-->
+                            <!--                            <tr>-->
+                            <!--                                <td>-->
+                            <!--                                    <b>-->
+                            <!--                                        <span style="text-size:15px;">PEAK CLUB CAFE</span>-->
+                            <!--                                    </b>-->
+                            <!--                                </td>-->
+                            <!--                            </tr>-->
+                        </table>
+                        <table width="95%">
+
+                            <tr>
+                                <td>
+                                    <span style="text-size:10px;padding-top:10px;">Cashier Settlement Report</span>
+                                </td>
+                            </tr>
+                        </table>
+                        <hr style="border-bottom: 1px solid black; width: 100%;"></hr>
+                        <table width="95%" style="margin-bottom:2px;">
+                            <!--                            <tr>-->
+                            <!--                                <td>-->
+                            <!--                                    <b>-->
+                            <!--                                        <span style="text-size:2px;">PEAK PERFORMANCE SDN BHD</span>-->
+                            <!--                                    </b>-->
+                            <!--                                </td>-->
+                            <!--                            </tr>-->
+                            <tr>
+                                <td style="text-size:10px;">
+                                    <span t-field="doc.company_id.street"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-size:10px;">
+                                    <span t-field="doc.company_id.street2"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span style="text-size:7px;">Phone :</span>
+                                    <span style="font-size:13px;" t-field="doc.company_id.phone"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span style="text-size:7px;">Date And Time :</span>
+                                    <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y %H:%M')"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span style="text-size:10px;">Cashier :</span>
+                                    <span t-esc="user.name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span style="text-size:10px;">Terminal :</span>
+                                    <span style="text-size:13px;">POS</span>
+                                </td>
+                            </tr>
+                            <!--                            <tr>-->
+                            <!--                                <td>-->
+                            <!--                                    <span style="text-size:10px;">Shift :</span>-->
+                            <!--                                </td>-->
+                            <!--                            </tr>-->
+                            <tr>
+                                <td>
+                                    <span style="text-size:10px;">Settlement Date :</span>
+                                    <span style="font-size:13px;" t-field="doc.date"/>
+
+                                </td>
+                            </tr>
+                        </table>
+                        <hr style="border-top: 1px solid black; width: 100%;"></hr>
+                        <table width="95%" style="margin-bottom:1px;">
+                            <tr>
+                                <td>
+                                    <b>
+                                        <span style="text-size:10px;">Sale Details</span>
+                                    </b>
+                                </td>
+                            </tr>
+                        </table>
+                        <hr style="border-top: 1px solid black; width: 100%;"></hr>
+                        <t t-set="method" t-value="doc.sudo().get_sale_details()"/>
+                        <t t-set="tot_sum" t-value="method['cash'] + method['card'] + method['bank']"/>
+                        <t t-set="discount" t-value="abs(method.get('total_discount',0.0))"/>
+                        <table width="95%" style="margin-bottom:1px;">
+
+                            <tr>
+                                <td>
+                                    <span style="text-size:10px;">Dine in Sales Collected</span>
+                                </td>
+                                <td align="right" style="font-size:10px;padding-left:20px;">
+                                    <span t-esc="tot_sum"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span style="text-size:10px;">Cash in Hand</span>
+
+                                </td>
+                                <td align="right">
+                                    <span style="font-size:10px;padding-left:20px;" t-field="doc.float_cash"/>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span style="text-size:10px;">Discount</span>
+                                </td>
+                                <td align="right" style="font-size:10px;padding-left:20px;">
+                                    <span t-esc="discount"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <hr style="border-top: 1px solid black; width: 100%;"></hr>
+                        <table width="95%" style="margin-bottom:1px;">
+                            <tr>
+                                <td>
+                                    <b>
+                                        <span style="text-size:10px;">Total</span>
+                                    </b>
+                                </td>
+                                <td align="right">
+                                    <b>
+                                        <span style="font-size:12px;padding-left:100px;">Total</span>
+                                    </b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>
+                                        <span style="text-size:10px;">Paymode Detail</span>
+                                    </b>
+                                </td>
+                            </tr>
+                        </table>
+                        <hr style="border-top: 1px solid black; width: 100%;"></hr>
+
+                        <table width="95%" style="margin-bottom:1px;">
+                            <tr>
+                                <td>
+                                    <b>
+                                        <span style="text-size:10px;">CASH</span>
+                                    </b>
+                                </td>
+                                <td align="right" style="font-size:10px;padding-left:60px;">
+                                    <span t-esc="method['cash']"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>
+                                        <span style="text-size:10px;">CARD</span>
+                                    </b>
+                                </td>
+                                <td align="right">
+                                    <span style="font-size:10px;padding-left:60px;" t-esc="method['card']"/>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>
+                                        <span style="text-size:10px;">BANK TRANSFER</span>
+                                    </b>
+                                </td>
+                                <td align="right">
+                                    <span style="font-size:10px;padding-left:60px;"
+                                          t-esc="method['bank']"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>
+                                        <span style="text-size:10px;">VOUCHER</span>
+                                    </b>
+                                </td>
+                                <td align="right">
+                                    <span style="font-size:10px;padding-left:60px;"
+                                          t-field="doc.debit_amount"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <hr style="border-top: 1px solid black; width: 100%;"></hr>
+                        <table width="95%" style="margin-bottom:1px;">
+                            <tr>
+                                <td>
+                                    <b>
+                                        <span style="text-size:10px;padding-left:1px">Total</span>
+                                    </b>
+                                </td>
+                                <td align="right" style="font-size:10px;padding-left:180px;">
+                                    <span t-esc="tot_sum"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <hr style="border-top: 1px solid black; width: 100%;"></hr>
+                        <table width="95%" style="margin-bottom:1px;">
+                            <tr>
+                                <td>
+                                    <b>
+                                        <span style="text-size:10px;">Counter Closing Details</span>
+                                    </b>
+                                    <!--                                    <span style="font-size:10px;padding-left:50px;" t-field="doc.company_id.phone"/>-->
+                                </td>
+                            </tr>
+                        </table>
+                        <hr style="border-top: 1px solid black; width: 100%;"></hr>
+
+                        <table width="95%" style="margin-bottom:1px;">
+
+
+                            <tr>
+
+
+                                <td>
+                                    <b>
+                                        <span style="text-size:10px;">CASH</span>
+                                    </b>
+                                </td>
+                                <td align="right">
+                                    <t t-set="object" t-value="0"/>
+                                    <t t-foreach="doc.cash_line_ids" t-as="l">
+                                        <t t-set="object" t-value="object + l.amount"/>
+                                    </t>
+                                    <span style="font-size:10px;padding-left:80px;" t-esc="'%.2f'% object"/>
+
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <td>
+                                    <b>
+                                        <span style="text-size:10px;">CARD</span>
+                                    </b>
+                                </td>
+                                <td align="right">
+                                    <t t-foreach="doc.payment_line_ids" t-as="l">
+                                        <t t-if="l.payment_method_id.name == 'Card'">
+                                            <span style="font-size:10px;padding-left:80px;" t-esc="l.amount"/>
+                                        </t>
+                                    </t>
+
+
+                                    <!--                                <span style="font-size:10px;padding-left:150px;" t-esc="method['card']"/>-->
+                                    <!--                                          t-attf-data-custom_date="doc.date"/>-->
+
+                                </td>
+                            </tr>
+                            <tr>
+
+                                <td>
+                                    <b>
+                                        <span style="text-size:10px;">BANK TRANSFER</span>
+                                    </b>
+                                </td>
+                                <td align="right">
+                                    <t t-foreach="doc.payment_line_ids" t-as="l">
+                                        <t t-if="l.payment_method_id.name == 'Bank Transfer'">
+                                            <span style="font-size:10px;padding-left:80px;" t-esc="l.amount"/>
+                                        </t>
+                                    </t>
+
+                                    <!--                                <span style="font-size:10px;padding-left:60px;"-->
+                                    <!--                                      t-esc="method['bank']"/>-->
+                                    <!--                                          t-attf-data-custom_date="doc.date"/>-->
+                                </td>
+
+                            </tr>
+                        </table>
+                        <hr style="border-top: 1px solid black; width: 100%;"></hr>
+
+                        <table width="95%" style="margin-bottom:1px;">
+                            <tr>
+                                <td>
+
+                                    <b>
+                                        <span style="text-size:10px;">Total</span>
+                                    </b>
+                                </td>
+                                <td align="right" style="font-size:10px;padding-left:190px;">
+                                    <t t-set="objects" t-value="0"/>
+                                    <t t-foreach="doc.payment_line_ids" t-as="l">
+
+                                        <t t-set="objects" t-value="objects + l.amount"/>
+                                    </t>
+                                    <t t-set="val_tot" t-value="objects + object"/>
+
+                                    <span t-esc="'%.2f'% val_tot"/>
+
+                                </td>
+                            </tr>
+                        </table>
+
+                        <hr style="border-top: 1px solid black; width: 100%;"></hr>
+                        <table width="95%" style="margin-bottom:1px;">
+
+                            <tr>
+                                <td>
+                                    <b>
+                                        <span style="text-size:10px;">Cash Difference</span>
+                                    </b>
+                                </td>
+                                <td align="right">
+                                    <span style="font-size:10px;padding-left:80px;" t-field="doc.cash_difference"/>
+
+                                </td>
+                            </tr>
+
+                        </table>
+                        <hr style="border-top: 1px solid black; width: 100%;"></hr>
+                        <table width="95%" style="margin-bottom:1px;">
+
+                            <tr>
+                                <td>
+                                    <b>
+                                        <span style="text-size:10px;">No of Orders</span>
+                                    </b>
+                                </td>
+                                <td align="right">
+                                    <span style="font-size:10px;padding-left:115px;" t-esc="method['order']"/>
+
+                                </td>
+                            </tr>
+
+                        </table>
+                        <hr style="border-top: 1px solid black; width: 100%;"></hr>
+                        <table width="95%" style="margin-bottom:1px;">
+
+                            <tr>
+                                <td>
+                                    <b>
+                                        <span style="text-size:10px;">Cash Payments</span>
+                                    </b>
+                                </td>
+                                <td align="right">
+                                    <span style="font-size:10px;padding-left:30px;" t-esc="method['cash_payment']"/>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>
+                                        <span style="text-size:10px;">Card Payments</span>
+                                    </b>
+                                </td>
+                                <td align="right">
+                                    <span style="font-size:10px;padding-left:30px;" t-esc="method['card_payment']"/>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>
+                                        <span style="text-size:10px;">Bank Transfer Payments</span>
+                                    </b>
+                                </td>
+                                <td align="right">
+                                    <span style="font-size:10px;padding-left:30px;" t-esc="method['bank_payment']"/>
+
+                                </td>
+                            </tr>
+
+                        </table>
+
+
+                    </div>
+                </t>
+            </t>
+        </t>
+
+
+    </template>
+
+    <template id="report_settkemnt_report_pdf">
+        <t t-call="web.basic_layout">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <div class="page" style="margin:0; padding:0;">
+                        <table width="95%" style="margin-bottom:1px;">
+                            <tr>
+                                <td width="18%" align="center" style="padding-right:20px:">
+                                    <img src='/web/binary/company_logo'
+                                         style="width:40%;height:100%;"
+                                         alt="Logo" align="center" valign="middle"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <t t-set="val_tot" t-value="0"/>
+
+                        <table width="95%" style="margin-bottom:1px;margin-top:1px;">
+                            <tr>
+                                <td style="vertical-align:top; font-weight: bold;line-height:15px;"
+                                    width="25%" align="left">
+                                    <b>
+                                        <span style="text-size:15px;">YA - NUR RESTAURANT AND CATERING</span>
+                                    </b>
+                                </td>
+                            </tr>
+                            <!--                            <tr>-->
+                            <!--                                <td>-->
+                            <!--                                    <b>-->
+                            <!--                                        <span style="text-size:15px;"></span>-->
+                            <!--                                    </b>-->
+                            <!--                                </td>-->
+                            <!--                            </tr>-->
+                            <!--                            <tr>-->
+                            <!--                                <td>-->
+                            <!--                                    <b>-->
+                            <!--                                        <span style="text-size:15px;">PEAK CLUB CAFE</span>-->
+                            <!--                                    </b>-->
+                            <!--                                </td>-->
+                            <!--                            </tr>-->
+                        </table>
+                        <table width="95%">
+
+                            <tr>
+                                <td>
+                                    <span style="text-size:10px;padding-top:10px;">Cashier Settlement Report</span>
+                                </td>
+                            </tr>
+                        </table>
+                        <hr style="border-bottom: 1px solid black; width: 100%;"></hr>
+                        <table width="95%" style="margin-bottom:2px;">
+                            <!--                            <tr>-->
+                            <!--                                <td>-->
+                            <!--                                    <b>-->
+                            <!--                                        <span style="text-size:2px;">PEAK PERFORMANCE SDN BHD</span>-->
+                            <!--                                    </b>-->
+                            <!--                                </td>-->
+                            <!--                            </tr>-->
+                            <tr>
+                                <td style="text-size:10px;">
+                                    <span t-field="doc.company_id.street"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-size:10px;">
+                                    <span t-field="doc.company_id.street2"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span style="text-size:7px;">Phone :</span>
+                                    <span style="font-size:13px;" t-field="doc.company_id.phone"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span style="text-size:7px;">Date And Time :</span>
+                                    <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y %H:%M')"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span style="text-size:10px;">Cashier :</span>
+                                    <span t-esc="user.name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span style="text-size:10px;">Terminal :</span>
+                                    <span style="text-size:13px;">POS</span>
+                                </td>
+                            </tr>
+                            <!--                            <tr>-->
+                            <!--                                <td>-->
+                            <!--                                    <span style="text-size:10px;">Shift :</span>-->
+                            <!--                                </td>-->
+                            <!--                            </tr>-->
+                            <tr>
+                                <td>
+                                    <span style="text-size:10px;">Settlement Date :</span>
+                                    <span style="font-size:13px;" t-field="doc.date"/>
+
+                                </td>
+                            </tr>
+                        </table>
+                        <hr style="border-top: 1px solid black; width: 100%;"></hr>
+                        <table width="95%" style="margin-bottom:1px;">
+                            <tr>
+                                <td>
+                                    <b>
+                                        <span style="text-size:10px;">Sale Details</span>
+                                    </b>
+                                </td>
+                            </tr>
+                        </table>
+                        <hr style="border-top: 1px solid black; width: 100%;"></hr>
+                        <t t-set="method" t-value="doc.sudo().get_sale_details()"/>
+                        <t t-set="tot_sum" t-value="method['cash'] + method['card'] + method['bank']"/>
+                        <t t-set="discount" t-value="abs(method.get('total_discount',0.0))"/>
+                        <table width="95%" style="margin-bottom:1px;">
+
+                            <tr>
+                                <td>
+                                    <span style="text-size:10px;">Dine in Sales Collected</span>
+                                </td>
+                                <td align="right" style="font-size:10px;padding-left:20px;">
+                                    <span t-esc="tot_sum"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span style="text-size:10px;">Cash in Hand</span>
+
+                                </td>
+                                <td align="right">
+                                    <span style="font-size:10px;padding-left:20px;" t-field="doc.float_cash"/>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span style="text-size:10px;">Discount</span>
+                                </td>
+                                <td align="right" style="font-size:10px;padding-left:20px;">
+                                    <span t-esc="discount"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <hr style="border-top: 1px solid black; width: 100%;"></hr>
+                        <table width="95%" style="margin-bottom:1px;">
+                            <tr>
+                                <td>
+                                    <b>
+                                        <span style="text-size:10px;">Total</span>
+                                    </b>
+                                </td>
+                                <td align="right">
+                                    <b>
+                                        <span style="font-size:12px;padding-left:100px;">Total</span>
+                                    </b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>
+                                        <span style="text-size:10px;">Paymode Detail</span>
+                                    </b>
+                                </td>
+                            </tr>
+                        </table>
+                        <hr style="border-top: 1px solid black; width: 100%;"></hr>
+
+                        <table width="95%" style="margin-bottom:1px;">
+                            <tr>
+                                <td>
+                                    <b>
+                                        <span style="text-size:10px;">CASH</span>
+                                    </b>
+                                </td>
+                                <td align="right" style="font-size:10px;padding-left:60px;">
+                                    <span t-esc="method['cash']"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>
+                                        <span style="text-size:10px;">CARD</span>
+                                    </b>
+                                </td>
+                                <td align="right">
+                                    <span style="font-size:10px;padding-left:60px;" t-esc="method['card']"/>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>
+                                        <span style="text-size:10px;">BANK TRANSFER</span>
+                                    </b>
+                                </td>
+                                <td align="right">
+                                    <span style="font-size:10px;padding-left:60px;"
+                                          t-esc="method['bank']"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>
+                                        <span style="text-size:10px;">VOUCHER</span>
+                                    </b>
+                                </td>
+                                <td align="right">
+                                    <span style="font-size:10px;padding-left:60px;"
+                                          t-field="doc.debit_amount"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <hr style="border-top: 1px solid black; width: 100%;"></hr>
+                        <table width="95%" style="margin-bottom:1px;">
+                            <tr>
+                                <td>
+                                    <b>
+                                        <span style="text-size:10px;padding-left:1px">Total</span>
+                                    </b>
+                                </td>
+                                <td align="right" style="font-size:10px;padding-left:180px;">
+                                    <span t-esc="tot_sum"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <hr style="border-top: 1px solid black; width: 100%;"></hr>
+                        <table width="95%" style="margin-bottom:1px;">
+                            <tr>
+                                <td>
+                                    <b>
+                                        <span style="text-size:10px;">Counter Closing Details</span>
+                                    </b>
+                                    <!--                                    <span style="font-size:10px;padding-left:50px;" t-field="doc.company_id.phone"/>-->
+                                </td>
+                            </tr>
+                        </table>
+                        <hr style="border-top: 1px solid black; width: 100%;"></hr>
+
+                        <table width="95%" style="margin-bottom:1px;">
+
+
+                            <tr>
+
+
+                                <td>
+                                    <b>
+                                        <span style="text-size:10px;">CASH</span>
+                                    </b>
+                                </td>
+                                <td align="right">
+                                    <t t-set="object" t-value="0"/>
+                                    <t t-foreach="doc.cash_line_ids" t-as="l">
+                                        <t t-set="object" t-value="object + l.amount"/>
+                                    </t>
+                                    <span style="font-size:10px;padding-left:80px;" t-esc="'%.2f'% object"/>
+
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <td>
+                                    <b>
+                                        <span style="text-size:10px;">CARD</span>
+                                    </b>
+                                </td>
+                                <td align="right">
+                                    <t t-foreach="doc.payment_line_ids" t-as="l">
+                                        <t t-if="l.payment_method_id.name == 'Card'">
+                                            <span style="font-size:10px;padding-left:80px;" t-esc="l.amount"/>
+                                        </t>
+                                    </t>
+
+
+                                    <!--                                <span style="font-size:10px;padding-left:150px;" t-esc="method['card']"/>-->
+                                    <!--                                          t-attf-data-custom_date="doc.date"/>-->
+
+                                </td>
+                            </tr>
+                            <tr>
+
+                                <td>
+                                    <b>
+                                        <span style="text-size:10px;">BANK TRANSFER</span>
+                                    </b>
+                                </td>
+                                <td align="right">
+                                    <t t-foreach="doc.payment_line_ids" t-as="l">
+                                        <t t-if="l.payment_method_id.name == 'Bank Transfer'">
+                                            <span style="font-size:10px;padding-left:80px;" t-esc="l.amount"/>
+                                        </t>
+                                    </t>
+
+                                    <!--                                <span style="font-size:10px;padding-left:60px;"-->
+                                    <!--                                      t-esc="method['bank']"/>-->
+                                    <!--                                          t-attf-data-custom_date="doc.date"/>-->
+                                </td>
+
+                            </tr>
+                        </table>
+                        <hr style="border-top: 1px solid black; width: 100%;"></hr>
+
+                        <table width="95%" style="margin-bottom:1px;">
+                            <tr>
+                                <td>
+
+                                    <b>
+                                        <span style="text-size:10px;">Total</span>
+                                    </b>
+                                </td>
+                                <td align="right" style="font-size:10px;padding-left:190px;">
+                                    <t t-set="objects" t-value="0"/>
+                                    <t t-foreach="doc.payment_line_ids" t-as="l">
+
+                                        <t t-set="objects" t-value="objects + l.amount"/>
+                                    </t>
+                                    <t t-set="val_tot" t-value="objects + object"/>
+
+                                    <span t-esc="'%.2f'% val_tot"/>
+
+                                </td>
+                            </tr>
+                        </table>
+
+                        <hr style="border-top: 1px solid black; width: 100%;"></hr>
+                        <table width="95%" style="margin-bottom:1px;">
+
+                            <tr>
+                                <td>
+                                    <b>
+                                        <span style="text-size:10px;">Cash Difference</span>
+                                    </b>
+                                </td>
+                                <td align="right">
+                                    <span style="font-size:10px;padding-left:80px;" t-field="doc.cash_difference"/>
+
+                                </td>
+                            </tr>
+
+                        </table>
+                        <hr style="border-top: 1px solid black; width: 100%;"></hr>
+                        <table width="95%" style="margin-bottom:1px;">
+
+                            <tr>
+                                <td>
+                                    <b>
+                                        <span style="text-size:10px;">No of Orders</span>
+                                    </b>
+                                </td>
+                                <td align="right">
+                                    <span style="font-size:10px;padding-left:115px;" t-esc="method['order']"/>
+
+                                </td>
+                            </tr>
+
+                        </table>
+                        <hr style="border-top: 1px solid black; width: 100%;"></hr>
+                        <table width="95%" style="margin-bottom:1px;">
+
+                            <tr>
+                                <td>
+                                    <b>
+                                        <span style="text-size:10px;">Cash Payments</span>
+                                    </b>
+                                </td>
+                                <td align="right">
+                                    <span style="font-size:10px;padding-left:30px;" t-esc="method['cash_payment']"/>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>
+                                        <span style="text-size:10px;">Card Payments</span>
+                                    </b>
+                                </td>
+                                <td align="right">
+                                    <span style="font-size:10px;padding-left:30px;" t-esc="method['card_payment']"/>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>
+                                        <span style="text-size:10px;">Bank Transfer Payments</span>
+                                    </b>
+                                </td>
+                                <td align="right">
+                                    <span style="font-size:10px;padding-left:30px;" t-esc="method['bank_payment']"/>
+
+                                </td>
+                            </tr>
+
+                        </table>
+
+
+                    </div>
+                </t>
+            </t>
+        </t>
+
+
+    </template>
+
+</odoo>

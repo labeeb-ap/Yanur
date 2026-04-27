@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pos_printer,access.pos.printer,model_pos_printer,,1,1,1,1
+access_kot_canceled_order,access.kot.canceled.order,model_kot_canceled_order,,1,1,1,1
+access_cancel_order_line,access.cancel.order.line,model_cancel_order_line,,1,1,1,1

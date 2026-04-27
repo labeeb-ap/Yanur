@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_biometric_daily_attendance_hr,access.biometric.daily.attendance.hr,model_biometric_daily_attendance_hr,,1,1,1,1
+access_biometric_settings,access.biometric.settings,model_biometric_settings,,1,1,1,1

@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template id="sales_invoice_report_print">
+            <t t-call="web.basic_layout">
+                <t t-call="web.html_container">
+                    <t t-foreach="docs" t-as="doc">
+                        <header style="border-bottom: 1px solid black;">
+                            <table width="100%">
+                                <tr>
+                                    <td width="60%" style="padding-top:50px;">
+                                        <img src='/web/binary/company_logo'
+                                             style="width:60%; max-height:100pt;"
+                                             alt="Logo" align="left" valign="left"/>
+                                    </td>
+                                    <td style="vertical-align:top; font-weight: bold;padding-top:50px;" width="30%"
+                                        align="right">
+                                        <!--                                        <span style="font-size:16px;" t-field="doc.company_id.brand_name"/>-->
+                                        <br/>
+                                        <span style="font-size:20px;" t-field="doc.company_id.street"/>
+                                        <br/>
+                                        <span style="font-size:20px;" t-field="doc.company_id.street2"/>
+                                        <br/>
+                                        <span t-field="doc.company_id.city" style="font-size:20px;"/>
+                                        <span t-field="doc.company_id.state_id" style="font-size:20px;"/>
+                                        <span t-field="doc.company_id.zip" style="font-size:20px;"/>
+                                        <br/>
+                                        <span style="font-size:10px;"></span>
+                                        <span t-field="res_company.partner_id.phone" style="font-size:20px;"/>
+                                        <br/>
+                                        <span style="font-size:10px;"></span>
+                                        <span t-field="res_company.partner_id.email" style="font-size:20px;"/>
+                                        <br/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </header>
+                        <table width="100%" align="centre" style="padding-top:10px;">
+                            <tr>
+                                <td align="right" style="font-weight: bold;">
+                                    <span>Invoice Number:</span>
+                                </td>
+                                <td align="left" style="font-weight: bold;">
+                                    <span t-field="doc.name"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="50%" align="left">
+                            <br/>
+                            <tr>
+                                <td align="left" width="20%">
+                                    <span>Name:</span>
+                                </td>
+                                <td width="80%">
+                                    <span t-field="doc.partner_id.name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>Address:</span>
+                                </td>
+                                <td>
+                                    <span t-field="doc.partner_id.street"/>
+                                    <br/>
+                                    <span t-field="doc.partner_id.street2"/>
+                                    <br/>
+                                    <span t-field="doc.partner_id.city"/>
+                                    <br/>
+                                    <span t-field="doc.partner_id.state_id"/>
+                                    <br/>
+                                    <span t-field="doc.partner_id.zip"/>
+                                    <br/>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="50%" align="right">
+                            <td align="right" width="50%">
+                                <span>Date:</span>
+                            </td>
+                            <td>
+                                <span t-field="doc.invoice_date"/>
+                            </td>
+                        </table>
+                        <div style="font-size:12px;" width="100%">
+                            <table width="100%"
+                                   style="font-size:12px;border:1px solid black;">
+                                <thead>
+                                    <tr>
+                                        <!--                                        <th style="text-align:center;border-bottom: 1px solid black;border-right: 1px solid black;padding: 1px 1px 1px 1px;background-color: #e5e5e5; vertical-align: middle;">-->
+                                        <!--                                            Pax-->
+                                        <!--                                        </th>-->
+                                        <th style="text-align:center;border-bottom: 1px solid black;border-right: 1px solid black;padding: 1px 1px 1px 5px;background-color: #e5e5e5; vertical-align: middle;">
+                                            Description
+                                        </th>
+                                        <th style="text-align:center;border-bottom: 1px solid black;border-right: 1px solid black;padding: 1px 1px 1px 1px;background-color: #e5e5e5; vertical-align: middle;">
+                                            Quantity
+                                        </th>
+                                        <th style="text-align:center;border-bottom: 1px solid black;border-right: 1px solid black;padding: 1px 1px 1px 1px;background-color: #e5e5e5; vertical-align: middle;">
+                                            Price
+                                        </th>
+                                        <th style="text-align:center;border-bottom: 1px solid black;border-right: 1px solid black;padding: 1px 1px 1px 1px;background-color: #e5e5e5; vertical-align: middle;">
+                                            Total
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <t t-foreach="doc.invoice_line_ids" t-as="line">
+                                    <tr>
+                                        <td style="text-align:center;border-bottom: 1px solid black;border-right: 1px solid black;padding: 1px 1px 1px 5px; vertical-align: middle;">
+                                            <span t-esc="line.name"/>
+                                        </td>
+                                        <td style="text-align:center;border-bottom: 1px solid black;border-right: 1px solid black;padding: 1px 1px 1px 5px; vertical-align: middle;">
+                                            <span t-esc="line.quantity"/>
+                                        </td>
+                                        <td style="text-align:center;border-bottom: 1px solid black;border-right: 1px solid black;padding: 1px 1px 1px 5px; vertical-align: middle;">
+                                            <span t-esc="line.price_unit"/>
+                                        </td>
+                                        <td style="text-align:center;border-bottom: 1px solid black;border-right: 1px solid black;padding: 1px 1px 1px 5px; vertical-align: middle;">
+                                            <span t-esc="line.price_subtotal"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+                            <br></br>
+                            <table style="width:60%; float:left; font-size:12px;border:1px solid black;">
+                                <tr>
+                                    <td colspan="6" style="border-right: 1px solid black;padding: 10px 45px 45px 10px;">
+                                        <strong>Amount in Words:</strong>
+                                        <b><span t-field="doc.amount_in_words"/></b>
+                                        <br/>
+                                        <br/>
+                                        <strong>Discount Remarks:</strong>
+                                        <!-- <span t-esc="doc.sale.order.discount_amount"/> -->
+                                    </td>
+                                </tr>
+                            </table>
+                            <table style="width:40%; float:left; font-size:12px;border:1px solid black; page-break-inside: avoid;">
+
+                                <tr>
+                                    <td></td>
+                                    <td style="padding: 5px 5px 5px 5px;">
+                                        <span>Sub Total</span>
+                                    </td>
+                                    <td style="font-weight: 800;border-right: 1px solid black;border-top: 1px solid black;border-bottom: none;padding: 2px 2px 2px 2px;">
+                                        <span t-esc="'%.2f'% doc.sub_total"/>
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td></td>
+                                    <td style="padding: 5px 5px 5px 5px;">
+                                        <span>Misc.Amount</span>
+                                    </td>
+                                    <td style="font-weight: 800;border-right: 1px solid black;padding: 2px 2px 2px 2px;">
+                                        <span t-esc="'%.2f'% doc.additional_amount"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td style="padding: 5px 5px 5px 5px;">
+                                        <span>Net.Amount</span>
+                                    </td>
+                                    <td style="font-weight: 800;border-right: 1px solid black;padding: 2px 2px 2px 2px;">
+                                        <span t-esc="'%.2f'% doc.amount_total"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td style="padding: 5px 5px 5px 5px;">
+                                        <span>Paid Amount</span>
+                                    </td>
+                                    <td style="font-weight: 800;border-right: 1px solid black;padding: 2px 2px 2px 2px;">
+                                        <span t-esc="doc.invoice_payments_widget"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td style="padding: 5px 5px 5px 5px;">
+                                        <span>Balance Amount</span>
+                                    </td>
+                                    <td style="font-weight: 800;border-right: 1px solid black;padding: 2px 2px 2px 2px;">
+                                        <span t-esc="'%.2f'% doc.amount_residual"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <table style="width:100%; font-size:12px;border:1px solid black; page-break-inside: avoid;">
+                            <tr>
+                                <td align="left" style="padding: 5px 5px 5px 5px;">
+                                    <strong>Payment</strong>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px 10px 10px 10px;">
+                                    <span>Account Name
+                                        :&amp;nbsp;
+                                        <span t-field="doc.company_id.acc_bank_name"/>
+                                    </span>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px 10px 10px 10px;">
+                                    <span>Account No.
+                                        :&amp;nbsp;
+                                        <span t-field="doc.company_id.acc_number"/>
+                                    </span>
+                                </td>
+                                <td></td>
+
+
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px 10px 10px 10px;">
+                                    <span>Received By
+                                    </span>
+                                </td>
+                                <td align="center">
+                                    <span>
+                                        YA-NUR RESTAURANT
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
+                        <p align="left" style="text-decoration:text-decoration-line;font-size: 10px;">
+                            Terms and Condition
+                            <br></br>
+                            a.if there is any complaint regarding the function or setup,Customer should inform it to the
+                            operation or marketing team within 24hrs after the event take place.
+                            <br></br>
+                            b.confirm menu before 2 days.
+                            <br></br>
+                            c.payment should be made within 2 days after the event.
+                        </p>
+
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

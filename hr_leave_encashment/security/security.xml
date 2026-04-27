@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <record model="ir.module.category" id="module_category_encashment">
+            <field name="name">Encashment</field>
+            <field name="sequence">12</field>
+        </record>
+        <record model="ir.module.category" id="module_category_allow_encashment">
+            <field name="name">Allow Encashment</field>
+            <field name="sequence">66</field>
+            <field name="visible" eval="0" />
+            <field name="parent_id" ref="module_category_encashment"/>
+        </record>
+        <record id="group_encashment_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="module_category_allow_encashment"/>
+        </record>
+        <record id="group_encashment_manager" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="implied_ids" eval="[(4, ref('group_encashment_user'))]"/>
+            <field name="category_id" ref="module_category_allow_encashment"/>
+        </record>
+        <record id="group_encashment_admin" model="res.groups">
+            <field name="name">Administrator</field>
+            <field name="implied_ids" eval="[(4, ref('group_encashment_manager'))]"/>
+            <field name="category_id" ref="module_category_allow_encashment"/>
+        </record>
+    </data>
+
+</odoo>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="pos_line_pos_preview">
+            <field name="name">pos</field>
+            <field name="model">pos.order</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page/field[@name='lines']/tree/field[@name='discount']"
+                       position="before">
+                    <field name="new_amount_taxes"/>
+                </xpath>
+                <!--                <xpath expr="//field[@name='partner_id']" position="after">-->
+                <!--                <field name="new_line"/>-->
+                <!--&lt;!&ndash;                <field name="tax_rel"/>&ndash;&gt;-->
+                <!--            </xpath>-->
+            </field>
+        </record>
+        <record model="ir.ui.view" id="pos_config_pos_preview">
+            <field name="name">posconfig</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+            <field name="arch" type="xml">
+                <!--                <xpath expr="//notebook/page/field[@name='lines']/tree/field[@name='discount']"-->
+                <!--                       position="before">-->
+                <!--                    <field name="new_amount_taxes"/>-->
+                <!--                </xpath>-->
+<!--                <xpath expr="//field[@name='module_pos_restaurant']" position="before">-->
+
+
+<!--                    <field name="new_line"/>-->
+<!--                    <label for="new_line"/>-->
+<!--                    &lt;!&ndash;                <field name="tax_rel"/>&ndash;&gt;-->
+<!--                </xpath>-->
+                <xpath expr="//div[@class='o_notification_alert alert alert-warning']" position="after">
+                    <label for="new_line"/>
+                    <field name="new_line"/>
+                </xpath>
+
+<!--                <div class="row mt16 o_settings_container" id="taxes_task">-->
+<!--                        <div class="col-xs-12 col-md-6 o_setting_box">-->
+<!--                            <div class="o_setting_left_pane">-->
+<!--                                <field name="invoice_management"/>-->
+<!--                            </div>-->
+<!--                            <div class="o_setting_right_pane">-->
+<!--                                <label for="invoice_management"/>-->
+<!--&lt;!&ndash;                                <div class="text-muted">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    Collect TCS/TDS  from Customer or Vendor.&ndash;&gt;-->
+<!--&lt;!&ndash;                                </div>&ndash;&gt;-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="col-xs-12 col-md-6 o_setting_box">-->
+<!--                            <div class="o_setting_left_pane">-->
+<!--                                <label for="user_ids" attrs="{'invisible': [('invoice_management', '=', False)]}"/>-->
+<!--&lt;!&ndash;                                <div class="text-muted">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    Collect TCS/TDS  from Customer or Vendor.&ndash;&gt;-->
+<!--&lt;!&ndash;                                </div>&ndash;&gt;-->
+<!--                            </div>-->
+<!--                        <br/>-->
+<!--                            <div class="o_setting_right_pane">-->
+<!--                                <field name="user_ids" widget="many2many_tags" attrs="{'invisible': [('invoice_management', '=', False)]}"/>-->
+<!--                            </div>-->
+<!--                            <br/>-->
+<!--                        </div-->
+            </field>
+        </record>
+
+    </data>
+</odoo>

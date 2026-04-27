@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_culinary_list_template">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+
+                <div align="center" colspan="40" style="color: black; text-align: center;">
+                    <span><strong>CHEF'S CULINARY LIST</strong></span>
+                </div>
+                <br/>
+                <br/>
+                <br/>
+                <div align="left">
+                    <h5>Company Name: <span t-esc="company_name"/></h5>
+                    <h5>From Date: <span t-esc="start"/></h5>
+                    <h5>To Date: <span t-esc="end"/></h5>
+                </div>
+                <br/>
+                <div width="100%" class="page" style="border: 2px solid black; font-size:12px;">
+
+                    <div>
+                        <table width="100%" style="font-size:12px;">
+                            <thead width="100%">
+                                <td width="10px" style="border:1px solid black; font-size:20px;text-align:center">SlNO</td>
+                                <td style="border:1px solid black; font-size:20px;text-align:center">Product Name</td>
+                                <td style="border:1px solid black; font-size:20px;text-align:center">Quantity</td>
+                            </thead>
+                            <tbody width="100%">
+                                <t t-set="sl_no" t-value="0"/>
+                                <t t-foreach="objet_list" t-as="o">
+                                    <t t-set="sl_no" t-value="sl_no+1"/>
+                                    <tr>
+<!--                                        <td style="border:1px solid black"><span/></td>-->
+                                        <td width="10px" style="border:1px solid black"><span t-esc="sl_no"/></td>
+                                        <td style="border:1px solid black"><span t-esc="o['product_name']"/></td>
+                                        <td style="border:1px solid black"><span t-esc="o['product_quantity']"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="not-last-page">
+                        <hr style="background-color:black"/>
+                    </div>
+                    <div align="center" style="font-size:12px;">
+                        <span class="page"/>/
+                        <span class="topage"/>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

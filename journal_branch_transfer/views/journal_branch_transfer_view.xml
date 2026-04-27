@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record model="ir.ui.view" id="journal_branch_transfer_list_view">
+        <field name="name">Inter Branch Journal list</field>
+        <field name="model">journal.branch.transfer</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="reference"/>
+                <field name="date"/>
+                <field name="remarks"/>
+                <field name="total"/>
+                <field name="state" widget='badge' decoration-bf="state == 'draft'" decoration-success="state == 'done'"
+                       decoration-info="state =='confirm'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="journal_branch_transfer_form_view">
+        <field name="name">Inter Branch Journal form</field>
+        <field name="model">journal.branch.transfer</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_confirm" string="Confirm" states="draft" class="oe_highlight" type="object"/>
+                    <button name="create_journal_multi" string="Create Journal" states="confirm" class="oe_highlight"
+                            type="object"/>
+                    <button name="reset_draft" string="Reset to Draft" states="confirm" type="object"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <div class="oe_title">
+                                <h1>
+                                    <field name="name" readonly="1"/>
+                                </h1>
+                            </div>
+                        </group>
+                        <group></group>
+                        <group>
+                            <field name="date" required="1" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                            <field name="company_id" invisible="0" readonly="1"/>
+                            <field name="remarks" placeholder="Enter the remarks..."/>
+                        </group>
+                        <group>
+                            <field name="account_id" options="{'no_create': True, 'no_open': True}"
+                                   required="1" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                            <field name="journal_id" required="1" options="{'no_create': True, 'no_open': True}"
+                                   attrs="{'readonly': [('state', '=', 'done')]}"/>
+
+                            <field name="reference" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="line_ids" string="Journal Lines">
+                            <field name="line_ids" attrs="{'readonly': [('state', '=', 'confirm')]}">
+                                <tree editable="bottom">
+                                    <field name="company_id" options="{'no_create': True}"
+                                           domain="[('control_acc_id', '!=', False)]"/>
+                                    <field name="journal_id" required="1" options="{'no_create': True}"
+                                           attrs="{'readonly': [('company_id', '=', False)]}"/>
+                                    <field name="account_id" options="{'no_create': True}"
+                                           domain="[('company_id', '=', company_id),('control_code','=',False)]"
+                                           attrs="{'readonly': [('company_id', '=', False)]}"/>
+                                    <field name="partner_id" options="{'no_create': True, 'no_open': True}"/>
+                                    <field name="name"/>
+                                    <field name="debit"/>
+                                    <field name="credit"/>
+                                    <field name="control_account_id" invisible="1"/>
+                                    <field name="currency_id" invisible="1"/>
+                                </tree>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="total" class="oe_subtotal_footer_separator"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="journal_branch_transfer_action_window">
+        <field name="name">Inter Branch Journal</field>
+        <field name="res_model">journal.branch.transfer</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_apply_job_sub"
+              name="Inter Branch Journal Entries"
+              parent="account.menu_finance_entries_accounting_miscellaneous"
+              action="journal_branch_transfer_action_window"
+              sequence="0"
+    />
+</odoo>

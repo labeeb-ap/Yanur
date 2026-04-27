@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="production_plan_form" model="ir.ui.view">
+        <field name="name">production.plan.form</field>
+        <field name="model">production.plan</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button string="Confirm" class="oe_highlight"
+                            type="object" name="action_create_production_plan"
+                            states="draft" groups="production_plan_mk.group_planning_manager"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <div class="oe_title">
+                                <label for="name" class="oe_edit_only"/>
+                                <h3>
+                                    <field name="name" readonly="1"/>
+                                </h3>
+                            </div>
+                        </group>
+                        <group></group>
+                        <group>
+                            <field name="order_id" required="1" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                            <field name="date" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                            <field name="partner_id" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                        </group>
+                        <group>
+<!--                            <field name="project_id" readonly="1"/>-->
+                            <field name="consignment" attrs="{'readonly': [('state', '=', 'done')]}" invisible="1"/>
+                            <field name="planning_date" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                            <field name="exp_delivery_date" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Lines">
+                            <field name="plan_line_ids" attrs="{'readonly': [('state', '=', 'done')]}">
+                                <tree editable="bottom" create="false" delete="false">
+                                    <field name="product_id" readonly="1" force_save="1"/>
+                                    <field name="box" readonly="1" force_save="1" invisible="1"/>
+                                    <field name="quantity" readonly="0" force_save="1"/>
+                                    <field name="product_uom_id" readonly="1" force_save="1"/>
+                                    <field name="exp_production_date" force_save="1" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="production_plan_tree" model="ir.ui.view">
+        <field name="name">production.plan.tree</field>
+        <field name="model">production.plan</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="order_id"/>
+                <field name="date"/>
+                <field name="partner_id"/>
+                <field name="exp_delivery_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="production_plan_action" model="ir.actions.act_window">
+        <field name="name">Production Plan</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">production.plan</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create New...
+            </p>
+        </field>
+    </record>
+
+    <record id="view_order_form_inherited_production_plan_mk_smart" model="ir.ui.view">
+        <field name="name">sale.order.inherited.production.plan</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='preview_sale_order']" position="after">
+               <button class="oe_stat_button" type="object" name="manufacturing_list"
+                            icon="fa-wrench"  widget="statinfo" string="Manufacturing"
+                       attrs="{'invisible': [('man', '=', False)]}">
+                   <field name="man" widget="statinfo" invisible="1"/>
+               </button>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_order_form_inherited_production_plan_mk_smart_manu" model="ir.ui.view">
+        <field name="name">sale.order.inherited.production.plan.manu</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='bom_id']" position="after">
+                   <field name="order_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <menuitem id="production_plan_main_menu" name="Production Plan" sequence="4" parent="sale.sale_menu_root"/>
+    <menuitem id="sub_income_account" name="Production Plan" parent="production_plan_main_menu" sequence="0"
+              action="production_plan_action"/>
+
+</odoo>

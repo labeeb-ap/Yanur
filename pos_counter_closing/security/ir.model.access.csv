@@ -1,0 +1,14 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pos_other_payment_line,pos.other.payment.line,model_pos_other_payment_line,,1,1,1,1
+access_pos_cash_line,pos.cash.line,model_pos_cash_line,,1,1,1,1
+access_currency_type,currency.type,model_currency_type,point_of_sale.group_pos_user,1,1,1,1
+access_pos_session_close_wizard_manager,pos.session.close.wizard,model_pos_session_close_wizard,point_of_sale.group_pos_manager,1,1,1,1
+access_pos_session_close_wizard_user,pos.session.close.wizard,model_pos_session_close_wizard,point_of_sale.group_pos_user,1,1,1,1
+access_pos_session_close_user,pos.session.close,model_pos_session_close,point_of_sale.group_pos_user,1,1,1,0
+access_pos_session_close_manager,pos.session.close,model_pos_session_close,point_of_sale.group_pos_manager,1,1,1,0
+access_pos_cash_close_line_manager,pos.cash.close.line,model_pos_cash_close_line,point_of_sale.group_pos_manager,1,1,1,1
+access_pos_cash_close_line_user,pos.cash.close.line,model_pos_cash_close_line,point_of_sale.group_pos_user,1,1,1,1
+access_pos_close_other_payment_line_manager,pos.close.other.payment.line,model_pos_close_other_payment_line,point_of_sale.group_pos_manager,1,1,1,1
+access_pos_close_other_payment_line_user,pos.close.other.payment.line,model_pos_close_other_payment_line,point_of_sale.group_pos_user,1,1,1,1
+
+

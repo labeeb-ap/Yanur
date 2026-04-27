@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="t_b_report_action_form" model="ir.ui.view">
+        <field name="name">t.b.report.wizard.form</field>
+        <field name="model">tb.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="TB Report">
+                <group>
+                    <group>
+                        <field name="date_from" required="1"/>
+                    </group>
+                    <group>
+                        <field name="date_to" required="1"/>
+                    </group>
+                </group>
+                <group>
+                    <group>
+                        <field name="company_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                    </group>
+                    <group>
+                        <field name="detailed_summary"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_print_report" string="PDF" class="btn-primary" type="object"
+                            icon="fa-print"/>
+                    <button icon="fa-print" string="Excel" name="print_xl_report" type="object"
+                            class="oe_highlight"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="t_b_report_action" model="ir.actions.act_window">
+        <field name="name">Trial Balance Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">tb.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="t_b_report_action_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="t_b_report_menu"
+              name="Trial Balance Report"
+              parent="account.account_reports_management_menu"
+              action="t_b_report_action"
+              sequence="5"/>
+
+</odoo>

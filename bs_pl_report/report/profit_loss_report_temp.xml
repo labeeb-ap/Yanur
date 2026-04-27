@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template id="profit_loss_report_template">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <table width="100%">
+                            <tr>
+                                <td align="center" style="font-size: 30px; vertical-align: middle;">
+                                    <b>Profit and Loss</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="vertical-align: middle;">
+                                    <span t-esc="start"/>&#160;&#160;-&#160;&#160;<span t-esc="end"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <table style="width:50%; float:left;">
+                            <tr>
+                                <td align="center"
+                                    style="font-size: 20px; border-bottom: 1px solid black; vertical-align: middle;">
+                                    <b>Expense</b>
+                                </td>
+                                <td style="font-size: 20px; border-bottom: 1px solid black; vertical-align: middle;"
+                                    align="center">
+                                    <b>Amount</b>
+                                </td>
+                            </tr>
+                            <t t-foreach="type" t-as="t_expense">
+                                <t t-if="t_expense['acc_type'] == 'expense'">
+                                    <t t-set="line_expense_sum" t-value="0"/>
+                                    <t t-foreach="vals" t-as="expense_total">
+                                        <t t-if="expense_total['acc_type_id'] == t_expense['acc_type_id'] and expense_total['acc_type'] == t_expense['acc_type']">
+                                            <t t-set="line_expense_sum"
+                                               t-value="line_expense_sum + (expense_total['acc_debit'] - expense_total['acc_credit'])"/>
+                                        </t>
+                                    </t>
+                                    <tr>
+                                        <td>
+                                            <b>
+                                                <span t-esc="t_expense['acc_type_name']"
+                                                      style="font-size: 18px; color: #D12500; padding-left: 2px;"/>
+                                            </b>
+                                        </td>
+                                        <td align="right">
+                                            <b>
+                                                <span t-esc="'%.2f'%line_expense_sum"
+                                                      style="font-size: 18px; color: #D12500; padding-right: 7px;"/>
+                                            </b>
+                                        </td>
+                                    </tr>
+                                    <t t-if="summary == True">
+                                        <t t-foreach="vals" t-as="v_expense">
+                                            <tr>
+                                                <td style="padding-left: 7px;">
+                                                    <t t-if="v_expense['acc_type_id'] == t_expense['acc_type_id'] and v_expense['acc_type'] == t_expense['acc_type']">
+                                                        <b>
+                                                            <span t-esc="v_expense['acc_code']"/>
+                                                        </b>
+                                                        <span t-esc="v_expense['acc_name']"/>
+                                                    </t>
+                                                </td>
+                                                <td align="right" style="padding-right: 7px;">
+                                                    <t t-if="v_expense['acc_type_id'] == t_expense['acc_type_id'] and v_expense['acc_type'] == t_expense['acc_type']">
+                                                        <b>
+                                                            <span t-esc="'%.2f'%(v_expense['acc_debit'] - v_expense['acc_credit'])"/>
+                                                        </b>
+                                                    </t>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </t>
+                                </t>
+                            </t>
+                            <tr>
+                                <td style="font-size: 20px; padding-left: 2px; border-top: 1px solid black; vertical-align: middle;">
+                                    <b>Total</b>
+                                </td>
+                                <td align="right"
+                                    style="font-size: 20px; padding-right: 7px; border-top: 1px solid black; vertical-align: middle;">
+                                    <t t-set="total_expense_sum" t-value="0"/>
+                                    <t t-foreach="vals" t-as="exp_sum">
+                                        <t t-if="exp_sum['acc_type'] == 'expense'">
+                                            <t t-set="total_expense_sum"
+                                               t-value="total_expense_sum + (exp_sum['acc_debit'] - exp_sum['acc_credit'])"/>
+                                        </t>
+                                    </t>
+                                    <b>
+                                        <span t-esc="'%.2f'%total_expense_sum" style="color: #D12500;"/>
+                                    </b>
+                                </td>
+                            </tr>
+                        </table>
+                        <table style="width:50%; float:left;">
+                            <tr>
+                                <td align="center"
+                                    style="font-size: 20px; border-bottom: 1px solid black; vertical-align: middle;">
+                                    <b>Income</b>
+                                </td>
+                                <td align="center"
+                                    style="font-size: 20px; border-bottom: 1px solid black; vertical-align: middle;">
+                                    <b>Amount</b>
+                                </td>
+                            </tr>
+                            <t t-foreach="type" t-as="t_income">
+                                <t t-if="t_income['acc_type'] == 'income'">
+                                    <t t-set="line_sum" t-value="0"/>
+                                    <t t-foreach="vals" t-as="income_total">
+                                        <t t-if="income_total['acc_type_id'] == t_income['acc_type_id'] and income_total['acc_type'] == t_income['acc_type']">
+                                            <t t-set="line_sum"
+                                               t-value="line_sum + (income_total['acc_credit'] - income_total['acc_debit'])"/>
+                                        </t>
+                                    </t>
+                                    <tr>
+                                        <td>
+                                            <b>
+                                                <span t-esc="t_income['acc_type_name']"
+                                                      style="font-size: 18px; color: #D12500; padding-left: 2px;"/>
+                                            </b>
+                                        </td>
+                                        <td align="right">
+                                            <b>
+                                                <span t-esc="'%.2f'%line_sum"
+                                                      style="font-size: 18px; color: #D12500; padding-right: 7px;"/>
+                                            </b>
+                                        </td>
+                                    </tr>
+                                    <t t-if="summary == True">
+                                        <t t-foreach="vals" t-as="v_income">
+                                            <tr>
+                                                <td style="padding-left: 7px;">
+                                                    <t t-if="v_income['acc_type_id'] == t_income['acc_type_id'] and v_income['acc_type'] == t_income['acc_type']">
+                                                        <b>
+                                                            <span t-esc="v_income['acc_code']"/>
+                                                        </b>
+                                                        <span t-esc="v_income['acc_name']"/>
+                                                    </t>
+                                                </td>
+                                                <td align="right" style="padding-right: 7px;">
+                                                    <t t-if="v_income['acc_type_id'] == t_income['acc_type_id'] and v_income['acc_type'] == t_income['acc_type']">
+                                                        <b>
+                                                            <span t-esc="'%.2f'%(v_income['acc_credit'] - v_income['acc_debit'])"/>
+                                                        </b>
+                                                    </t>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </t>
+                                </t>
+                            </t>
+                            <tr>
+                                <td style="font-size: 20px; padding-left: 2px; border-top: 1px solid black; vertical-align: middle;">
+                                    <b>Total</b>
+                                </td>
+                                <td align="right"
+                                    style="font-size: 20px; padding-right: 7px; border-top: 1px solid black; vertical-align: middle;">
+                                    <t t-set="total_income_sum" t-value="0"/>
+                                    <t t-foreach="vals" t-as="inc_sum">
+                                        <t t-if="inc_sum['acc_type'] == 'income'">
+                                            <t t-set="total_income_sum"
+                                               t-value="total_income_sum + (inc_sum['acc_credit'] - inc_sum['acc_debit'])"/>
+                                        </t>
+                                    </t>
+                                    <b>
+                                        <span t-esc="'%.2f'%total_income_sum" style="color: #D12500;"/>
+                                    </b>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="page-break-inside: avoid;">
+                            <tr>
+                                <td align="center"
+                                    style="border-bottom: 1px solid black; font-size: 22px; vertical-align: middle;">
+                                    <b>Gross Profit</b>
+                                    <t t-set="gross_income" t-value="0"/>
+                                    <t t-set="gross_cost_of_revenue" t-value="0"/>
+                                    <t t-foreach="vals" t-as="g">
+                                        <t t-if="g['acc_type'] == 'expense' and g['acc_type_report'] == 'cost_of_revenue'">
+                                            <t t-set="gross_cost_of_revenue"
+                                               t-value="gross_cost_of_revenue + (g['acc_debit'] - g['acc_credit'])"/>
+                                        </t>
+                                        <t t-if="g['acc_type'] == 'income' and g['acc_type_report'] == 'income'">
+                                            <t t-set="gross_income"
+                                               t-value="gross_income + (g['acc_credit'] - g['acc_debit'])"/>
+                                        </t>
+                                    </t>
+                                    <b>
+                                        &#160;&#160;&#160;-&#160;&#160;&#160;<span
+                                            t-esc="'%.2f'%(gross_income - gross_cost_of_revenue)"
+                                            style="color: #D12500;"/>
+                                    </b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="font-size: 22px; vertical-align: middle;">
+                                    <b>Net Profit</b>
+                                    <t t-set="expense_value" t-value="0"/>
+                                    <t t-set="income_value" t-value="0"/>
+                                    <t t-foreach="vals" t-as="s">
+                                        <t t-if="s['acc_type'] == 'expense'">
+                                            <t t-set="expense_value"
+                                               t-value="expense_value + (s['acc_debit'] - s['acc_credit'])"/>
+                                        </t>
+                                        <t t-if="s['acc_type'] == 'income'">
+                                            <t t-set="income_value"
+                                               t-value="income_value + (s['acc_credit'] - s['acc_debit'])"/>
+                                        </t>
+                                    </t>
+                                    <b>
+                                        &#160;&#160;&#160;-&#160;&#160;&#160;<span
+                                            t-esc="'%.2f'%(income_value - expense_value)"
+                                            style="color: #D12500;"/>
+                                    </b>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

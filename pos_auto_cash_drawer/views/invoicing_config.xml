@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="ip_address_menu_tree" model="ir.ui.view">
+        <field name="name">cash.drawer.management.tree</field>
+        <field name="model">cash.drawer.management</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="ip_addrs"/>
+                <field name="printer_name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="ip_address_menu_form" model="ir.ui.view">
+        <field name="name">cash.drawer.management.form</field>
+        <field name="model">cash.drawer.management</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="ip_addrs"/>
+                            <field name="printer_name"/>
+                            <field name="company_id" invisible="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="ip_address_menu_action" model="ir.actions.act_window">
+        <field name="name">IP Address and Printers</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cash.drawer.management</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="ip_address_config_menu"
+              name="IP Config"
+              parent="account.menu_finance_configuration"
+              sequence="4"/>
+
+    <menuitem id="ip_address_menu"
+              name="IP/printer"
+              parent="ip_address_config_menu"
+              action="ip_address_menu_action"
+              sequence="10"/>
+</odoo>

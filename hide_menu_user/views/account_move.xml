@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="account_move_form_view_inherit_base_fields_readonly" model="ir.ui.view">
+            <field name="name">account.move.form.view.base.fields.readonly</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='l10n_in_gst_treatment']" position="attributes">
+                    <attribute name="readonly">0</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="account_move_form_view_inherit_base_fields_with_readonly" model="ir.ui.view">
+            <field name="name">account.move.form.view.base.fields.with.readonly</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="groups_id" eval="[(4, ref('hide_menu_user.group_sale_orders_readonly'))]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='l10n_in_gst_treatment']" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

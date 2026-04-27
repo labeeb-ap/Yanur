@@ -1,0 +1,24 @@
+.pos .pos-prereceipt-container {
+    font-size: 0.75em;
+    text-align: center;
+}
+.pos-kot-note {
+    font-size: 12px;
+    margin-left: 16px;
+}
+.receipt-orderlines {
+    width: 100%;
+}
+.change_type{
+    text-transform: capitalize;
+}
+
+@media print {
+    .pos-kot-receipt .pos-receipt {
+        width: 100% !important;
+        min-height: 95vh !important;
+    }
+    .pos-kot-receipt .pos-receipt .pos-sale-ticket {
+        width: 266px !important;
+    }
+}

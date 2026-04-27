@@ -1,0 +1,35 @@
+<odoo>
+
+    <record id="paperformat_cash_flow_reports" model="report.paperformat">
+            <field name="name">Cash Flow A4 Format</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">40</field>
+        </record>
+
+
+
+
+    <record id="cash_flow_report_pdf" model="ir.actions.report">
+        <field name="name">Cash Flow</field>
+        <field name="model">cash.flow.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">cash_flow.cash_flow_report_template</field>
+        <field name="report_file">cash_flow.cash_flow_report_template</field>
+        <field name="paperformat_id" ref="cash_flow.paperformat_cash_flow_reports"/>
+    </record>
+
+
+    <report
+    id="cash_flow_report"
+    model="account.move"
+    string="Cash Flow Report"
+    report_type="qweb-pdf"
+    name="cash_flow.cash_flow_report_template"
+    file="cash_flow.cash_flow_report_template"
+    print_report_name="'Cash Flow Report - %s' % (object.name)"
+/>
+
+
+</odoo>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="rented_items_list_form" model="ir.ui.view">
+        <field name="name">rented.items.list.form</field>
+        <field name="model">rent.items</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button string="Confirm" class="oe_highlight"
+                            type="object" name="action_create_rent_items"
+                            states="draft" />
+                    <button icon="fa-print" string="Send Mail" name="mail_report" type="object"
+                            class="oe_highlight" />
+                    <button string="Received" class="oe_highlight"
+                            type="object" name="action_receive_rent_items"
+                            states="done" />
+                    <button string="Return" class="oe_highlight"
+                            type="object" name="action_return_rent_items"
+                            states="received" />
+<!--                            states="draft" groups="production_plan_mk.group_planning_manager"/>-->
+                    <field name="state" widget="statusbar" statusbar_visible="draft,done,received,return"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <div class="oe_title">
+                                <label for="name" class="oe_edit_only"/>
+                                <h3>
+                                    <field name="name" readonly="1"/>
+                                </h3>
+                            </div>
+                        </group>
+                        <group></group>
+                        <group>
+                            <field name="order_id" required="1" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                            <field name="date" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                            <field name="partner_id" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                        </group>
+                        <group>
+<!--                            <field name="project_id" readonly="1"/>-->
+<!--                            <field name="consignment" attrs="{'readonly': [('state', '=', 'done')]}"/>-->
+                            <field name="planning_date" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                            <field name="exp_delivery_date" attrs="{'readonly': [('state', '=', 'done')]}" required="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Lines">
+                            <field name="rent_line_ids" attrs="{'readonly': [('state', '=', 'done')]}">
+                                <tree editable="bottom">
+                                    <field name="product_id" force_save="1"/>
+<!--                                    <field name="box" readonly="1" force_save="1"/>-->
+                                    <field name="quantity" readonly="0" force_save="1"/>
+<!--                                    <field name="product_uom_id" readonly="1" force_save="1"/>-->
+                                    <field name="exp_production_date" force_save="1" invisible="1"/>
+                                    <field name="rate" force_save="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="rent_items_tree" model="ir.ui.view">
+        <field name="name">rent.items.tree</field>
+        <field name="model">rent.items</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="order_id"/>
+                <field name="date"/>
+                <field name="partner_id" required="1"/>
+                <field name="exp_delivery_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="rent_items_action" model="ir.actions.act_window">
+        <field name="name">Rent Items</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">rent.items</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create New...
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="rent_items_main_menu" name="Rent Items" sequence="4" parent="sale.sale_menu_root"/>
+    <menuitem id="sub_rent_items" name="Rent Items" parent="rent_items_main_menu" sequence="0"
+              action="rent_items_action"/>
+
+
+
+    <record id="stock_location_form_view" model="ir.ui.view">
+			<field name="name">stock.location.template.rental</field>
+			<field name="model">stock.location</field>
+			<field name="inherit_id" ref="stock.view_location_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='return_location']" position="after">
+                    <field name="rent_items_location"/>
+                </xpath>
+			</field>
+		</record>
+
+</odoo>

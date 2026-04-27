@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="cash_drawer_settings_tree" model="ir.ui.view">
+        <field name="name">cash.drawer.settings.tree</field>
+        <field name="model">cash.drawer.settings</field>
+        <field name="arch" type="xml">
+            <tree>
+
+                <field name="employee"/>
+
+            </tree>
+        </field>
+    </record>
+    <record id="cash_drawer_settings_form_view" model="ir.ui.view">
+        <field name="name">cash.drawer.settings.form</field>
+        <field name="model">cash.drawer.settings</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h3>
+                                <field name="name" readonly="1"/>
+                            </h3>
+                        </div>
+                    </group>
+                    <group>
+                        <field name="employee"/>
+                        <field name="drawer_pin"/>
+                        <field name="company_id" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_cash_drawer_settings" model="ir.actions.act_window">
+        <field name="name">Cash Drawer Manager</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cash.drawer.settings</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="cash_drawer_settings_menu" parent="hr.menu_human_resources_configuration"
+              name="Cash Drawer Managers"
+              action="action_cash_drawer_settings" sequence="1"/>
+
+</odoo>

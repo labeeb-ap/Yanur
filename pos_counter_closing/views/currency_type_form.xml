@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="counter_close_form_view" model="ir.ui.view">
+        <field name="name">counter.close.form.view</field>
+        <field name="model">currency.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <field name="value"/>
+
+                    <!--                    <group>-->
+                    <!--                        <field name="value"/>-->
+                    <!--                        <field name="value"/>-->
+                    <!--                    </group>-->
+                    <!--                    <notebook>-->
+                    <!--                        <page string="Counter Closing">-->
+                    <!--                            <field name="counter_close_ids">-->
+                    <!--                                <tree editable="bottom">-->
+                    <!--                                    <field name="value"/>-->
+                    <!--                                    <field name="move_id" force_save="1" readonly="1"/>-->
+                    <!--                                    <field name="difference" force_save="1" readonly="1"/>-->
+                    <!--                                    <field name="amount" sum="total" required="1"/>-->
+                    <!--                                </tree>-->
+                    <!--                        </page>-->
+                    <!--                    </notebook>-->
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="counter_close_tree_view" model="ir.ui.view">
+        <field name="name">counter.close.tree.view</field>
+        <field name="model">currency.type</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="value"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="pos_session_close_action_id" model="ir.actions.act_window">
+        <field name="name">Session Close</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">currency.type</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create New...
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="pos_session_close_main_id"
+              name="Currency Type"
+              parent="point_of_sale.menu_point_config_product"
+              action="pos_session_close_action_id"
+              sequence="9"
+              groups="pos_counter_closing.group_pos_special_user"
+    />
+</odoo>

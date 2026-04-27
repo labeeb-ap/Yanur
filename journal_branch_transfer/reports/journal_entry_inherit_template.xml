@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_journal_entries_inherit" inherit_id="accounting_pdf_reports.report_journal_entries">
+        <xpath expr="//tr/td[2]" position="after">
+            <tr>
+                <td colspan="5">
+                    Internal Reference:
+                    <span t-field="o.inter_branch_ref"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5">
+                    Remarks:
+                    <span t-field="o.remarks"/>
+                </td>
+            </tr>
+        </xpath>
+    </template>
+</odoo>

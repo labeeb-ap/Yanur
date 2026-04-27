@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="paperformat_day_book_report" model="report.paperformat">
+        <field name="name">Day Book Report format</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">12</field>
+    </record>
+
+    <record id="day_book_report_pdf" model="ir.actions.report">
+        <field name="name">Day Book Report</field>
+        <field name="model">day.book.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">day_book_report.day_book_report_pdf_temp</field>
+        <field name="report_file">day_book_report.day_book_report_pdf_temp</field>
+        <field name="paperformat_id" ref="day_book_report.paperformat_day_book_report"/>
+    </record>
+
+</odoo>

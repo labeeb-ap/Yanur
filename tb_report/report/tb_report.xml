@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template id="t_b_report_template">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <style type="text/css">
+                        .table_data {
+                        border-top : 1px solid black;
+                        border-bottom : 1px solid black;
+                        border-left : 1px solid black;
+                        border-right : 1px solid black;
+                        vertical-align: middle;
+                        }
+                    </style>
+                    <div class="page">
+                        <table width="100%">
+                            <tr>
+                                <td align="center"
+                                    style="font-size: 30px; vertical-align: middle; background-color: #DEE9FF;">
+                                    <b>Trial Balance</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="vertical-align: middle; background-color: #FFFFFF;">
+                                    <b><span t-esc="d_from"/>&#160;&#160;-&#160;&#160;<span t-esc="d_to"/>
+                                    </b>
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <table width="100%">
+                            <tr>
+                                <td align="center" class="table_data"
+                                    style="font-size: 20px; background-color: #DEE9FF;">
+                                    <b>Account</b>
+                                </td>
+                                <td align="center" class="table_data"
+                                    style="font-size: 20px; background-color: #DEE9FF;">
+                                    <b>Initial Debit</b>
+                                </td>
+                                <td align="center" class="table_data"
+                                    style="font-size: 20px; background-color: #DEE9FF;">
+                                    <b>Initial Credit</b>
+                                </td>
+                                <td align="center" class="table_data"
+                                    style="font-size: 20px; background-color: #DEE9FF;">
+                                    <b>Debit</b>
+                                </td>
+                                <td align="center" class="table_data"
+                                    style="font-size: 20px; background-color: #DEE9FF;">
+                                    <b>Credit</b>
+                                </td>
+                                <td align="center" class="table_data"
+                                    style="font-size: 20px; background-color: #DEE9FF;">
+                                    <b>Total Debit</b>
+                                </td>
+                                <td align="center" class="table_data"
+                                    style="font-size: 20px; background-color: #DEE9FF;">
+                                    <b>Total Credit</b>
+                                </td>
+                            </tr>
+                            <t t-foreach="type" t-as="t">
+                                <tr>
+                                    <td class="table_data"
+                                        style="font-size: 20px; padding-left: 2px;">
+                                        <b>
+                                            <span t-esc="t['line_type_name']"/>
+                                        </b>
+                                    </td>
+                                    <td class="table_data" align="right"
+                                        style="padding-right: 7px;">
+                                        <t t-set="total_initial_debit" t-value="0"/>
+                                        <t t-foreach="vals" t-as="r">
+                                            <t t-if="r['account_type_id'] == t['line_type_id']">
+                                                <t t-set="total_initial_debit"
+                                                   t-value="total_initial_debit + r['i_debit']"/>
+                                            </t>
+                                        </t>
+                                        <b>
+                                            <span t-esc="'%.2f'%total_initial_debit"/>
+                                        </b>
+                                    </td>
+                                    <td class="table_data" align="right"
+                                        style="padding-right: 7px;">
+                                        <t t-set="total_initial_credit" t-value="0"/>
+                                        <t t-foreach="vals" t-as="r">
+                                            <t t-if="r['account_type_id'] == t['line_type_id']">
+                                                <t t-set="total_initial_credit"
+                                                   t-value="total_initial_credit + r['i_credit']"/>
+                                            </t>
+                                        </t>
+                                        <b>
+                                            <span t-esc="'%.2f'%total_initial_credit"/>
+                                        </b>
+                                    </td>
+                                    <td class="table_data" align="right"
+                                        style="padding-right: 7px;">
+                                        <t t-set="total_debit" t-value="0"/>
+                                        <t t-foreach="vals" t-as="r">
+                                            <t t-if="r['account_type_id'] == t['line_type_id']">
+                                                <t t-set="total_debit"
+                                                   t-value="total_debit + r['acc_debit']"/>
+                                            </t>
+                                        </t>
+                                        <b>
+                                            <span t-esc="'%.2f'%total_debit"/>
+                                        </b>
+                                    </td>
+                                    <td class="table_data" align="right"
+                                        style="padding-right: 7px;">
+                                        <t t-set="total_credit" t-value="0"/>
+                                        <t t-foreach="vals" t-as="r">
+                                            <t t-if="r['account_type_id'] == t['line_type_id']">
+                                                <t t-set="total_credit"
+                                                   t-value="total_credit + r['acc_credit']"/>
+                                            </t>
+                                        </t>
+                                        <b>
+                                            <span t-esc="'%.2f'%total_credit"/>
+                                        </b>
+                                    </td>
+                                    <td class="table_data" align="right"
+                                        style="padding-right: 7px;">
+                                        <t t-set="debit" t-value="0"/>
+                                        <t t-foreach="vals" t-as="r">
+                                            <t t-if="r['account_type_id'] == t['line_type_id']">
+                                                <t t-set="debit"
+                                                   t-value="debit + (r['i_debit'] + r['acc_debit'])"/>
+                                            </t>
+                                        </t>
+                                        <b>
+                                            <span t-esc="'%.2f'%debit"/>
+                                        </b>
+                                    </td>
+                                    <td class="table_data" align="right"
+                                        style="padding-right: 7px; background-color: #FFFFFF;">
+                                        <t t-set="credit" t-value="0"/>
+                                        <t t-foreach="vals" t-as="r">
+                                            <t t-if="r['account_type_id'] == t['line_type_id']">
+                                                <t t-set="credit"
+                                                   t-value="credit + (r['i_credit'] + r['acc_credit'])"/>
+                                            </t>
+                                        </t>
+                                        <b>
+                                            <span t-esc="'%.2f'%credit"/>
+                                        </b>
+                                    </td>
+                                </tr>
+                                <t t-if="summary == True">
+                                    <t t-foreach="vals" t-as="v">
+                                        <t t-if="v['account_type_id'] == t['line_type_id']">
+                                            <tr>
+                                                <td class="table_data" style="padding-left: 7px;">
+                                                    <b>
+                                                        <span t-esc="v['acc_code']"/>
+                                                    </b>&#160;<span t-esc="v['acc_name']"/>
+                                                </td>
+                                                <td class="table_data" align="right" style="padding-right: 7px;">
+                                                    <span t-esc="'%.2f'%v['i_debit']"/>
+                                                </td>
+                                                <td class="table_data" align="right" style="padding-right: 7px;">
+                                                    <span t-esc="'%.2f'%v['i_credit']"/>
+                                                </td>
+                                                <td class="table_data" align="right" style="padding-right: 7px;">
+                                                    <span t-esc="'%.2f'%v['acc_debit']"/>
+                                                </td>
+                                                <td class="table_data" align="right" style="padding-right: 7px;">
+                                                    <span t-esc="'%.2f'%v['acc_credit']"/>
+                                                </td>
+                                                <td class="table_data" align="right"
+                                                    style="padding-right: 7px;">
+                                                    <span t-esc="'%.2f'%(v['i_debit'] + v['acc_debit'])"/>
+                                                </td>
+                                                <td class="table_data" align="right"
+                                                    style="padding-right: 7px; background-color: #FFFFFF;">
+                                                    <span t-esc="'%.2f'%(v['i_credit'] + v['acc_credit'])"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </t>
+                                </t>
+                            </t>
+                            <tr>
+                                <td align="center" class="table_data"
+                                    style="font-size: 20px; background-color: #DEE9FF;">
+                                    <b>Total</b>
+                                </td>
+                                <td align="right" class="table_data"
+                                    style="font-size: 18px; padding-right: 7px; background-color: #DEE9FF;">
+                                    <b>
+                                        <span t-esc="'%.2f'%(sum([vl['i_debit'] for vl in vals]))"/>
+                                    </b>
+                                </td>
+                                <td align="right" class="table_data"
+                                    style="font-size: 18px; padding-right: 7px; background-color: #DEE9FF;">
+                                    <b>
+                                        <span t-esc="'%.2f'%(sum([vl['i_credit'] for vl in vals]))"/>
+                                    </b>
+                                </td>
+                                <td align="right" class="table_data"
+                                    style="font-size: 18px; padding-right: 7px; background-color: #DEE9FF;">
+                                    <b>
+                                        <span t-esc="'%.2f'%(sum([vl['acc_debit'] for vl in vals]))"/>
+                                    </b>
+                                </td>
+                                <td align="right" class="table_data"
+                                    style="font-size: 18px; padding-right: 7px; background-color: #DEE9FF;">
+                                    <b>
+                                        <span t-esc="'%.2f'%(sum([vl['acc_credit'] for vl in vals]))"/>
+                                    </b>
+                                </td>
+                                <td align="right" class="table_data"
+                                    style="font-size: 18px; padding-right: 7px; background-color: #DEE9FF;">
+                                    <b>
+                                        <span t-esc="'%.2f'%(sum([vl['i_debit'] + vl['acc_debit'] for vl in vals]))"/>
+                                    </b>
+                                </td>
+                                <td align="right" class="table_data"
+                                    style="font-size: 18px; padding-right: 7px; background-color: #DEE9FF;">
+                                    <b>
+                                        <span t-esc="'%.2f'%(sum([vl['i_credit'] + vl['acc_credit'] for vl in vals]))"/>
+                                    </b>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

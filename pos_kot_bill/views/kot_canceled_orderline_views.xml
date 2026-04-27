@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="kot_canceled_orderline_form" model="ir.ui.view">
+        <field name="name">kot.canceled.order.form</field>
+        <field name="model">kot.canceled.order</field>
+        <field name="arch" type="xml">
+            <form string="Canceled Orders" create="0" delete="0" edit="0">
+                <sheet>
+                    <group>
+                            <div class="oe_title">
+                                <label for="name" class="oe_edit_only"/>
+                                <h3>
+                                    <field name="name" readonly="1"/>
+                                </h3>
+                            </div>
+                        </group>
+                    <group>
+                        <group>
+                            <field name="order_ref" required='True'  readonly="1"/>
+                            <field name="company_id" invisible="1"/>
+                            <field name="date"  readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="floor"  readonly="1"/>
+                            <field name="table"  readonly="1"/>
+                            <field name="reason"  readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Lines">
+                            <field name="cancel_line_ids">
+                                <tree create="0" delete="0">
+                                    <field name="product_id" force_save="1"  readonly="1"/>
+                                    <field name="quantity" force_save="1"  readonly="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="kot_canceled_orderline_tree" model="ir.ui.view">
+        <field name="name">kot.canceled.order.tree</field>
+        <field name="model">kot.canceled.order</field>
+        <field name="arch" type="xml">
+            <tree string="Kot Canceled Orders" create="0" delete="0">
+                <field name="order_ref"/>
+                <field name="floor"/>
+                <field name="table"/>
+                <field name="reason"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="kot_canceled_orderline_action" model="ir.actions.act_window">
+        <field name="name">Canceled Kot Order</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">kot.canceled.order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create New...
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="pos_kot_cancel_menu_id"
+              name="Kot Canceled Orders"
+              parent="point_of_sale.menu_point_of_sale"
+              action="kot_canceled_orderline_action"
+              sequence="10"/>
+</odoo>

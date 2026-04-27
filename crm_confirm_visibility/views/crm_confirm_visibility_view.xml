@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.ui.view" id="crm_confirm_order">
+        <field name="name">crm confirm order</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_confirm'][1]" position="attributes">
+                <attribute name="groups">crm_confirm_visibility.crm_confirm_button_visibility</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_confirm'][2]" position="attributes">
+                <attribute name="groups">crm_confirm_visibility.crm_confirm_button_visibility</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

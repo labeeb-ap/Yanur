@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="mrp_production_form_view_inherited_production_plan_mk" model="ir.ui.view">
+        <field name="name">mrp.production.inherited.production.plan</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button string="Packing Material Request" class="oe_highlight" states="confirmed,progress,to_close"
+                        type="object" name="packing_material_request"
+                        invisible="1"/>
+            </xpath>
+            <xpath expr="//div[@class='oe_button_box']" position="inside">
+                <button class="oe_stat_button" type="object" name="created_internal_transfer_list"
+                        icon="fa-anchor" widget="statinfo"
+                        attrs="{'invisible': [('picking_count', '=', 0)]}">
+                    <field name="picking_count" widget="statinfo" string="Material Request"/>
+                </button>
+            </xpath>
+            <xpath expr="//notebook/page/field[@name='move_raw_ids']/tree/field['product_id']" position="after">
+                <field name="on_hand" string="Available Qty"/>
+                <!--                <field name="purchase_uom" string="Purchase Unit Of Measure"/>-->
+            </xpath>
+            <field name="user_id" position="before">
+                <!--                <field name="project_id" attrs="{'readonly': [('state', '=', 'done')]}"/>-->
+                <field name="consignment" invisible="1"/>
+            </field>
+            <xpath expr="/form/sheet/notebook/page[@name='miscellaneous']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <field name="product_id" position="after">
+                <field name="box" attrs="{'readonly': [('state', '=', 'done')]}" invisible="1"/>
+            </field>
+            <field name="bom_id" position="after">
+                <field name="picking_type_id" attrs="{'readonly': [('state', '!=', 'draft')]}" invisible="1"/>
+                <field name="location_src_id" groups="stock.group_stock_multi_locations" options="{'no_create': True}"
+                       attrs="{'readonly': [('state', '!=', 'draft')]}" invisible="1"/>
+                <field name="location_dest_id" groups="stock.group_stock_multi_locations" options="{'no_create': True}"
+                       attrs="{'readonly': [('state', '!=', 'draft')]}" invisible="1"/>
+
+            </field>
+            <field name="user_id" position="after">
+                <field name="origin" invisible="1"/>
+                <field name="date_deadline"
+                       attrs="{'invisible': ['|', ('state', 'in', ('done', 'cancel')), ('date_deadline', '=', False)]}"
+                       decoration-danger="date_deadline and date_deadline &lt; current_date"
+                       decoration-bf="date_deadline and date_deadline &lt; current_date" invisible="1"/>
+            </field>
+        </field>
+    </record>
+
+
+    <record id="view_mrp_production_filter_inherit_production_plan_mk" model="ir.ui.view">
+        <field name="name">mrp.production.search</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.view_mrp_production_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search/group" position="inside">
+                <filter string="Consignment" name="consignment" context="{'group_by':'consignment'}" invisible="1"/>
+                <!--                 <filter string="project_id" name="consignment" context="{'group_by':'project_id'}"/>-->
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="view_mrp_production_filter_inherit_production_plan_mk_bom" model="ir.ui.view">
+        <field name="name">mrp.bom.search</field>
+        <field name="model">mrp.bom</field>
+        <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='bom_line_ids']/tree/field[@name='product_uom_id']" position="after">
+                <field name="purchase_uom_id"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

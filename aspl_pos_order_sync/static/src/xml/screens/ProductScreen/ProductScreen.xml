@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ProductScreen" t-inherit="point_of_sale.ProductScreen" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('rightpane')]" position="replace">
+             <div class="rightpane" t-if="!env.isMobile || mobile_pane === 'right'">
+                 <t t-if="props.showOrderPanel">
+                     <div class="draft_order-screen">
+                         <div class="controls">
+                             <button class="button back" t-on-click="trigger('close-draft-screen')">
+                                <t t-if="!env.isMobile">
+                                    <i class="fa  fa-angle-double-left"></i>
+                                    Close
+                                </t>
+                                 <t t-else="">
+                                    <i class="fa fa-undo"></i>
+                                </t>
+                            </button>
+                         </div>
+                         <div class="green-border-bottom" style="border-bottom: solid 3px rgb(110, 200, 155);"/>
+                         <div class="orders">
+                            <div class="header-row">
+                                <div class="col start wide">Receipt/Ref</div>
+                                <div class="col start wide">Customer</div>
+                                <div class="col start wide">Salesman</div>
+                                <div class="col start wide">Order Amount</div>
+                                <div class="col center very-narrow"></div>
+                                <div class="col center very-narrow" name="delete"></div>
+                            </div>
+                             <t t-if="env.pos.db.get_draft_orders_list()">
+                                <t t-foreach="env.pos.db.get_draft_orders_list()" t-as="order" t-key="order.id">
+                                    <div class="order-row pointer">
+                                        <div class="col start wide">
+                                            <t t-esc="order.pos_reference"/>
+                                        </div>
+                                        <div class="col start wide">
+                                            <t t-esc="order.partner_id[1]"/>
+                                        </div>
+                                        <div class="col start wide">
+                                            <t t-esc="order.salesman_id[1]"/>
+                                        </div>
+                                        <div class="col start wide">
+                                            <t t-esc="env.pos.format_currency(order.amount_total)"/>
+                                        </div>
+                                        <div class="col center very-narrow" t-on-click="quick_pay(order.id)">
+                                            <i class="fa fa-money" aria-hidden="true" style="font-size: x-large;"></i>
+                                        </div>
+                                        <div class="col center very-narrow" t-on-click="quick_delete(order.id)">
+                                            <i class="fa fa-trash" aria-hidden="true" style="font-size: x-large;"></i>
+                                        </div>
+                                    </div>
+                                </t>
+                            </t>
+                        </div>
+                      </div>
+                     </t>
+                 <t t-else="">
+                    <ProductsWidget t-if="!state.cashControl"/>
+                     <t t-if="env.isMobile">
+                        <MobileOrderWidget pane="mobile_pane" t-on-switchpane="switchPane"/>
+                    </t>
+                 </t>
+             </div>
+        </xpath>
+    </t>
+
+</templates>

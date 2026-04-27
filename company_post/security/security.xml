@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="confirm_button_visibility" model="res.groups">
+        <field name="name"> Purchase Order Confirm Visibility(Purchase)</field>
+    </record>
+    <record id="purchase_validate" model="res.groups">
+        <field name="name">Access to Validate(Purchase)</field>
+    </record>
+    <record id="purchase_order_approval" model="res.groups">
+        <field name="name">Purchase Order Manager Approval</field>
+    </record>
+    <record id="create_invoice_button_hide" model="res.groups">
+        <field name="name">Create Invoice Button Hide</field>
+    </record>
+    <record id="create_purchase_bill_button_hide" model="res.groups">
+        <field name="name">Purchase Create Bill Button Hide</field>
+    </record>
+</odoo>

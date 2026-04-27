@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_picking_type_form_inherited_production_plan_mk" model="ir.ui.view">
+        <field name="name">stock.picking.type.production.plan</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form"/>
+        <field name="arch" type="xml">
+            <field name="sequence_code" position="after">
+                <field name="user_ids" widget="many2many_tags" options="{'no_create': True}"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_stock_transfer_picking_form_inherited_production_plan_mk" model="ir.ui.view">
+        <field name="name">stock.transfer.picking.production.plan</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <field name="origin" position="after">
+<!--                <field name="project_id"/>-->
+                <field name="consignment" invisible="1"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_stock_transfer_picking_tree_inherited_production_plan_mk" model="ir.ui.view">
+        <field name="name">stock.transfer.picking.tree.production.plan</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree"/>
+        <field name="arch" type="xml">
+            <field name="origin" position="after">
+<!--                <field name="project_id" optional="hide"/>-->
+                <field name="consignment" optional="hide" invisible="1"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

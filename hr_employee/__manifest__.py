@@ -1,0 +1,18 @@
+{'name': 'hr_employee',
+ 'version': '14.0.1.0.0',
+ 'summary': 'hr employee ',
+ 'sequence': -1,
+ 'category': 'Tools',
+ 'author': 'Catalist Divergent ERP',
+ 'maintainer': 'Catalist Divergent ERP',
+ 'company': 'Catalist Divergent ERP',
+ 'website': 'https://www.catalisterp.com/',
+ 'depends': ['base','hr','hr_contract_types','hr_payroll_community'],
+ 'data': ['views/hr_employee.xml'],
+
+ 'images': [],
+ 'license': 'AGPL-3',
+ 'installable': True,
+ 'application': False,
+ 'auto_install': False,
+ }

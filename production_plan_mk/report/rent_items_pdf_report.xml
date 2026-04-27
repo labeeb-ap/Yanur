@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template id="product_pdf">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+                    <div class="page">
+                        <table width="100%">
+                        <tr>
+                            <td align="left" colspan="2" style="font-size: 20px;">
+                                <h>YA-NUR TRADING COMPANY</h>
+                            </td>
+                        </tr>
+                        <br/>
+                        <tr>
+                            <td align="left" style="font-size: 20px;">
+                                <h>Brunei Darussalam</h>
+                            </td>
+                        </tr>
+                        <br/>
+                        <tr>
+                            <td align="center" style="padding-top: 5%; font-size: 30px;">
+                                <b>RENTAL ITEMS</b>
+                            </td>
+                        </tr>
+                        <br/>
+<!--                        <tr>-->
+<!--                            <td align="left" style="padding-top: 5%; font-size: 22px;">Sale Order:-->
+<!--                                <t t-esc="ref"/>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                        <br/>-->
+                        <tr>
+                            <td align="left" style="font-size: 22px;">Vendor:
+                                <t t-esc="partner_name"/>
+                            </td>
+                        </tr>
+                        <br/>
+                        <tr>
+                            <td align="left" style="font-size: 22px;">Event Date:
+                                <t t-esc="event_date"/>
+                            </td>
+                        </tr>
+                        </table>
+                        <br/>
+                        <table width="100%" class="table table-sm o_main_table" name="items" style="padding-top: 20%;">
+                            <thead>
+                                <tr>
+                                    <th name="no" class="text-left">
+                                        <span>SlNo</span>
+                                    </th>
+                                    <th name="product" class="text-left">
+                                        <span>Product</span>
+                                    </th>
+                                    <th name="qty" class="text-left">
+                                        <span>Quantity</span>
+                                    </th>
+<!--                                    <th name="exp_date" class="text-left">-->
+<!--                                        <span>Expected Production Date</span>-->
+<!--                                    </th>-->
+                                    <th name="rate" class="text-left">
+                                        <span>Rate</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <t t-set="sl_no" t-value="0"/>
+                            <t t-foreach="rent_item_list" t-as="line">
+                                <tr>
+
+                                     <t t-set="sl_no" t-value="sl_no+1"/>
+                                    <td align="center" >
+                                        <span t-esc="sl_no"/>
+                                    </td>
+
+                                    <td>
+                                        <span t-esc="line['product']"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line['quantity']"/>
+                                    </td>
+<!--                                    <td>-->
+<!--                                        <span t-field="line['delivery_date']"/>-->
+<!--                                    </td>-->
+                                    <td>
+                                        <span t-esc="line['rate']"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

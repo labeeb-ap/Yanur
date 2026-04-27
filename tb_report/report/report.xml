@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="paperformat_tb_reports" model="report.paperformat">
+        <field name="name">Trial Balance Report format</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Landscape</field>
+        <!--        <field name="margin_top">40</field>-->
+    </record>
+
+    <record id="t_b_report_pdf" model="ir.actions.report">
+        <field name="name">Trial Balance Report</field>
+        <field name="model">tb.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">tb_report.t_b_report_template</field>
+        <field name="report_file">tb_report.t_b_report_template</field>
+        <field name="paperformat_id" ref="tb_report.paperformat_tb_reports"/>
+    </record>
+
+</odoo>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="paperformat_statement_report" model="report.paperformat">
+            <field name="name">Report format</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">62</field>
+            <field name="header_spacing">50</field>
+        </record>
+
+        <record id="event_order_report_pdf" model="ir.actions.report">
+            <field name="name">Event Order Summary Report</field>
+            <field name="model">event.order.summary</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">sale_order_summary_report.report_review_test_template_id</field>
+            <field name="report_file">sale_order_summary_report.report_review_test_template_id</field>
+            <field name="binding_model_id" ref="model_event_order_summary"/>
+            <field name="paperformat_id" ref="sale_order_summary_report.paperformat_statement_report"/>
+            <field name="binding_type">report</field>
+        </record>
+
+    </data>
+</odoo>

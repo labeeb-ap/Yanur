@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--    <record id="view_biometric_daily_attendance_tree_extend" model="ir.ui.view">-->
+    <!--        <field name="name">biometric.daily.attendance.tree.extend</field>-->
+    <!--        <field name="model">biometric.daily.attendance.hr</field>-->
+    <!--        <field name="inherit_id" ref="hr_biotime_attendance.view_biometric_daily_attendance_tree"/>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <xpath expr="//tree" position="inside">-->
+    <!--                <header>-->
+    <!--                    <button string="Attendance Log" class="oe_highlight"-->
+    <!--                            type="object" name="action_get_att"/>-->
+    <!--                </header>-->
+    <!--            </xpath>-->
+    <!--        </field>-->
+    <!--    </record>-->
+
+    <record id="view_biometric_daily_attendance_tree" model="ir.ui.view">
+        <field name="name">biometric.daily.attendance.tree</field>
+        <field name="model">biometric.daily.attendance.hr</field>
+        <field name="arch" type="xml">
+            <tree string="Attendance" editable="top">
+                <header>
+                    <button string="Attendance Log" class="oe_highlight" type="object"
+                            name="action_get_att"/>
+                </header>
+                <field name="employee_id"/>
+                <field name="company"/>
+                <field name="check_in"/>
+                <field name="department"/>
+                <field name="check_out"/>
+                <field name="entry_id" invisible="1"/>
+                <field name="worked_hours"/>
+                <!--                <field name="over_out"/>-->
+                <field name="date" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="bio_view_search" model="ir.ui.view">
+        <field name="model">bio.view</field>
+        <field name="model">biometric.daily.attendance.hr</field>
+        <field name="arch" type="xml">
+            <search string="Hr Attendance Search">
+                <field name="company"/>
+                <field name="department"/>
+                <field name="employee_id"/>
+                <group expand="0" string="Group By">
+                    <filter string="Company" name="company" context="{'group_by': 'company'}"/>
+                    <filter string="Department" name="department" context="{'group_by': 'department'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+
+    <record id="action_biometric_daily_attendance" model="ir.actions.act_window">
+        <field name="name">Attendance Analysis</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">biometric.daily.attendance.hr</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+
+    <record id="hr_employee_inherit_form_view" model="ir.ui.view">
+        <field name="name">hr.employee.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <field name="user_id" position="after">
+                <field name="device_id"/>
+                <field name="employee_type"/>
+            </field>
+        </field>
+    </record>
+    <record id="hr_attendance_view_form_inherit_hr_biotime_attendance" model="ir.ui.view">
+        <field name="name">hr.attendance.form.inherit</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.hr_attendance_view_form"/>
+        <field name="arch" type="xml">
+            <field name="employee_id" position="after">
+                <field name="device_user_id"/>
+            </field>
+            <field name="check_out" position="after">
+                <field name="user_serial_num_check_in"/>
+                <field name="user_serial_num_check_out"/>
+            </field>
+        </field>
+    </record>
+
+    <menuitem id="biometric_attendance_menu" parent="hr_attendance.menu_hr_attendance_root" sequence="50"
+              name="Biometric Attendance"/>
+    <menuitem id="biometric_attendance_sub_menu" parent="biometric_attendance_menu" name="Attendance Log"
+              action="action_biometric_daily_attendance" sequence="1"/>
+
+</odoo>

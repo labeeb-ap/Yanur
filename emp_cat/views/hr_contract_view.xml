@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+    <record id="hr_contract_view_form_inherit_emp_cat" model="ir.ui.view">
+        <field name="name">hr.contract.inherit.emp.cat</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='information']" position="inside">
+                <group string="Partial Salary" name="partial_salary" class="oe_title">
+                    <field name="partial_credit_account_id"/>
+                    <field name="partial_debit_account_id"/>
+                </group>
+            </xpath>
+            <field name="employee_id" position="after">
+                <field name="employee_code" readonly="1"/>
+            </field>
+            <field name="date_end" position="after">
+                 <field name="tax_professional" invisible="1" readonly="0"/>
+                <field name="professional_tax" readonly="0"/>
+                <field name="medical_insurance" readonly="0"/>
+                <field name="tds_percentage" readonly="0"/>
+            </field>
+            <field name="structure_type_id" position="after">
+                <field name="pf_num" readonly="0"/>
+                <field name="esi_num" readonly="0"/>
+                <field name="gmc_num" readonly="0"/>
+
+            </field>
+                <xpath expr="//label[@for='wage']" position="attributes">
+		            <attribute name="string">Basic + DA</attribute>
+                </xpath>
+        </field>
+    </record>
+    <record id="hr_contract_view_form_inherit_allowance_emp_cat" model="ir.ui.view">
+        <field name="name">hr.contract.inherit.allowance.emp.cat</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_payroll_community.hr_contract_form_additional_allowance"/>
+        <field name="arch" type="xml">
+             <xpath expr="//label[@for='da']" position="attributes">
+		            <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//group[@name='allowances']/div[2]" position="attributes">
+		            <attribute name="invisible">1</attribute>
+            </xpath>
+             <xpath expr="//label[@for='travel_allowance']" position="attributes">
+		            <attribute name="string">Conv. Allowance</attribute>
+                </xpath>
+            <xpath expr="//label[@for='meal_allowance']" position="attributes">
+		            <attribute name="string">Spec. Allowance</attribute>
+                </xpath>
+            <xpath expr="//label[@for='meal_allowance']" position="attributes">
+		            <attribute name="string">Spec. Allowance</attribute>
+                </xpath>
+        </field>
+    </record>
+</odoo>

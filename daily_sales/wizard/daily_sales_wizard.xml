@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="daily_sales_form" model="ir.ui.view">
+        <field name="name">daily.sales.form</field>
+        <field name="model">daily.sales</field>
+        <field name="arch" type="xml">
+            <form string ="Daily Sales">
+                <group>
+                    <group>
+                        <field name = "from_date" required = 'True'/>
+                        <field name = "to_date" required = 'True'/>
+                    </group>
+                </group>
+                <footer>
+                    <button icon="fa-print" string="XLSX" name="daily_sales_xlsx" type="object"
+                            class="oe_highlight"/>
+                    <button string="Cancel" class="btn" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="daily_sales_action" model="ir.actions.act_window">
+        <field name="name">Daily sales</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">daily.sales</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="daily_sales_form"/>
+    </record>
+
+    <menuitem id="daily_sales_report_menu"
+              name="Daily Sales Report"
+              parent="point_of_sale.menu_point_rep"
+              action="daily_sales_action"
+              sequence="10"/>
+</odoo>

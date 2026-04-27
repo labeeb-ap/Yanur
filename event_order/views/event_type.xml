@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="event_type_form" model="ir.ui.view">
+        <field name="name">event.type.form</field>
+
+        <field name="model">event.type.sale</field>
+        <field name="arch" type="xml">
+            <form string="Event Type">
+                <sheet>
+                    <group>
+                        <field name="event_type"/>
+                        <field name="product_ids" widget="many2many_tags"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="event_type_tree" model="ir.ui.view">
+        <field name="name">event.type.tree</field>
+        <field name="model">event.type.sale</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="event_type"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="evevnt_type_action" model="ir.actions.act_window">
+        <field name="name">Event Type</field>
+        <field name="res_model">event.type.sale</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create Event type for the event orders
+            </p>
+        </field>
+    </record>
+
+
+    <menuitem
+            id="event_type_menu"
+            name="Event Type"
+            action="evevnt_type_action"
+            parent="account.menu_finance_receivables"
+            sequence="2"
+            />
+
+
+</odoo>

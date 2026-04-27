@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="select_account_pdc_wizard" model="ir.ui.view">
+        <field name="name">select.account.wizard</field>
+        <field name="model">account.pdc</field>
+        <field name="arch" type="xml">
+            <form string="Select Account">
+                <group>
+                    <field name="account_id" required="1"/>
+                    <field name="date" required="1"/>
+                </group>
+                <footer>
+                    <button class="btn-primary" name="action_confirm" type="object" string="Confirm"/>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

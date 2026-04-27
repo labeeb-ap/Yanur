@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template id="cash_account_report_temp">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+                    <div class="page">
+                        <table width="100%">
+                            <tr>
+                                <td align="center" colspan="3" style="font-size: 30px;">
+                                    <b>Cash Account Report</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" colspan="3" style="padding-top: 2%; vertical-align: middle;">
+                                    <b>
+                                        <t t-esc="company_name"/>
+                                    </b>
+                                    <t t-if="com_street">
+                                        <br/>
+                                        <t t-esc="com_street"/>
+                                    </t>
+                                    <t t-if="com_street2">
+                                        <br/>
+                                        <t t-esc="com_street2"/>
+                                    </t>
+                                    <br/>
+                                    <t t-esc="com_city"/>
+                                    <t t-esc="com_state"/>
+                                    <t t-esc="com_zip"/>
+                                    <t t-if="com_country">
+                                        <br/>
+                                        <t t-esc="com_country"/>
+                                    </t>
+                                    <t t-if="com_phone">
+                                        <br/>
+                                        Phone:&#160;<t t-esc="com_phone"/>
+                                    </t>
+                                    <t t-if="com_email">
+                                        <br/>
+                                        Email:&#160;<t t-esc="com_email"/>
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="padding-top: 5%; font-size: 22px;">Date From:
+                                    <b>
+                                        <t t-esc="date_f"/>
+                                    </b>
+                                </td>
+                                <td align="center" style="padding-top: 5%; font-size: 22px;">Date To:
+                                    <b>
+                                        <t t-esc="date_t"/>
+                                    </b>
+                                </td>
+                                <td align="center" style="padding-top: 5%; font-size: 22px;">A/c Head:
+                                    <b>
+                                        <t t-esc="type_code"/>&#160;<t t-esc="type_name"/>
+                                    </b>
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <table width="100%" class="table table-bordered">
+                            <tr style="background-color: #F6F6F6;">
+                                <td align="center" style="vertical-align: middle; font-size: 20px;">
+                                    <b>Date</b>
+                                </td>
+                                <td align="center" style="vertical-align: middle; font-size: 20px;">
+                                    <b>Voucher No.</b>
+                                </td>
+                                <t t-if="is_account == True">
+                                    <td align="center" style="vertical-align: middle; font-size: 20px;">
+                                        <b>A/c head</b>
+                                    </td>
+                                </t>
+                                <t t-if="is_partner == True">
+                                    <td align="center" style="vertical-align: middle; font-size: 20px;">
+                                        <b>Partner</b>
+                                    </td>
+                                </t>
+                                <t t-if="is_label == True">
+                                    <td align="center" style="vertical-align: middle; font-size: 20px;">
+                                        <b>Label</b>
+                                    </td>
+                                </t>
+                                <td align="center" style="vertical-align: middle; font-size: 20px;">
+                                    <b>Debit</b>
+                                </td>
+                                <td align="center" style="vertical-align: middle; font-size: 20px;">
+                                    <b>Credit</b>
+                                </td>
+                                <td align="center" style="vertical-align: middle; font-size: 20px;">
+                                    <b>Cumulative<br/>Balance
+                                    </b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" colspan="8" style="vertical-align: middle; font-size: 25px;">
+                                    <b>Opening
+                                        Balance :
+                                        <t t-if="open == 0">
+                                            <span t-esc="open"/>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-if="open &lt; 0">
+                                                <span t-esc="'%.2f'%open"/>&#160;Cr
+                                            </t>
+                                            <t t-if="open &gt; 0">
+                                                <span t-esc="'%.2f'%open"/>&#160;Dr
+                                            </t>
+                                        </t>
+                                    </b>
+                                </td>
+                            </tr>
+
+                            <t t-if="open == 0">
+                                <t t-set="cumulative" t-value="0"/>
+                            </t>
+                            <t t-else="">
+                                <t t-set="cumulative" t-value="open"/>
+                            </t>
+
+                            <t t-foreach="val" t-as="vl">
+                                <tr>
+                                    <td style="vertical-align: middle;">
+                                        <span t-esc="vl['voucher_date']"/>
+                                    </td>
+                                    <td style="vertical-align: middle;">
+                                        <span t-esc="vl['voucher']"/>
+                                    </td>
+                                    <t t-if="is_account == True">
+                                        <td style="vertical-align: middle;">
+                                            <t t-set="sl_no" t-value="0"/>
+                                            <t t-foreach="vl['values']" t-as="v">
+                                                <t t-set="sl_no" t-value="sl_no+1"/>
+                                                <b>
+                                                    <span t-att-style="style" t-esc="sl_no"/>.&#160;
+                                                </b>
+                                                <span t-esc="v['entry_code']"/>
+                                                <span t-esc="v['entry_head']"/>&#160;
+                                                <t t-if="v['line_debit'] != 0">
+                                                    -
+                                                    <b><span t-esc="v['line_debit']"/>&#160;Dr
+                                                    </b>
+                                                </t>
+                                                <t t-if="v['line_credit'] != 0">
+                                                    -
+                                                    <b><span t-esc="v['line_credit']"/>&#160;Cr
+                                                    </b>
+                                                </t>
+                                                <br/>
+                                            </t>
+                                        </td>
+                                    </t>
+                                    <t t-if="is_partner == True">
+                                        <td style="vertical-align: middle;">
+                                            <t t-set="part_no" t-value="0"/>
+                                            <t t-foreach="vl['values']" t-as="p">
+                                                <t t-set="part_no" t-value="part_no+1"/>
+                                                <t t-if="p['line_partner']">
+                                                    <b>
+                                                        <span t-att-style="style" t-esc="part_no"/>.&#160;
+                                                    </b>
+                                                </t>
+                                                <span t-esc="p['line_partner']"/>
+                                                <br/>
+                                            </t>
+                                        </td>
+                                    </t>
+                                    <t t-if="is_label == True">
+                                        <td style="vertical-align: middle;">
+                                            <t t-set="label_no" t-value="0"/>
+                                            <t t-foreach="vl['values']" t-as="l">
+                                                <t t-set="label_no" t-value="label_no+1"/>
+                                                <t t-if="l['line_label']">
+                                                    <b>
+                                                        <span t-att-style="style" t-esc="label_no"/>.&#160;
+                                                    </b>
+                                                </t>
+                                                <span t-esc="l['line_label']"/>
+                                                <br/>
+                                            </t>
+                                        </td>
+                                    </t>
+                                    <td style="vertical-align: middle;" align="right">
+                                        <span t-esc="'%.2f'%vl['line_account_debit']"/>
+                                    </td>
+                                    <td style="vertical-align: middle;" align="right">
+                                        <span t-esc="'%.2f'%vl['line_account_credit']"/>
+                                    </td>
+                                    <td style="vertical-align: middle;" align="right">
+                                        <b>
+                                            <t t-set="cumulative"
+                                               t-value="cumulative + vl['line_account_debit'] - vl['line_account_credit']"/>
+                                            <span t-att-style="style"
+                                                  t-esc="'%.2f'%cumulative"/>
+                                            <!--                                            <t t-if="vl['line_account_debit'] != 0">-->
+                                            <!--                                                                                            <t t-set="cumulative"-->
+                                            <!--                                                                                               t-value="cumulative + vl['line_account_debit']"/>-->
+                                            <!--                                                <span t-att-style="style" t-esc="'%.2f'%cumulative"/>-->
+                                            <!--                                            </t>-->
+                                            <!--                                            <t t-if="vl['line_account_credit'] != 0">-->
+                                            <!--                                                <t t-set="cumulative"-->
+                                            <!--                                                   t-value="cumulative - vl['line_account_credit']"/>-->
+                                            <!--                                                <span t-att-style="style" t-esc="'%.2f'%cumulative"/>-->
+                                            <!--                                            </t>-->
+                                        </b>
+                                    </td>
+                                </tr>
+                            </t>
+                            <tr>
+                                <td align="center" colspan="8" style="vertical-align: middle; font-size: 25px;">
+                                    <b>Closing
+                                        Balance :
+                                        <t t-if="close == 0">
+                                            <span t-esc="close"/>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-if="close &lt; 0">
+                                                <span t-esc="'%.2f'%close"/>&#160;Cr
+                                            </t>
+                                            <t t-if="close &gt; 0">
+                                                <span t-esc="'%.2f'%close"/>&#160;Dr
+                                            </t>
+                                        </t>
+                                    </b>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="footer o_standard_footer" style="border-top: 2px solid black;">
+                        <div class="row text-center">
+                            <div class="col col-12 text-center">
+                                <ul class="list-inline">
+                                    <li class="list-inline-item">
+                                        <span class="page"/>
+                                    </li>
+                                    <li class="list-inline-item">/</li>
+                                    <li class="list-inline-item">
+                                        <span class="topage"/>
+                                    </li>
+                                    <li>
+                                        <span t-esc="user.name"/>&#160;-&#160;
+                                        <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y %H:%M')"/>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

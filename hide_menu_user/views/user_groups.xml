@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="user_groups_user_tree" model="ir.ui.view">
+        <field name="name">user.groups.user.tree</field>
+        <field name="model">user.groups.user</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="user_groups_user_action" model="ir.actions.act_window">
+        <field name="name">User Groups</field>
+        <field name="res_model">user.groups.user</field>
+        <field name="view_mode">tree</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new User Group !
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="user_groups_user_root"
+              name="User Groups"
+              action="user_groups_user_action"
+              sequence="3"
+              parent="base.menu_users"/>
+
+</odoo>

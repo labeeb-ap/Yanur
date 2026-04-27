@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="production_plan_form" model="ir.ui.view">
+        <field name="name">pos.session.close.form</field>
+        <field name="model">pos.session.close</field>
+        <field name="arch" type="xml">
+            <form create="0">
+                <header>
+                     <button string="Close" class="oe_highlight"
+                            type="object" name="action_close_pos_session"
+                            states="draft"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+                </header>
+                <sheet>
+                    <group>
+<!--                          <group>-->
+<!--                         <div class="oe_title">-->
+<!--                            <label for="name" class="oe_edit_only"/>-->
+<!--                            <h3><field name="name" readonly="1"/></h3>-->
+<!--                        </div>-->
+<!--                    </group><group></group>-->
+                        <group>
+                            <field name="session_ids" required="1" readonly="1" widget="many2many_tags" options="{'no_create': True}"/>
+                            <field name="float_cash" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                            <field name="active" invisible="1"/>
+
+                        </group>
+                        <group>
+                            <field name="date" attrs="{'readonly': [('state', '=', 'done')]}" readonly="1"/>
+                            <field name="close_at" required="0" attrs="{'invisible': [('state', '!=', 'done')], 'readonly': [('state', '=', 'done')]}"/>
+                            <field name="company_id" invisible="1" readonly="1"/>
+                            <field name="account_id" invisible="1"/>
+                            <field name="debit_amount" invisible="1"/>
+
+                        </group>
+                    </group>
+                    <notebook>
+
+                    <page string="Cash Closing">
+                         <group>
+
+
+                         <label for="cash_difference" attrs="{'invisible': [('cash_difference', '=', 0)]}"/>
+                            <div class="o_row" attrs="{'invisible': [('cash_difference', '=', 0)]}">
+                                <span><field name="cash_difference" string="Cash Difference" class="oe_inline" readonly="1"
+                                             force_save="1" help="value = terminal cash - cash balance" nolabel="1"/></span>
+
+                            </div>
+
+                        <label for="move_id" attrs="{'invisible': [('move_id', '=', False)]}"/>
+                            <div class="o_row" attrs="{'invisible': [('move_id', '=', False)]}">
+                                <span><field name="move_id" string="Cash Difference" class="oe_inline" readonly="1"
+                                             force_save="1" help="Entry" nolabel="1"/></span>
+
+                            </div>
+                        </group>
+<!--                    <field name="cash_difference" string="Cash Difference" class="oe_inline" readonly="1" force_save="1" help="value = terminal cash - cash balance"/>-->
+<!--                <button id="add_currency_type" name="add_currency_type" string="Add Currency Line" class="btn-primary" type="object"-->
+<!--                attrs="{'invisible': [('is_add_cash_closing', '=', True)]}"/>-->
+                    <field name="cash_line_ids" attrs="{'readonly': [('state', '=', 'done')]}">
+                        <tree editable="bottom" create="0">
+                            <field name="currency_type" required="1" readonly="1" force_save="1"/>
+                            <field name="count" required="1"/>
+                            <field name="amount" sum="total" readonly="1" force_save="1"/>
+                        </tree>
+                    </field>
+               <group string="Other Payment">
+
+               </group>
+                    <section string="Other Payment">
+                        <field name="payment_line_ids" string="" attrs="{'readonly': [('state', '=', 'done')]}">
+                        <tree editable="bottom" create="false" delete="false">
+                            <field name="payment_method_id" force_save="1" readonly="1" required="1"/>
+                            <field name="move_id" force_save="1" readonly="1"/>
+                            <field name="difference" force_save="1" readonly="1"/>
+                            <field name="amount" sum="total" required="1"/>
+                        </tree>
+                    </field>
+
+                    </section>
+                </page>
+<!--                    <page string="other">-->
+<!--                      <button string="Update Company" class="oe_highlight"-->
+<!--                        type="object" name="update_company"-->
+<!--                        />-->
+<!--                    </page>-->
+                        </notebook>
+                </sheet>
+                    <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="pos_session_close_tree_view" model="ir.ui.view">
+        <field name="name">pos.session.close.tree</field>
+        <field name="model">pos.session.close</field>
+        <field name="arch" type="xml">
+            <tree create="0">
+                 <field name="date"/>
+                 <field name="close_at"/>
+                 <field name="active" invisible="1"/>
+                 <field name="state" widget='badge' decoration-success="state == 'done'" decoration-info="state == 'draft'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="pos_session_close_action" model="ir.actions.act_window">
+        <field name="name">Session Close</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">pos.session.close</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create New...
+            </p>
+        </field>
+    </record>
+     <menuitem id="pos_session_close_main"
+            name="Sessions Closed"
+            parent="point_of_sale.menu_point_of_sale"
+            action="pos_session_close_action"
+            sequence="9"
+            />
+<!--     <menuitem id="production_plan_main_menu" name="Production Plan" sequence="4" parent="sale.sale_menu_root"/>-->
+<!--        <menuitem id="sub_income_account" name="Production Plan" parent="production_plan_main_menu" sequence="0"-->
+<!--                  action="production_plan_action"/>-->
+
+</odoo>

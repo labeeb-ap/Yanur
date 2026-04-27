@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="payment_register_pdc_inherited" model="ir.ui.view">
+        <field name="name">payment.pdc.register</field>
+        <field name="model">account.payment.register</field>
+        <field name="inherit_id" ref="account.view_account_payment_register_form"/>
+        <field name="arch" type="xml">
+            <field name="journal_id" position="after">
+                <field name="cheque_no" attrs="{'invisible':[('journal_cheque_payment_compute', '!=', 'cheque')],
+                'required':[('journal_cheque_payment_compute', '=', 'cheque')]}"/>
+                <field name="cheque_date" attrs="{'invisible':[('journal_cheque_payment_compute', '!=', 'cheque')],
+                'required':[('journal_cheque_payment_compute', '=', 'cheque')]}"/>
+                <field name="journal_cheque_payment_compute" invisible="1"/>
+                <field name="account_move_id" invisible="1"/>
+            </field>
+        </field>
+        </record>
+
+        <record id="account_payment_tree_pdc_inherited" model="ir.ui.view">
+        <field name="name">account.payment.tree.pdc.inherited</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_tree"/>
+        <field name="arch" type="xml">
+            <field name="journal_id" position="after">
+                <field name="journal_cheque_compute" invisible="1"/>
+                <field name="cheque_dates" />
+            </field>
+        </field>
+        </record>
+
+        <record id="account_payment_pdc_inherited" model="ir.ui.view">
+        <field name="name">account.pdc.inherited</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_form"/>
+        <field name="arch" type="xml">
+        <xpath expr="//header" position="inside">
+            <button name="cheque_accept" string="Accepted" class="oe_highlight" type="object"
+                        attrs="{'invisible':['|',('journal_cheque_compute', '!=', 'cheque'), ('cheque_status', '!=', False)]}"/>
+            <button name="cheque_bounce" string="Bounced" class="oe_highlight" type="object"
+                        attrs="{'invisible':['|',('journal_cheque_compute', '!=', 'cheque'), ('cheque_status', '!=', False)]}"/>
+        </xpath>
+
+            <field name="journal_id" position="after">
+                <field name="cheque_status" widget="badge" decoration-success="cheque_status == 'accepted'"
+                       readonly="1" attrs="{'invisible':[('journal_cheque_compute', '!=', 'cheque')]}"/>
+                <field name="cheque_nos" attrs="{'invisible':[('journal_cheque_compute', '!=', 'cheque')]}"/>
+                <field name="cheque_dates" attrs="{'invisible':[('journal_cheque_compute', '!=', 'cheque')]}" readonly="0"/>
+                <field name="journal_cheque_compute" invisible="1"/>
+            </field>
+        </field>
+        </record>
+
+             <record id="account_payment_filter_pdc_inherited" model="ir.ui.view">
+                <field name="name">account.pdc.filter</field>
+                <field name="model">account.payment</field>
+                <field name="type">search</field>
+                <field name="inherit_id" ref="account.view_account_payment_search"/>
+                <field name="arch" type="xml">
+                <search>
+                <field name="name"/>
+                <filter name="today" string="Current Dated Cheques" domain="['&amp;', ('cheque_dates', '=', context_today().strftime('%Y-%m-%d')), ('journal_id', '=', 'Cheque')]"/>
+                <filter name="passed" string="Date Passed Cheques" domain="['&amp;', ('cheque_dates','&lt;',context_today().strftime('%Y-%m-%d')), ('journal_id', '=', 'Cheque')]" />
+                <filter name="post" string="Post Dated Cheques" domain="['&amp;', ('cheque_dates','&gt;',context_today().strftime('%Y-%m-%d')), ('journal_id', '=', 'Cheque')]" />
+            </search>
+                </field>
+        </record>
+
+
+            <record id="action_account_payments_pdc" model="ir.actions.act_window">
+            <field name="name">PDC Payments</field>
+            <field name="res_model">account.payment</field>
+            <field name="view_mode">tree,kanban,form,graph</field>
+            <field name="domain">[('journal_id.name', '=', 'Cheque')]</field>
+            <field name="context">{
+                'default_journal_id.name': 'Cheque',
+            }</field>
+            <field name="view_id" ref="account.view_account_payment_tree"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                  Register a payment
+                </p><p>
+                  Payments are used to register liquidity movements. You can process those payments by your own means or by using installed facilities.
+                </p>
+            </field>
+        </record>
+
+
+         <menuitem id="menu_pdc_main"
+            name="PDC Payment"
+            parent="account.menu_finance_receivables"
+            action="action_account_payments_pdc"
+              sequence="5"
+            />
+    </data>
+</odoo>

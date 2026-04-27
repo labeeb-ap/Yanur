@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template id="record_inventory_in_out_report_print_template">
+            <t t-call="web.basic_layout">
+                <div class="page">
+                    <table width="100%">
+                        <tr>
+                            <td colspan="2" align="center">
+                                <strong>
+                                    <span style="font-size:25px" t-esc="company_name"/>,
+                                    <span style="font-size:25px" t-esc="com_street"/>,
+                                    <br/>
+                                    <span style="font-size:25px" t-esc="com_street2"/>,
+                                    <span style="font-size:25px" t-esc="com_city"/>
+                                    <br/>
+                                    <span style="font-size:25px" t-esc="com_state"/>
+                                    <span style="font-size:25px" t-esc="com_zip"/>
+                                </strong>
+                                <br/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <br/>
+                            <td style="padding-left: 15px;padding-top: 50px;padding-bottom: 10px;">
+                                Report Date
+                                :&amp;nbsp;&amp;nbsp;
+                                <span t-esc="report_date"/>
+                            </td>
+                            <td align="right">
+                            </td>
+                            <br/>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="padding-left: 15px;padding-bottom: 15px;">
+                                Item Cardex for the item &#032;
+                                <span t-esc="it_name"/>&#032;
+                                <span>for The Period of</span>&#032;
+                                <span t-esc="from_date"/>&#032;
+                                <span>to</span>&#032;
+                                <span t-esc="to_dt"/>
+
+                            </td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <table width="100%">
+                        <tr>
+                            <td style="padding-left: 15px;padding-top: 20px;padding-bottom: 10px;">
+                                Item Code
+                                :&amp;nbsp;&amp;nbsp;
+                                <span t-esc="item_cd"/>
+                            </td>
+                            <td style="padding-top: 20px;padding-bottom: 10px;">
+                                Opening Balance
+                                :&amp;nbsp;&amp;nbsp;
+                                <span t-esc="opening"/>
+                            </td>
+                            <td style="padding-top: 20px; padding-bottom: 10px;">
+                                Unit
+                                :&amp;nbsp;&amp;nbsp;
+                                <span t-esc="prod_qty"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 15px;padding-bottom: 20px;">
+                                Item Name
+                                :&amp;nbsp;&amp;nbsp;
+                                <span t-esc="it_name"/>
+                            </td>
+                            <td style="padding-bottom: 20px;">
+                                Average Cost
+                                :&amp;nbsp;&amp;nbsp;
+                                <span t-esc="avg_price"/>
+                            </td>
+                            <td style="padding-bottom: 20px;">
+                                Sales Price
+                                :&amp;nbsp;&amp;nbsp;
+                                <span t-esc="sel_price"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <table class="table table-bordered" style="border:solid 1px black;">
+                        <tr>
+                            <th align="center"
+                                style="font-size: 17px; vertical-align: middle;border:1px solid black;">
+                                Date
+                            </th>
+                            <th align="center"
+                                style="font-size: 17px; vertical-align: middle;border:1px solid black;">
+                                Transaction
+                            </th>
+                            <th align="center"
+                                style="font-size: 17px; vertical-align: middle;border:1px solid black;">
+                                Number
+                            </th>
+                            <th align="center"
+                                style="font-size: 17px; vertical-align: middle;border:1px solid black;">
+                                Description
+                            </th>
+                            <th align="center"
+                                style="font-size: 17px; vertical-align: middle;border:1px solid black;">
+                                From
+                            </th>
+                            <th align="center"
+                                style="font-size: 17px; vertical-align: middle;border:1px solid black;">
+                                To
+                            </th>
+                            <th align="center"
+                                style="font-size: 17px; vertical-align: middle;border:1px solid black;">
+                                In Qty
+                            </th>
+                            <th align="center"
+                                style="font-size: 17px; vertical-align: middle;border:1px solid black;">
+                                Out Qty
+                            </th>
+                            <th align="center"
+                                style="font-size: 17px; vertical-align: middle;border:1px solid black;">
+                                Balance
+                            </th>
+                            <th align="center"
+                                style="font-size: 17px; vertical-align: middle;border:1px solid black;">
+                                Movement
+                            </th>
+                        </tr>
+                        <t t-set="tot" t-value="opening"/>
+                        <t t-foreach="vals" t-as="doc">
+                            <tr>
+                                <td align="center"
+                                    style="font-size: 17px; vertical-align: middle;border:1px solid black;">
+                                    <span t-att-style="style" t-esc="doc['dates']"/>
+                                </td>
+                                <td align="center"
+                                    style="font-size: 17px; vertical-align: middle;border:1px solid black;">
+                                    <span t-att-style="style" t-esc="doc['trans']"/>
+                                </td>
+                                <td align="center"
+                                    style="font-size: 17px; vertical-align: middle;border:1px solid black;">
+                                    <span t-att-style="style" t-esc="doc['number']"/>
+                                </td>
+                                <td align="center"
+                                    style="font-size: 17px; vertical-align: middle;border:1px solid black;">
+                                    <span t-att-style="style" t-esc="doc['description']"/>
+                                </td>
+                                <td align="center"
+                                    style="font-size: 17px; vertical-align: middle;border:1px solid black;">
+                                    <span t-att-style="style" t-esc="doc['loc_name']"/>
+                                </td>
+                                <td align="center"
+                                    style="font-size: 17px; vertical-align: middle;border:1px solid black;">
+                                    <span t-att-style="style" t-esc="doc['lo_dest_name']"/>
+                                </td>
+                                <td align="center"
+                                    style="font-size: 17px; vertical-align: middle;border:1px solid black;">
+                                    <t t-if="doc['location_dest_id'] == location_id">
+                                        <t t-set="tot" t-value="tot+doc['qty_done']"/>
+                                        <span t-att-style="style" t-esc="doc['qty_done']"/>
+                                    </t>
+                                </td>
+                                <td align="center"
+                                    style="font-size: 17px; vertical-align: middle;border:1px solid black;">
+                                    <t t-if="doc['location_id'] == location_id">
+                                        <t t-set="tot" t-value="tot-doc['qty_done']"/>
+                                        <span t-att-style="style" t-esc="doc['qty_done']"/>
+                                    </t>
+                                </td>
+                                <td align="center"
+                                    style="font-size: 17px; vertical-align: middle;border:1px solid black;">
+                                    <span t-att-style="style" t-esc="doc['opening_qty_done']"/>
+                                </td>
+                                <td align="center"
+                                    style="font-size: 17px; vertical-align: middle;border:1px solid black;">
+                                    <span t-att-style="style" t-esc="doc['movement']"/>
+                                </td>
+                            </tr>
+                        </t>
+                        <tr>
+                            <td colspan="10" align="center"
+                                style="font-size: 17px; vertical-align: middle;border:1px solid black;">
+                                <b>Total
+                                :&amp;nbsp;&amp;nbsp;
+                                <span t-att-style="style" t-esc="tot"/></b>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="footer o_standard_footer">
+                    <div class="row text-center">
+                        <div class="col col-12 text-center">
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <span class="page"/>
+                                </li>
+                                <li class="list-inline-item">/</li>
+                                <li class="list-inline-item">
+                                    <span class="topage"/>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

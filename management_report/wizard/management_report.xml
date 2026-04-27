@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="management_report_form" model="ir.ui.view">
+        <field name="name">management.report.form</field>
+        <field name="model">management.report</field>
+        <field name="arch" type="xml">
+            <form string ="Daily Sales">
+                <group>
+                    <group>
+                        <field name = "from_date" required = 'True'/>
+                        <field name = "to_date" required = 'True'/>
+                    </group>
+                    <group>
+                        <field name = "company_ids" widget="many2many_tags" required = 'True'/>
+
+                    </group>
+                </group>
+                <footer>
+                    <button icon="fa-print" string="XLSX" name="management_report_xlsx" type="object"
+                            class="oe_highlight"/>
+                    <button string="Cancel" class="btn" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="management_report_action" model="ir.actions.act_window">
+        <field name="name">Management Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">management.report</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="management_report_form"/>
+    </record>
+
+    <menuitem id="management_report_report_menu"
+              name="MGT budget Report"
+              parent="account.menu_finance_reports"
+              action="management_report_action"
+              sequence="10"/>
+</odoo>

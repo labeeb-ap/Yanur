@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="point_of_sale.template" xml:space="preserve">
+    <t t-name="OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('pos-receipt-contact')]" position="after">
+<!--            <div class="tax_invoice_head" style='text-align:center;border-bottom: 1px dashed black;padding-top: 7px;'>-->
+<!--                   <strong> TAX INVOICE </strong>-->
+<!--            </div>-->
+        </xpath>
+        <xpath expr="//div[hasclass('pos-receipt-contact')]" position="replace">
+            <h2>YANUR RESTAURANT AND</h2>
+            <h2 style='text-align:center'>CATERING</h2>
+            <div class="pos-receipt-contact">
+                <t t-if="receipt.company.contact_address">
+                    <div style="font-size: 20px;"><b><t t-esc="env.pos.company.name" /></b></div>
+                    <div><t t-esc="env.pos.company.street"/></div>
+                    <div><t t-esc="env.pos.company.street2"/></div>
+                    <div><t t-esc="env.pos.company.city"/></div>
+                    <div><t t-esc="env.pos.company.state"/></div>
+                    <div><t t-esc="env.pos.company.zip"/></div>
+                </t>
+                <t t-if="receipt.company.phone">
+                    <div>Tel:<t t-esc="receipt.company.phone"/></div>
+                </t>
+
+                <!--                <t t-if="receipt.company.name">-->
+                <!--                    <div><t t-esc="receipt.company.name" /></div>-->
+                <!--                    <div><t t-esc="env.pos.company.brand_name" /></div>-->
+                <!--                    <div><t t-esc="receipt.company.name" /></div>-->
+                <!--                </t>-->
+
+                <t t-if="receipt.company.email">
+                    <div><t t-esc="receipt.company.email" /></div>
+                </t>
+                <t t-if="receipt.company.website">
+                    <div><t t-esc="receipt.company.website" /></div>
+                </t>
+                <t t-if="receipt.header_html">
+                    <t t-raw="receipt.header_html"/>
+                </t>
+                <t t-if="!receipt.header_html and receipt.header">
+                    <div><t t-esc="receipt.header" /></div>
+                </t>
+
+                <t t-if="receipt.cashier">
+                    <div class="cashier">
+                        <div>--------------------------------</div>
+                        <div>Served by <t t-esc="receipt.cashier"/></div>
+                    </div>
+                </t>
+                <t t-if="receipt.table">
+                    <div class="cashier" style='text-align:left;font-size:15px; padding-top: 7px;' >
+                        Table No :<t t-esc="receipt.table" />
+                    </div>
+                </t>
+                <t t-if="receipt.name">
+                    <div style='text-align:left; padding-top: 7px;'><b> Invoice No : <t t-esc="receipt.name"/></b></div>
+                    <div style='text-align:left'><b>Invoice Date : <t t-esc="receipt.date.localestring"/></b></div>
+                </t>
+
+            </div>
+        </xpath>
+
+        <xpath expr="//div[hasclass('orderlines')]" position="replace">
+            <div style="text-align:center;border-bottom: 1px dashed black;" width="100%" class="orderlines">
+                <table width="100%" class='receipt-orderlines'>
+                    <tr style="font-weight: bold; font-size: 12px;">
+                        <td align="left" width="40%">Item</td>
+<!--                        <td align="center">HSN</td>-->
+                        <td align="center">Qty</td>
+                        <td align="right">Rate</td>
+                        <td align="right">Total</td>
+                    </tr>
+                    <tr>
+                        <td colspan="5" style="padding-top: 7px;"/>
+                    </tr>
+
+                    <tr>
+                        <td colspan="5" style="border-bottom: 1px dashed black; padding top: 5px;"/>
+                    </tr>
+                    <tr>
+                        <td colspan="5" style="padding-top: 10px;"/>
+                    </tr>
+                    <t t-foreach="orderlines" t-as="orderline">
+                        <tr>
+                            <td style="font-size: 10px; font-weight: bold;" align="left"><span t-esc="orderline.get_product().display_name"/></td>
+<!--                            <td style="font-size: 10px; font-weight: bold;" align="center"><span t-esc="orderline.get_product().l10n_in_hsn_code"/></td>-->
+                            <td style="font-size: 10px; font-weight: bold;" align="center"><span t-esc="orderline.get_quantity_str_with_unit()"/></td>
+                            <td style="font-size: 10px; font-weight: bold;" align="right">
+                                <t t-if="orderline.before_disc_unit_price">
+                                    <t t-esc="env.pos.format_currency_no_symbol(orderline.before_disc_unit_price)"/>
+                                </t>
+                                <t t-else="">
+                                    <t t-esc="env.pos.format_currency_no_symbol(orderline.get_unit_display_price())"/>
+                                </t>
+                            </td>
+                            <td style="font-size: 10px; font-weight: bold;" align="right">
+                                <t t-if="orderline.before_disc_total_price">
+                                    <t t-esc="env.pos.format_currency_no_symbol(orderline.before_disc_total_price)"/>
+                                </t>
+                                <t t-else="">
+                                    <t t-esc="env.pos.format_currency_no_symbol(orderline.get_price_with_tax())"/>
+                                </t>
+                            </td>
+                        </tr>
+
+                        <tr>
+                        <td colspan="5" style="padding-top: 6px;"/>
+                        </tr>
+                    </t>
+
+
+                    <tr>
+                        <td colspan="5" style="padding-top: 7px;"/>
+                    </tr>
+                </table>
+            </div>
+        </xpath>
+        <xpath expr="//t[@t-if='!isTaxIncluded']" position="replace">
+
+            <div class="sub_total">
+
+                <t t-set="disc" t-value="0"/>
+                    <t t-foreach="orderlines" t-as="orderline" t-key="orderline.id">
+
+                    <t t-set="disc" t-value="orderline.dis_val"/>
+                </t>
+                    Subtotal
+                <t t-if="disc &gt; 0">
+                    <span t-esc="env.pos.format_currency(receipt.subtotal+disc)" class="pos-receipt-right-align"/>
+                </t>
+                <t t-else="">
+                    <span t-esc="env.pos.format_currency(receipt.subtotal)" class="pos-receipt-right-align"/>
+                </t>
+            </div>
+
+        </xpath>
+        <xpath expr="//t[@t-if='receipt.total_rounded != receipt.total_with_tax']" position="replace">
+
+            <t t-if="receipt.total_rounded != receipt.total_with_tax">
+                <div class="pos-receipt-amount" style="text-align:right;font-size: 14px">
+                    Rounding:<span t-esc='env.pos.format_currency(receipt.rounding_applied)'
+                                   class="pos-receipt-right-align"/>
+                </div>
+                <br/>
+                <div class="pos-receipt-amount">
+                 <b>  To Pay<span t-esc='env.pos.format_currency(receipt.total_rounded)'
+                                  class="pos-receipt-right-align" style="text-align:center;font-size: 17px"/> </b>
+                    </div>
+
+                <!--             <br/>-->
+                <!--             <br/>-->
+            </t>
+            <!--</div>-->
+         </xpath>
+        <xpath expr="//t[@t-foreach='receipt.paymentlines']" position="replace">
+
+            <t t-foreach="receipt.paymentlines" t-as="line" t-key="line.cid" class="pos-receipt-right-align">
+<!--                <br/>-->
+                <div class="pos-receipt-center-align" style="text-align:center; padding-right: 17px; font-size: 30px;">
+                    <t t-esc="line.name" class="pos-receipt-center-align;" style="text-align:center;"/>:
+                    <span t-esc="env.pos.format_currency_no_symbol(line.amount)" class="pos-receipt-center-align"/>
+
+                </div>
+            </t>
+        </xpath>
+
+        <xpath expr="//t[@t-if='receipt.total_discount']" position="replace">
+
+        </xpath>
+
+        <xpath expr="//div[@class='sub_total']" position="after">
+
+            <t t-set="disc" t-value="0"/>
+            <t t-foreach="orderlines" t-as="orderline" t-key="orderline.id">
+<!--                <span t-esc="env.pos.format_currency(orderline.dis_val)"-->
+                <!--                                              class="pos-receipt-right-align"/>-->
+                <t t-set="disc" t-value="orderline.dis_val"/>
+            </t>
+            <!--                            <t t-if="count == 0">-->
+            <t t-if="disc &gt; 0">
+<!--                                    <t t-if="disc &lt; 6">-->
+                <t t-if="disc &lt;= 5">
+<!--                                        <t t-set="count" t-value="1"/>-->
+                    <!--                            <br/>-->
+                    <div>
+                                                Round Off
+                                                <span t-esc="env.pos.format_currency(disc)"
+                                                      class="pos-receipt-right-align"/>
+                        <!--                                        With a <t t-esc=""/>% discountval-->
+
+
+                        <!--                            <span t-esc="receipt.payload" class="pos-receipt-right-align"/>-->
+                        <!--                            <span t-esc='env.pos.format_currency(receipt.rounding_applied)' class="pos-receipt-right-align"/>-->
+                        <!--                            <span t-esc='env.pos.format_currency(receipt.total_rounded)' class="pos-receipt-right-align"/>-->
+                        <!--                            <span t-esc="env.pos.format_currency(receipt.discount_amt)" class="pos-receipt-right-align"/>-->
+                                            </div>
+                                        </t>
+                <t t-else="">
+                                        <div>
+                                            Discount
+                                            <span t-esc="env.pos.format_currency(disc)"
+                                                  class="pos-receipt-right-align"/>
+                                            <!--                                        With a <t t-esc=""/>% discountval-->
+
+
+                                            <!--                            <span t-esc="receipt.payload" class="pos-receipt-right-align"/>-->
+                                            <!--                            <span t-esc='env.pos.format_currency(receipt.rounding_applied)' class="pos-receipt-right-align"/>-->
+                                            <!--                            <span t-esc='env.pos.format_currency(receipt.total_rounded)' class="pos-receipt-right-align"/>-->
+                                            <!--                            <span t-esc="env.pos.format_currency(receipt.discount_amt)" class="pos-receipt-right-align"/>-->
+                                        </div>
+                                    </t>
+                                </t>
+
+            <!--                    </t>-->
+            <!--            <br/>-->
+        </xpath>
+
+        <xpath expr="//t[@t-foreach='receipt.paymentlines']" position="after">
+<!--    		<t t-if='receipt.client'>-->
+            <!--            <span t-field="doc.barcode"/>-->
+            <h2 class="pos-receipt-center-align">
+<!--                <div>Client: <t t-esc='receipt.client.name'/></div>-->
+                <!--                <div class="col-md-6">-->
+                <!--                        <table style="width:243pt; height:153pt; border: 1pt solid black; border-collapse:separate; border-radius:8pt; margin:5pt">-->
+                <!--                            <td style="width:33%;" valign="center">-->
+                <!--                                <table style="width:77pt; height:150pt">-->
+                <!--                                    <tr style="height:30%">-->
+                <!--                                        <td align="center" valign="center">-->
+                <!--                                            <img t-if="employee.company_id.logo" t-att-src="image_data_uri(employee.company_id.logo)" style="max-height:45pt;max-width:90%" alt="Company Logo"/>-->
+                <!--                                        </td>-->
+                <!--                                    </tr>-->
+                <!--                                    <tr style="height:70%;">-->
+                <!--                                        <td align="center" valign="center">-->
+                <!--                                            <img t-if="employee.image_1920" t-att-src="image_data_uri(employee.image_1920)" style="max-height:85pt;max-width:90%" alt="Employee Image"/>-->
+                <!--                                        </td>-->
+                <!--                                    </tr>-->
+                <!--                                </table>-->
+                <!--                            </td>-->
+                <!--                            <td style="width:67%" valign="center">-->
+
+                <!--                This is for barcode but we already have another-->
+                <!--                                <table style="width:155pt; height:85pt">-->
+                <!--                                    <tr><th><div style="font-size:15pt; margin-bottom:0pt;margin-top:0pt;" align="center"><t t-esc="employee.name"/></div></th></tr>-->
+                <!--                                    <tr><td><div align="center" style="font-size:10pt;margin-bottom:5pt;"><t t-esc="employee.job_id.name"/></div></td></tr>-->
+                <!--                                    <tr><td><img alt="barcode" t-if="receipt.barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', receipt.barcode, 600, 120)" style="max-height:50pt;max-width:100%;" align="center"/></td></tr>-->
+                <!--                                </table>-->
+                <!--                            </td>-->
+                <!--                        </table>-->
+                <!--                    </div>-->
+                <span style="font-size: 23px;">Thank you for dining with us!</span>
+                <div class="pos-dot-lines">--------------------------------</div>
+            </h2>
+            <!--            <span style="display:none;" t-esc="receiptBarcode" class="pos-receipt-center-align"/>-->
+            <!--            <div class="pos-receipt-center-align">-->
+            <!--				<span style="display:none;" t-esc="receiptBarcode"/>-->
+            <!--				<div id="barcode_print"></div>-->
+            <!--			</div>-->
+    	</xpath>
+        <xpath expr="//div[hasclass('pos-dot-lines')]" position="after">
+			<div>
+				<span style="display:none;" t-esc="receiptBarcode"/>
+                <div style="margin:auto;margin-top:10px;" id="barcode_print"></div>
+			</div>
+		</xpath>
+        <!--        <xpath expr="//div[@id='barcode_print']" position="replace">-->
+        <!--        </xpath>-->
+        <xpath expr="//div[@class='pos-receipt-amount receipt-change']" position="replace">
+    	</xpath>
+        <xpath expr="//t[@t-if='isTaxIncluded']" position="replace">
+        </xpath>
+
+
+        <!--        This block will display sequence number and display(FYI:moved to the top )-->
+        <xpath expr="//div[@class='pos-receipt-order-data']" position="replace">
+<!--             <div class="pos-receipt-order-data">-->
+            <!--                 <div style='text-align:left;padding: 0px 0px 0px 55px;'><b> Invoice No : <t t-esc="receipt.name" /></b></div>-->
+            <!--                 <div><b>Invoice Date : <t t-esc="receipt.date.localestring" /></b></div>-->
+            <!--            </div>-->
+    	</xpath>
+
+
+        <!--        <xpath expr="//div[@class='pos-receipt-order-data']" position="replace" >-->
+        <!--            <div><t t-esc="receipt.date.localestring" style='text-align:right'/></div>-->
+        <!--            <div><t t-esc="env.pos.config.new_line" style='text-align:right'/></div>-->
+        <!--        </xpath>-->
+    </t>
+</templates>

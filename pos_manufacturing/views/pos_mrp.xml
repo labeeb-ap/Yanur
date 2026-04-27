@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_pos_order_form" model="ir.ui.view">
+            <field name="name">pos.order.form</field>
+            <field name="model">pos.order</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_order_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="inside">
+                    <header>
+                        <button name="create_manufacturing_order" string="Create Manufacturing Order" type="object"
+                                class="oe_highlight"/>
+                    </header>
+                </xpath>
+                <!--                 <xpath expr="//field[@name='session_id']" position="after">-->
+                <!--                    <field name="is_true" invisible="0"/>-->
+                <!--                </xpath>-->
+            </field>
+        </record>
+
+        <record id="action_manufacturin_production_order_mark_done" model="ir.actions.server">
+            <field name="name">Mark as Done</field>
+            <field name="model_id" ref="mrp.model_mrp_production"/>
+            <field name="binding_model_id" ref="mrp.model_mrp_production"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    res = records.filtered(lambda mo: mo.state in {'draft','confirmed', 'to_close',
+                    'progress'}).button_mark_done()
+                    if res is not True:
+                            action = res
+            </field>
+        </record>
+
+        <record id="view_mrp_production_form_inherit" model="ir.ui.view">
+            <field name="name">mrp.production.form.inherit</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='bom_id']" position="after">
+                    <!--                <div class="oe_title">-->
+                    <!--                    <label for="pos_order_id" class="oe_edit_only"/>-->
+                    <!--                    <h2>-->
+                    <field name="pos_order_id" readonly="1" options="{'no_create': True}" string="Point of Sale Order"
+                           invisible="1"/>
+
+<!--                    <field name="component_product"/>-->
+                    <field name="bom_cost"/>
+                    <field name="sales_price"/>
+
+                    <!--                    </h2>-->
+                    <!--                </div>-->
+                </xpath>
+            </field>
+        </record>
+
+
+<!--        <record id="view_mrp_production_pivot_inherit" model="ir.ui.view">-->
+<!--            <field name="name">mrp.production.pivot.inherit</field>-->
+<!--            <field name="model">mrp.production</field>-->
+<!--            <field name="inherit_id" ref="mrp.view_production_pivot"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <pivot>-->
+<!--                    <field name="product_id" type="row"/>-->
+<!--                    <field name="component_product" type="row"/>-->
+<!--                    <field name="sales_price" type="row"/>-->
+<!--                    <field name="product_qty" type="row"/>-->
+<!--                    <field name="bom_cost" type="row"/>-->
+<!--                </pivot>-->
+<!--            </field>-->
+<!--        </record>-->
+
+        <!--     <record id="view_mrp_production_form_inherit_cost" model="ir.ui.view">-->
+        <!--        <field name="name">mrp.production.form.inherit.cost</field>-->
+        <!--        <field name="model">mrp.production</field>-->
+        <!--        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>-->
+        <!--        <field name="arch" type="xml">-->
+        <!--            <xpath expr="//field[@name='bom_id']" position="after">-->
+        <!--&lt;!&ndash;                <div class="oe_title">&ndash;&gt;-->
+        <!--&lt;!&ndash;                    <label for="pos_order_id" class="oe_edit_only"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;                    <h2>&ndash;&gt;-->
+        <!--                        <field name="component_product"/>-->
+        <!--&lt;!&ndash;                    </h2>&ndash;&gt;-->
+        <!--&lt;!&ndash;                </div>&ndash;&gt;-->
+        <!--            </xpath>-->
+        <!--        </field>-->
+        <!--    </record>-->
+
+    </data>
+</odoo>

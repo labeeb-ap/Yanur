@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<templates id="bi_pos_items_count_template" inherit_id="point_of_sale.template" xml:space="preserve">
+
+	 	<!-- OrderWidget -->
+<!--		<t t-name="OrderWidget" t-inherit="point_of_sale.OrderWidget" t-inherit-mode="extension" owl="1">-->
+<!--			<xpath expr="//div[hasclass('order')]" position="inside">-->
+<!--				<t t-if="total_items > 0">-->
+<!--					<div class='items' style="padding-bottom: 10px; padding-left: 15px;padding-right: 15px;">-->
+<!--						<i><b style="font-weight: bold; color: #0075AC;font-size: 20px;">Total Quantity: <span><t t-esc="total_items"/></span></b></i>&#160;&#160;&#160;&#160;&#160;&#160;-->
+<!--						<i style="padding-left: 20px;"><b style="font-weight: bold; color: #0075AC;font-size: 20px;">Total Items: <span><t t-esc="total_orders"/></span></b></i>-->
+<!--					</div>-->
+<!--				</t>-->
+
+<!--				<t t-if="total_items > 0">-->
+<!--					<div class='items-count' style="padding-bottom: 10px; padding-left: 15px;padding-right: 15px;"><i><b style="font-weight: bold; color: #0075AC;font-size: 20px;">Total Items: <span><t t-esc="total_orders"/></span></b></i></div>-->
+<!--				</t>-->
+<!--			</xpath>-->
+<!--		</t>-->
+		
+		<!-- Add Total Items in OrderReceipt -->
+		<t t-name="OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
+			<xpath expr="//div[hasclass('pos-receipt-order-data')]" t-operation="after">
+				<br />
+				<h4><div>
+					Total Quantity :
+					<span t-esc="props.order.get_total_items()"/>
+				</div></h4>
+			</xpath>
+		</t> 
+	</templates>
+
+

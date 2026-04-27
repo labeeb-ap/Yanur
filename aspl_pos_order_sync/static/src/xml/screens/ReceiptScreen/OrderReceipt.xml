@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('pos-receipt-order-data')]" position="replace">
+            <div class="pos-receipt">
+                <div class="pos-receipt-order-data">
+                    <div><t t-esc="env.pos.get_order().get_pos_reference() ? env.pos.get_order().get_pos_reference() : env.pos.get_order().name" /></div>
+                    <div><t t-esc="env.pos.get_order().get_date_order() ? env.pos.get_order().get_date_order() : receipt.date.localestring" /></div>
+                </div>
+            </div>
+        </xpath>
+
+        <xpath expr="//div[hasclass('receipt-change')]" position="before">
+            <t t-if="env.pos.get_order().get_journal()">
+               <div t-foreach="env.pos.get_order().get_journal()" t-as="line">
+                   <span>
+                       <t t-esc="line.payment_method"/>
+                   </span>
+                   <span style="float:right;">
+                       <t t-esc="env.pos.format_currency(line.amount)"/>
+                   </span>
+               </div>
+                <br></br>
+           </t>
+        </xpath>
+
+        <xpath expr="//div[hasclass('receipt-change')]" position="replace">
+            <div class="pos-receipt">
+                <div class="pos-receipt-amount receipt-change">
+                    CHANGE
+                     <t t-if="env.pos.get_order().get_amount_return()">
+                        <span t-esc="env.pos.format_currency(env.pos.get_order().get_amount_return())"
+                              class="pos-receipt-right-align"/>
+                     </t>
+                    <t t-if="!env.pos.get_order().get_amount_return()">
+                        <span t-esc="env.pos.format_currency(env.pos.get_order().get_change())"
+                              class="pos-receipt-right-align"/>
+                     </t>
+                </div>
+            </div>
+        </xpath>
+    </t>
+</templates>

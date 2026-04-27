@@ -1,0 +1,16 @@
+<odoo>
+    <record id="view_pos_details_wizard_form_inherit_excel" model="ir.ui.view">
+        <field name="name">pos.details.wizard.form.inherit.excel</field>
+        <field name="model">pos.details.wizard</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_details_wizard"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='generate_report']" position="after">
+                <button name="export_excel"
+                        string="Export Excel"
+                        type="object"
+                        class="btn btn-primary"/>
+
+            </xpath>
+        </field>
+    </record>
+</odoo>

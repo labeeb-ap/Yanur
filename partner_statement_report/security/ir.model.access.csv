@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_partner_statement_report,access.partner.statement.report,model_partner_statement_report,,1,1,1,1
+
+
+

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.ui.view" id="employee_address">
+        <field name="name">employee address</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <field name="address_home_id" position="attributes">
+                <attribute name="string">Brunei Address</attribute>
+            </field>
+            <field name="address_home_id" position="after">
+                <field name="permanent_address"/>
+            </field>
+            <field name="permanent_address" position="after">
+                <field name="temporary_address"/>
+            </field>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="employee_incentive">
+        <field name="name">employee incentive</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//label[@for='travel_allowance']" position="before">
+                <label for="incentive"/>
+                <div class="o_row">
+                    <field name="incentive"/>
+                    <span>/ month</span>
+                </div>
+            </xpath>
+            <xpath expr="//form/sheet/notebook/page[@name='information']" position="after">
+                    <page name='terms and condition' string="Terms and Conditions">
+                            <group name="notes" string="Notes">
+                                <field name="notes" nolabel="1"/>
+                            </group>
+                    </page>
+                </xpath>
+        </field>
+    </record>
+    <record model="ir.cron" id="employee_contract_reminder">
+        <field name="name">Employee Contract Expiration</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        <field name="model_id" ref="model_hr_contract"/>
+        <field name="state">code</field>
+        <field name="code">model.mail_reminder()</field>
+    </record>
+</odoo>
