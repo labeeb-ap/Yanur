@@ -567,7 +567,7 @@
                         <t>
                             <table width="100%"
                                    class="table table-borderless"
-                                   style="font-size:10px; height:10mm; margin-bottom:0;">
+                                   style="font-size:10px; height:10mm; margin-top:15px;">
                                 <thead>
                                     <tr>
                                         <th id="table_head_border" width="50%"
@@ -590,18 +590,27 @@
                                             <strong>
                                                 <span t-field="doc.location_id"/>
                                             </strong>
-                                            <t t-foreach="doc.order_line" t-as="line">
+                                            <t t-foreach="doc.order_line.filtered(lambda l: not l.is_rental)"
+                                               t-as="line">
                                                 <div style="margin-bottom:2px;">
                                                     <span t-field="line.product_id.display_name"/>
                                                 </div>
                                             </t>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td id="table_head_border" style="padding:2px 4px; line-height:12px;">
+                                            <span t-field="doc.vip_food_note"/>
+                                        </td>
+                                        <td id="table_head_border" style="padding:2px 4px; line-height:12px;">
+
 
                                             <t t-if="doc.vip_food_details_ids.vip_id">
-                                                <hr style="border-top: 1px solid black;margin-top:5px;margin-bottom:5px;"/>
-                                                <strong>VIP</strong><br/>
+                                                <strong>VIP</strong>
+                                                <br/>
                                                 <t t-foreach="doc.vip_food_details_ids" t-as="line">
                                                     <div style="margin-bottom:2px;">
-                                                    <span t-field="line.vip_id"/>
+                                                        <span t-field="line.vip_id"/>
                                                     </div>
                                                 </t>
                                             </t>
@@ -615,10 +624,9 @@
 
 
                         <t t-if="doc.complimentory_food_new_id">
-                            <hr style="border-top: 1px solid black;margin-top:1px;"/>
                             <table width="100%"
                                    class="table table-borderless"
-                                   style="font-size:10px; height:10mm; margin-bottom:0;">
+                                   style="font-size:10px; height:10mm; margin-top:15px;">
                                 <thead>
                                     <tr>
                                         <th id="table_head_border" width="50%"
@@ -636,7 +644,7 @@
                                         <!-- NOTES COLUMN -->
                                         <td id="table_head_border"
                                             style="padding:2px 4px; line-height:12px; vertical-align:top;">
-                                            <span t-field="doc.notes_notebook"/>
+                                            <span t-field="doc.complimentory_food_note"/>
                                         </td>
 
                                         <!-- MENU COLUMN -->
@@ -653,10 +661,9 @@
                         </t>
 
                         <t t-if="doc.food_tasting_ids">
-                            <hr style="border-top: 1px solid black;margin-top:1px;"/>
                             <table width="100%"
                                    class="table table-borderless"
-                                   style="font-size:10px; height:10mm; margin-bottom:0;">
+                                   style="font-size:10px; height:10mm; margin-top:15px;">
                                 <thead>
                                     <tr>
                                         <th id="table_head_border" width="50%"
@@ -674,7 +681,7 @@
                                         <!-- NOTES COLUMN -->
                                         <td id="table_head_border"
                                             style="padding:2px 4px; line-height:12px; vertical-align:top;">
-                                            <span t-field="doc.notes_notebook"/>
+                                            <span t-field="doc.food_tasting_note"/>
                                         </td>
 
                                         <!-- MENU COLUMN -->

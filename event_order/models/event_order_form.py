@@ -12,29 +12,28 @@ class SaleOrderCustomisation(models.Model):
         'order_id',
         string="Complimentory Foods"
     )
-    complimentory_food_note=fields.Text(string="Complimentory Food Note")
+    complimentory_food_note = fields.Text(string="Complimentory Food Note")
 
     food_tasting_ids = fields.One2many(
         'food.tasting.details',
         'order_id',
         string="Food Tasting Details"
     )
-    food_tasting_note=fields.Text(string="Food  Tasting Note")
+    food_tasting_note = fields.Text(string="Food  Tasting Note")
 
     vip_food_details_ids = fields.One2many(
         'vip.food.details',
         'order_id',
         string="VIP Food Details"
     )
-    vip_food_note=fields.Text(string="VIP Food Note")
-
-
+    vip_food_note = fields.Text(string="VIP Food Note")
 
     complimentory_food_id = fields.One2many('sale.order.line', 'complimentory_id')
     food_test_ids = fields.One2many('sale.order.line', 'food_id')
     vip_food_details = fields.One2many('sale.order.line', 'vip_food_id')
 
-    date_order = fields.Date(string='Order Date', index=True, copy=False, default=fields.Datetime.now ,states={'sale': [('readonly', True)], 'done': [('readonly', True)]})
+    date_order = fields.Date(string='Order Date', index=True, copy=False, default=fields.Datetime.now,
+                             states={'sale': [('readonly', True)], 'done': [('readonly', True)]})
     ph_no = fields.Char(string="TEL / HP")
     fax = fields.Char(string="Fax")
     # time_site = fields.Float(string='Time Site')
@@ -88,7 +87,7 @@ class SaleOrderCustomisation(models.Model):
     discount_line = fields.Float(string="Discount", readonly=True, copy=True)
     sub_total = fields.Float(string="Sub Total", readonly=True, compute="compute_sub_total", store=True)
     # part_timers = fields.One2many('part.timers', 'employee_id', string="Part Timers", copy=True)
-    location_id = fields.Many2one('event.type.sale',string='Event Type',required=1)
+    location_id = fields.Many2one('event.type.sale', string='Event Type', required=1)
     pax_child_amount = fields.Float(string="Price Per child Pax", default=0.0, copy=False)
     pax_child_qty = fields.Integer(string="No Of child Pax", default=0, copy=False)
     number_of_vip = fields.Integer(string="VIP", default=0)
@@ -133,15 +132,13 @@ class SaleOrderCustomisation(models.Model):
             default['order_line'] = [(0, 0, line.copy_data()[0]) for line in
                                      self.order_line.filtered(lambda l: not l.addi_true)]
 
-
         default = super(SaleOrderCustomisation, self).copy_data(default=default)
         return default
 
-
-
-    @api.onchange('price_amount', 'price_amount_min','order_line', 'pax_child_amount', 'pax_child_qty')
+    @api.onchange('price_amount', 'price_amount_min', 'order_line', 'pax_child_amount', 'pax_child_qty')
     def onchange_price_amount(self):
-        if (self.price_amount > 0 and self.price_amount_min > 0 and self.order_line) or (self.pax_child_amount > 0 and self.pax_child_qty > 0 and self.order_line):
+        if (self.price_amount > 0 and self.price_amount_min > 0 and self.order_line) or (
+                self.pax_child_amount > 0 and self.pax_child_qty > 0 and self.order_line):
             result = (self.price_amount * self.price_amount_min) + (self.pax_child_amount * self.pax_child_qty)
 
             self.sub_total = result
@@ -160,9 +157,6 @@ class SaleOrderCustomisation(models.Model):
             if self.sub_total > 0:
                 self.sub_total = 0
 
-
-
-
     @api.onchange('partner_id')
     def onchange_partner_id(self):
         res = super().onchange_partner_id()
@@ -179,24 +173,20 @@ class SaleOrderCustomisation(models.Model):
                 self.email_id = ""
         return res
 
-
-
-
-
     # @api.onchange( 'price_amount_min','order_line.price_subtotal')
     # def onchange_price_amount_min(self):
     #     print("yyyyy")
     #     if self.price_amount_min > 0 and self.price_amount > 0:
     #         print("roshna")
-        # x = len(self.order_line)
-        # amt = 0
-        # if x > 0:
-        #     amt = self.price_amount_min
-        # for i in self.order_line:
-        #     if i.product_id:
-        #         i.product_uom_qty = amt
-        #     else:
-        #         i.product_uom_qty = 0
+    # x = len(self.order_line)
+    # amt = 0
+    # if x > 0:
+    #     amt = self.price_amount_min
+    # for i in self.order_line:
+    #     if i.product_id:
+    #         i.product_uom_qty = amt
+    #     else:
+    #         i.product_uom_qty = 0
 
     def action_confirm(self):
         res = super(SaleOrderCustomisation, self).action_confirm()
@@ -217,15 +207,13 @@ class SaleOrderCustomisation(models.Model):
         #             })
         #         print('/////')
 
-
-
         # for rec in self.order_line:
         for k in self.rental_item_ids:
             self.env['sale.order.line'].create({
                 'order_id': k.product_price_id.id,
                 'product_id': k.rental_product.id,
                 'product_uom_qty': k.product_quantity,
-                'is_rental':True,
+                'is_rental': True,
                 'name': k.rental_product.name,
                 'price_unit': k.product_price,
                 'addi_true': True,
@@ -235,7 +223,6 @@ class SaleOrderCustomisation(models.Model):
 
         return res
 
-
     # @api.depends('rental_item_ids.product_sub_total')
     # def _compute_total_amounts(self):
     #     totall = 0
@@ -244,7 +231,7 @@ class SaleOrderCustomisation(models.Model):
     #             totall += rec.product_sub_total
     #     self.total_amounts = totall
 
-     # (self.additional_amount = self.total_amounts) old commented
+    # (self.additional_amount = self.total_amounts) old commented
 
     @api.onchange('rental_item_ids.product_sub_total')
     def _onchange_total_amounts(self):
@@ -334,6 +321,7 @@ class SaleOrderCustomisation(models.Model):
         invoice_vals['pax_child_qty'] = self.pax_child_amount
         return invoice_vals
 
+
 class RentalItems(models.Model):
     _name = 'rental.items'
 
@@ -343,7 +331,6 @@ class RentalItems(models.Model):
     description = fields.Char(string="Description")
     product_sub_total = fields.Float(string="Sub Total", compute="_compute_sub_total", store=True)
     product_price_id = fields.Many2one('sale.order')
-
 
     @api.onchange('rental_product')
     def onchange_product_price(self):
@@ -369,8 +356,6 @@ class RentalItems(models.Model):
 class SaleOrderMoveLine(models.Model):
     _inherit = 'sale.order.line'
 
-
-
     pax = fields.Char(string="Pax")
     addi_true = fields.Boolean(string="Rental")
     complimentory_id = fields.Many2one('sale.order', string="order line", store=True)
@@ -384,7 +369,6 @@ class SaleOrderMoveLine(models.Model):
     event_time_ynr_complementory = fields.Float(string="Time Yanur")
     is_rental = fields.Boolean(string="Is Rental", defualt=False)
 
-
     # food taste section
     food_id = fields.Many2one('sale.order', string="food")
     food_taste_id = fields.Many2one('product.product', string="Tate Food")
@@ -395,16 +379,10 @@ class SaleOrderMoveLine(models.Model):
     event_time_food = fields.Float(string="Time Site")
     event_time_food_yanur = fields.Float(string="Time Yanur")
 
-
     # vip food details
 
     vip_food_id = fields.Many2one('sale.order', string="Food")
     vip_id = fields.Many2one('product.product', string="Food")
-
-
-
-
-
 
     @api.model
     def create(self, vals):
@@ -416,7 +394,7 @@ class SaleOrderMoveLine(models.Model):
                 vals['order_id'] = vals['food_id']
             elif vals.get('vip_food_id'):
                 vals['order_id'] = vals['vip_food_id']
-        
+
         # 2. Determine Product ID from custom fields if missing
         if 'product_id' not in vals:
             if vals.get('complimentory_food'):
@@ -433,8 +411,8 @@ class SaleOrderMoveLine(models.Model):
                 product = self.env['product.product'].browse(product_id)
                 vals['name'] = product.get_product_multiline_description_sale()
             else:
-                vals['name'] = "/" # Fallback dummy value
-        
+                vals['name'] = "/"  # Fallback dummy value
+
         # 4. Handle missing UOM
         if 'product_uom' not in vals and vals.get('product_id'):
             product = self.env['product.product'].browse(vals['product_id'])
@@ -444,10 +422,10 @@ class SaleOrderMoveLine(models.Model):
         if 'product_uom_qty' not in vals:
             if vals.get('complimentory_food_qty'):
                 vals['product_uom_qty'] = vals['complimentory_food_qty']
-            elif vals.get('total_pax_food'): # Assuming pax maps to qty for food taste
-                 vals['product_uom_qty'] = vals['total_pax_food']
+            elif vals.get('total_pax_food'):  # Assuming pax maps to qty for food taste
+                vals['product_uom_qty'] = vals['total_pax_food']
             else:
-                 vals['product_uom_qty'] = 1.0
+                vals['product_uom_qty'] = 1.0
 
         return super(SaleOrderMoveLine, self).create(vals)
 
@@ -461,7 +439,17 @@ class SaleOrderMoveLine(models.Model):
         res['is_rental_item'] = self.addi_true
         return res
 
+    @api.onchange('product_id')
+    def onchange_product_id(self):
+        for line in self:
+            if not line.order_id:
+                return
 
+            if line.order_id.price_amount == 0 or line.order_id.price_amount_min == 0:
+                raise ValidationError('Please Enter The Pax')
+
+            # ✅ SET QTY FROM PAX
+            line.product_uom_qty = line.order_id.price_amount_min
 
 
 class AdditionalRentalProducts(models.Model):
@@ -490,8 +478,6 @@ class AdditionalRentalProducts(models.Model):
 
         return res
 
-
-
     @api.depends('sub_total', 'additional_amount', 'discount')
     def _compute_amount(self):
         res = super(AdditionalRentalProducts, self)._compute_amount()
@@ -501,9 +487,8 @@ class AdditionalRentalProducts(models.Model):
                 x = i.sub_total + i.additional_amount - i.discount
             if i.sub_total == 0:
                 for j in i.invoice_line_ids:
-                        x += j.price_subtotal
+                    x += j.price_subtotal
         self.amount_total = x
-
 
         return res
 
@@ -511,9 +496,8 @@ class AdditionalRentalProducts(models.Model):
 class LineidEvent(models.Model):
     _inherit = 'account.move.line'
 
-    event_type_id = fields.Many2one('event.type.sale',string='Event Type',limit=1,copy=False)
+    event_type_id = fields.Many2one('event.type.sale', string='Event Type', limit=1, copy=False)
     is_rental_item = fields.Boolean(string='Rental')
-
 
 
 class ComplimentoryOrderLine(models.Model):
@@ -559,7 +543,6 @@ class ComplimentoryOrderLine(models.Model):
         ('am', 'AM'),
         ('pm', 'PM')
     ], string="Time Period")
-
 
 
 class FoodTastingDetails(models.Model):
@@ -625,12 +608,3 @@ class VipFoodDetails(models.Model):
         'product.product',
         string="VIP Food"
     )
-
-
-
-
-
-
-
-
-
