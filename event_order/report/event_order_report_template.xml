@@ -699,9 +699,69 @@
                                 </tbody>
                             </table>
                         </t>
+                        <t t-if="doc.rental_item_ids">
 
+                            <div style="page-break-inside: avoid;">
 
-                        <!--                        </t>-->
+                                <!-- TITLE -->
+                                <div style="margin-top:15px; font-size:11px; font-weight:bold;">
+                                    ADDITIONAL RENTAL ORDERS
+                                </div>
+
+                                <table width="100%"
+                                       class="table table-borderless"
+                                       style="font-size:10px; margin-top:5px; page-break-inside: avoid;">
+
+                                    <thead>
+                                        <tr>
+                                            <th id="table_head_border">ITEM</th>
+                                            <th id="table_head_border" style="text-align:center;">QTY</th>
+                                            <th id="table_head_border" style="text-align:right;">RATE</th>
+                                            <th id="table_head_border" style="text-align:right;">AMOUNT</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <t t-foreach="doc.rental_item_ids" t-as="line">
+                                            <tr style="page-break-inside: avoid;">
+                                                <td id="table_head_border">
+                                                    <span t-field="line.rental_product.display_name"/>
+                                                </td>
+
+                                                <td id="table_head_border" style="text-align:center;">
+                                                    <span t-field="line.product_quantity"/>
+                                                </td>
+
+                                                <td id="table_head_border" style="text-align:right;">
+                                                    <span t-field="line.product_price"/>
+                                                </td>
+
+                                                <td id="table_head_border" style="text-align:right;">
+                                                    <span t-field="line.product_sub_total"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+
+                                </table>
+
+                                <!-- TOTAL -->
+                                <t t-set="rental_total" t-value="sum(doc.rental_item_ids.mapped('product_sub_total'))"/>
+
+                                <table width="100%" style="margin-top:5px;">
+                                    <tr>
+                                        <td style="text-align:right; font-size:11px;">
+                                            <strong>Total :</strong>
+                                            <span style="margin-left:10px;">
+                                                <t t-esc="'%s %0.2f' % (doc.currency_id.symbol, rental_total)"/>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </div>
+
+                        </t>                        <!--                        </t>-->
                     </div>
 
 
