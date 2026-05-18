@@ -74,6 +74,20 @@ class SaleOrderCustomisation(models.Model):
     additional_amount = fields.Float(string="Additional amount", readonly=True, store=True,
                                      compute="compute_additional_amount")
     ic_number_customer = fields.Char(string="IC Number")
+
+    breakfast_pax = fields.Integer("Breakfast Pax")
+    breakfast_per_pax = fields.Float("Breakfast Per Pax")
+
+    lunch_pax = fields.Integer("Lunch Pax")
+    lunch_per_pax = fields.Float("Lunch Per Pax")
+
+    dinner_pax = fields.Integer("Dinner Pax")
+    dinner_per_pax = fields.Float("Dinner Per Pax")
+
+    hi_tea_pax = fields.Integer("Hi Tea Pax")
+    hi_tea_per_pax = fields.Float("Hi Tea Per Pax")
+
+    
     total_pax_food = fields.Integer(string="Pax", default=0)
     total_pax_com = fields.Integer(string="Pax", default=0)
     price_per_pax = fields.Float(string="Price Per Pax")
