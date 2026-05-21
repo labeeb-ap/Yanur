@@ -60,318 +60,348 @@
                     </div>
 
                     <div class="page">
-                        <table width="100%">
-                            <tr>
-                                <td colspan="5">
-                                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                                        <div style="font-size:10px; text-align:left;">
-                                            <span>ORDER NO :</span>
-                                            <span>
-                                                <span t-field="doc.name"/>
-                                            </span>
-                                        </div>
-                                        <div style="font-size:10px; text-align:right;margin-top:-13px;">
-                                            <span>ORDER DATE :</span>
-                                            <span>
-                                                <span t-field="doc.date_order"/>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding-top:2px;padding-bottom:2px;" colspan="4">
-                                    <span style="font-size:10px;">NAME OF CLIENT :</span>
-                                    <span style="font-size:10px;display:inline-block; width:350px; border-bottom:1px solid black;"
-                                          t-field="doc.partner_id">
-                                        <!--                                        <span />-->
-                                    </span>
-                                </td>
-                                <td style="font-size:10px;text-align:left;padding-top:2px;padding-bottom:2px;padding-right:2px; text-align:right;"
-                                    colspan="1">
-                                    <span>SALES MAN ID :</span>
-                                    <span>
-                                        <span t-field="doc.sales_man"/>
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding-top:2px;padding-bottom:2px; font-size:10px;"
-                                    colspan="5">
-                                    <span style="font-size:10px;">ADDRESS :</span>
-                                    <span style="display:inline-block; width:450px; border-bottom:1px solid black;">
-                                        <t t-esc="doc.partner_id.street or ' '"/>
-                                    </span>
+                        <!-- MAIN DETAILS -->
+                        <div style="width:100%; font-size:10px; line-height:22px;">
 
-                                    <t t-if="doc.partner_id.city">
-                                        <span>
-                                            <span t-field="doc.partner_id.city"/>
+                            <!-- ORDER -->
+                            <table style="width:100%; border-collapse:collapse;">
+                                <tr>
+
+                                    <td style="width:60%;">
+
+                                        <strong>ORDER NO :</strong>
+
+                                        <span style="display:inline-block; padding:0px 5px;">
+                                            <span t-field="doc.name"/>
                                         </span>
-                                    </t>
-                                    <t t-if="doc.partner_id.state_id">
-                                        <span>
-                                            <span t-field="doc.partner_id.state_id"/>
+
+                                    </td>
+
+                                    <td style="width:40%;">
+
+                                        <strong>ORDER DATE :</strong>
+
+                                        <span style="display:inline-block; padding:0px 5px;">
+                                            <span t-field="doc.date_order"/>
                                         </span>
-                                    </t>
-                                    <t t-if="doc.partner_id.country_id">
-                                        <span>
-                                            <span t-field="doc.partner_id.country_id"/>
+
+                                    </td>
+
+                                </tr>
+                            </table>
+
+
+                            <!-- CLIENT -->
+                            <table style="width:100%; border-collapse:collapse;">
+                                <tr>
+
+                                    <td style="width:60%;">
+
+                                        <strong>NAME OF CLIENT :</strong>
+
+                                        <span style="display:inline-block; padding:0px 5px;"
+                                              t-field="doc.partner_id"/>
+
+                                    </td>
+
+                                    <td style="width:40%;">
+
+                                        <strong>SALES MAN ID :</strong>
+
+                                        <span style="display:inline-block; padding:0px 5px;">
+                                            <span t-field="doc.sales_man"/>
                                         </span>
-                                    </t>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding-top:2px;padding-bottom:2px; font-size:10px;" colspan="3">
-                                    <span style="font-size:10px;">TEL/HP :</span>
-                                    <span style="display:inline-block; width:150px; border-bottom:1px solid black;">
-                                        <t t-if="doc.ph_no">
-                                            <span t-field="doc.ph_no"/>
-                                        </t>
-                                    </span>
-                                </td>
-                                <td style="padding-top:2px;padding-bottom:2px; text-align:left;">
-                                    <span style="font-size:10px;">FAX :</span>
-                                    <span style="font-size:10px; display:inline-block; width:100px; border-bottom:1px solid black;">
-                                        <t t-if="doc.fax">
-                                            <span t-field="doc.fax"/>
-                                        </t>
-                                    </span>
-                                </td>
-                                <td style="font-size:10px;text-align:left;padding-top:2px;padding-bottom:2px; text-align:right">
-                                    <span>TIME YANUR :</span>
-                                    <span>
-                                        <span style="display:inline-block; width:50px; border-bottom:1px solid black;"
-                                              t-field="doc.time_yanur" t-options="{'widget': 'float_time'}"/>
-                                    </span>
-                                    <span>
-                                        <span t-field="doc.event_time_format_1"/>
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style=";padding-top:2px;padding-bottom:2px;" colspan="3">
-                                    <span style="font-size:10px;">DESCRIPTION :</span>
-                                    <span style="font-size:10px; display:inline-block; width:300px; border-bottom:1px solid black;">
-                                        <t t-if="doc.notes">
+
+                                    </td>
+
+                                </tr>
+                            </table>
+
+
+                            <!-- ADDRESS -->
+                            <table style="width:100%; border-collapse:collapse;">
+                                <tr>
+
+                                    <td style="width:100%;">
+
+                                        <strong>ADDRESS :</strong>
+
+                                        <span style="display:inline-block; padding:0px 5px;">
+
+                                            <t t-esc="doc.partner_id.street or ''"/>
+
+                                            <t t-if="doc.partner_id.city">
+                                                <span t-field="doc.partner_id.city"/>
+                                            </t>
+
+                                            <t t-if="doc.partner_id.state_id">
+                                                <span t-field="doc.partner_id.state_id"/>
+                                            </t>
+
+                                            <t t-if="doc.partner_id.country_id">
+                                                <span t-field="doc.partner_id.country_id"/>
+                                            </t>
+
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+                            </table>
+
+
+                            <!-- DESCRIPTION -->
+                            <table style="width:100%; border-collapse:collapse;">
+                                <tr>
+
+                                    <td style="width:60%;">
+
+                                        <strong>DESCRIPTION :</strong>
+
+                                        <span style="display:inline-block; padding:0px 5px;">
                                             <span t-field="doc.notes"/>
-                                        </t>
-                                    </span>
-                                </td>
-                                <td style="font-size:10px;text-align:left;padding-top:2px;padding-bottom:2px;padding-right:2px; text-align:right;"
-                                    colspan="2">
-                                    <span>TIME SITE :</span>
-                                    <span>
-                                        <span style="font-size:10px; display:inline-block; width:50px; border-bottom:1px solid black;"
-                                              t-field="doc.time_site" t-options="{'widget': 'float_time'}"/>
-                                    </span>
-                                    <span>
+                                        </span>
+
+                                    </td>
+
+                                    <td style="width:40%;">
+
+                                        <strong>TIME SITE :</strong>
+
+                                        <span style="display:inline-block; padding:0px 5px;"
+                                              t-field="doc.time_site"
+                                              t-options="{'widget':'float_time'}"/>
+
                                         <span t-field="doc.event_time_format_2"/>
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding-top:2px;padding-bottom:2px;" colspan="3">
-                                    <span style="font-size:10px;">NATURE OF FUNCTION :</span>
-                                    <span style="font-size:10px; font-size:10px; display:inline-block; width:250px; border-bottom:1px solid black;">
-                                        <t t-if="doc.nature_of_function">
+
+                                    </td>
+
+                                </tr>
+                            </table>
+
+
+                            <!-- FUNCTION -->
+                            <table style="width:100%; border-collapse:collapse;">
+                                <tr>
+
+                                    <td style="width:60%;">
+
+                                        <strong>NATURE OF FUNCTION :</strong>
+
+                                        <span style="display:inline-block; padding:0px 5px;">
                                             <span t-field="doc.nature_of_function"/>
-                                        </t>
-                                    </span>
-                                </td>
-                                <td style="font-size:10px;padding-top:2px;padding-bottom:2px;padding-right:2px; text-align:left;">
-                                    <span style="font-size:10px;">FUNCTION DATE :</span>
-                                    <span style="font-size:10px; display:inline-block; width:60px; border-bottom:1px solid black;">
-                                        <t t-if="doc.exp_delivery_date">
+                                        </span>
+
+                                    </td>
+
+                                    <td style="width:40%;">
+
+                                        <strong>FUNCTION DATE :</strong>
+
+                                        <span style="display:inline-block; padding:0px 5px;">
                                             <span t-field="doc.exp_delivery_date"/>
-                                        </t>
-                                    </span>
-                                </td>
-                                <td style="font-size:10px;padding-top:2px;padding-bottom:2px;padding-right:2px; text-align:right;">
-                                    <t t-if="doc.company_id.id != 5">
-                                        <span style="font-size:10px;">VIP :</span>
-                                        <span style="font-size:10px; display:inline-block; width:20px; border-bottom:1px solid black;">
-                                            <span t-field="doc.number_of_vip"/>
                                         </span>
-                                    </t>
 
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="font-size:10px;padding-top:2px;padding-bottom:2px;padding-right:2px; text-align:left;"
-                                    colspan="5">
-                                    <span>VENUE :</span>
-                                    <span style="font-size:10px; display:inline-block; width:250px; border-bottom:1px solid black;">
-                                        <t t-if="doc.venue">
+                                    </td>
+
+                                </tr>
+                            </table>
+
+
+                            <!-- TIME YANUR -->
+                            <table style="width:100%; border-collapse:collapse;">
+                                <tr>
+
+                                    <td style="width:60%;">
+
+                                        <strong>TIME YANUR :</strong>
+
+                                        <span style="display:inline-block; padding:0px 5px;"
+                                              t-field="doc.time_yanur"
+                                              t-options="{'widget':'float_time'}"/>
+
+                                        <span t-field="doc.event_time_format_1"/>
+
+                                    </td>
+
+                                    <td style="width:40%;"></td>
+
+                                </tr>
+                            </table>
+
+
+                            <!-- PHONE -->
+                            <table style="width:100%; border-collapse:collapse;">
+                                <tr>
+
+                                    <td style="width:60%;">
+
+                                        <strong>TEL/HP :</strong>
+
+                                        <span style="display:inline-block; padding:0px 5px;">
+                                            <span t-field="doc.ph_no"/>
+                                        </span>
+
+                                    </td>
+
+                                    <td style="width:40%;">
+
+                                        <strong>FAX :</strong>
+
+                                        <span style="display:inline-block; padding:0px 5px;">
+                                            <span t-field="doc.fax"/>
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+                            </table>
+
+
+                            <!-- VENUE -->
+                            <table style="width:100%; border-collapse:collapse;">
+                                <tr>
+
+                                    <td style="width:100%;">
+
+                                        <strong>VENUE :</strong>
+
+                                        <span style="display:inline-block; padding:0px 5px;">
                                             <span t-field="doc.venue"/>
-                                        </t>
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding-top:2px;padding-bottom:2px;font-size:10px;padding-right:0px;">
-                                    PRICE PER PERSON :
-                                    <span style="font-size:10px; display:inline-block; width:100px; border-bottom:1px solid black;"></span>
-                                </td>
-                                <td style="padding-top:2px;padding-bottom:2px;font-size:10px;padding-right:0px; text-align:left;">
-                                    <strong>Breakfast</strong>:
-                                    <span style="font-size:10px; display:inline-block; width:30px; border-bottom:1px solid black;">
-                                        <t t-if="doc.food_type == 'breakfast'">
-                                            <span t-field="doc.price_amount"/>
-                                        </t>
-                                        <t t-else="">0</t>
-                                    </span>
-                                </td>
-                                <td style="padding-top:2px;padding-bottom:2px;font-size:10px;padding-left:20px; text-align:left;">
-                                    <strong>Lunch</strong>
-                                    :
-                                    <span style="font-size:10px; display:inline-block; width:30px; border-bottom:1px solid black;">
-                                        <t t-if="doc.food_type == 'lunch'">
-                                            <span t-field="doc.price_amount"/>
-                                        </t>
-                                        <t t-else="">0</t>
-                                    </span>
-                                </td>
-                                <td style="padding-top:2px;padding-bottom:2px;font-size:10px;padding-right:1px; text-align:left;">
-                                    <strong>Hi-Tea</strong>
-                                    :
-                                    <span style="font-size:10px; display:inline-block; width:50px; border-bottom:1px solid black;">
-                                        <t t-if="doc.food_type == 'hi_tea'">
-                                            <span t-field="doc.price_amount"/>
-                                        </t>
-                                        <t t-else="">0</t>
-                                    </span>
-                                </td>
-                                <td style="padding-top:2px;padding-bottom:2px;font-size:10px;padding-right:1px;padding-left:45px; text-align:left;">
-                                    <strong>Dinner</strong>:
-                                    <span style="font-size:10px; display:inline-block; width:50px; border-bottom:1px solid black;">
-                                        <t t-if="doc.food_type == 'dinner'">
-                                            <span t-field="doc.price_amount"/>
-                                        </t>
-                                        <t t-else="">0</t>
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding-top:2px;padding-bottom:2px;font-size:10px;padding-right:1px;">
-                                    MIN NO OF PERSONS GUARANTEED :
-                                </td>
-                                <td style="padding-top:2px;padding-bottom:2px;font-size:10px;padding-right:1px; text-align:left;">
-                                    <strong>Breakfast</strong>:
-                                    <span style="font-size:10px; display:inline-block; width:30px; border-bottom:1px solid black;">
-                                        <t t-if="doc.food_type == 'breakfast'">
-                                            <span t-field="doc.price_amount_min"/>
-                                        </t>
-                                        <t t-else="">0</t>
-                                    </span>
-                                </td>
-                                <td style="padding-top:2px;padding-bottom:2px;font-size:10px;padding-left:20px; text-align:left;">
-                                    <strong>Lunch</strong>
-                                    :
-                                    <span style="font-size:10px; display:inline-block; width:30px; border-bottom:1px solid black;">
-                                        <t t-if="doc.food_type == 'lunch'">
-                                            <span t-field="doc.price_amount_min"/>
-                                        </t>
-                                        <t t-else="">0</t>
-                                    </span>
-                                </td>
-                                <td style="padding-top:2px;padding-bottom:2px;font-size:10px;padding-right:1px; text-align:left;">
-                                    <strong>Hi-Tea</strong>
-                                    :
-                                    <span style="font-size:10px; display:inline-block; width:50px; border-bottom:1px solid black;">
-                                        <t t-if="doc.food_type == 'hi_tea'">
-                                            <span t-field="doc.price_amount_min"/>
-                                        </t>
-                                        <t t-else="">0</t>
-                                    </span>
-                                </td>
-                                <td style="padding-top:2px;padding-bottom:2px;font-size:10px;padding-right:1px;padding-left:45px; text-align:left;">
-                                    <strong>Dinner</strong>:
-                                    <span style="font-size:10px; display:inline-block; width:50px; border-bottom:1px solid black;">
-                                        <t t-if="doc.food_type == 'dinner'">
-                                            <span t-field="doc.price_amount_min"/>
-                                        </t>
-                                        <t t-else="">0</t>
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding-top:2px;padding-bottom:2px;font-size:10px;" colspan="3">
-                                    VIP DETAILS:
-                                    <span style="font-size:10px; display:inline-block; width:50px; border-bottom:1px solid black;">
+                                        </span>
 
-                                    </span>
-                                </td>
-                                <td style="padding-top:2px;padding-bottom:2px; padding-left:0px;font-size:10px; text-align:left;">
-                                    <strong>TOTAL PAX</strong>:
-                                    <span style="font-size:10px; display:inline-block; width:50px; border-bottom:1px solid black;">
-                                        <span t-field="doc.price_amount_min"/>
-                                    </span>
-                                </td>
-                                <td style="padding-top:2px;padding-bottom:2px;font-size:10px; text-align:right;">
-                                    <strong>PRICE PER PAX</strong>
-                                    :
-                                    <span style="font-size:10px; display:inline-block; width:50px; border-bottom:1px solid black;">
-                                        <span t-field="doc.price_amount"/>
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding-top:2px;padding-bottom:2px;font-size:12px;" colspan="2">
-                                    <span style="font-size:10px;"><strong>ADDITIONAL AMOUNT</strong>:
-                                    </span>
-                                    <span>
-                                        <strong>
-                                            <span style="font-size:10px; display:inline-block; width:100px; border-bottom:1px solid black;"
-                                                  t-esc="'%s %d' % (doc.currency_id.symbol, round(doc.additional_amount))"/>
-                                        </strong>
-                                    </span>
-                                </td>
-                                <td style="padding-top:2px;padding-bottom:2px;font-size:10px;">
-                                    <t t-if="doc.company_id.id != 5">
-                                        <span style="font-size:10px;"><strong>Price per child pax</strong>:
-                                            <!--                                            <span  style="display:inline-block; width:10px; border-bottom:1px solid black;"> </span>-->
-                                        </span>
-                                    </t>
-                                    <t t-else="">
-                                        <span style="font-size:10px;"><strong>Price per VIP pax</strong>:
-                                        </span>
-                                    </t>
-                                    <span>
-                                        <strong>
-                                            <span t-field="doc.pax_child_amount"/>
-                                        </strong>
-                                    </span>
-                                </td>
-                                <td style="padding-top:2px;padding-bottom:2px;font-size:10px;">
-                                    <t t-if="doc.company_id.id != 5">
-                                        <span style="font-size:10px;">
-                                            <strong>No of child pax :</strong>
-                                        </span>
-                                    </t>
-                                    <t t-else="">
-                                        <span style="font-size:10px;">
-                                            <strong>No of VIP pax :</strong>
-                                        </span>
-                                    </t>
-                                    <span>
-                                        <strong>
-                                            <span t-field="doc.pax_child_qty"/>
-                                        </strong>
-                                    </span>
-                                </td>
-                                <td style="padding-top:2px;padding-bottom:2px;font-size:12px;" align="right">
-                                    <span style="font-size:10px;"><strong>TOTAL AMOUNT</strong>:
-                                    </span>
-                                    <span>
-                                        <strong>
+                                    </td>
+
+                                </tr>
+                            </table>
+
+
+                            <!-- PRICE -->
+                            <!-- PRICE PER PERSON -->
+                            <!-- PRICE PER PERSON -->
+                            <table style="width:100%; border-collapse:collapse; margin-top:2px;">
+
+                                <tr>
+
+                                    <td style="width:30%;">
+
+                                        <strong>PRICE PER PERSON :</strong>
+                                    </td>
+                                    <td style="width:18%;">
+
+                                        <strong>Breakfast :</strong>
+                                        <span t-field="doc.breakfast_per_pax"/>
+                                    </td>
+
+                                    <td style="width:18%;">
+                                        <strong>Lunch :</strong>
+                                        <span t-field="doc.lunch_per_pax"/>
+
+                                    </td>
+                                    <td style="width:18%;">
+                                        <strong>Hi-Tea :</strong>
+                                        <span t-field="doc.hi_tea_per_pax"/>
+
+                                    </td>
+                                    <td style="width:18%;">
+                                        <strong>Dinner :</strong>
+                                        <span t-field="doc.dinner_per_pax"/>
+
+                                    </td>
+
+                                </tr>
+
+                            </table>
+
+
+                            <!-- MIN NO OF PERSONS GUARANTEED -->
+                            <table style="width:100%; border-collapse:collapse; margin-top:2px;">
+
+                                <tr>
+
+                                    <td style="width:30%;">
+
+                                        <strong>MIN NO OF PERSONS GUARANTEED :</strong>
+                                    </td>
+                                    <td style="width:18%;">
+
+                                        <strong>Breakfast :</strong>
+                                        <span t-field="doc.breakfast_pax"/>
+                                    </td>
+
+                                    <td style="width:18%;">
+                                        <strong>Lunch :</strong>
+                                        <span t-field="doc.lunch_pax"/>
+
+                                    </td>
+                                    <td style="width:18%;">
+                                        <strong>Hi-Tea :</strong>
+                                        <span t-field="doc.hi_tea_pax"/>
+                                    </td>
+
+                                    <td style="width:18%;">
+                                        <strong>Dinner :</strong>
+                                        <span t-field="doc.dinner_pax"/>
+
+                                    </td>
+
+                                </tr>
+
+                            </table>
+
+
+                            <!-- VIP DETAILS -->
+                            <table style="width:100%; border-collapse:collapse; margin-top:2px;">
+
+                                <tr>
+
+                                    <td style="width:20%;">
+
+                                        <strong>VIP DETAILS :</strong>
+                                    </td>
+                                    <td style="width:28%;">
+
+                                        <strong>Price per VIP pax :</strong>
+                                        <span t-field="doc.pax_child_amount"/>
+                                    </td>
+                                    <td style="width:28%;">
+
+
+                                        <strong>No of VIP pax :</strong>
+                                        <span t-field="doc.pax_child_qty"/>
+
+                                    </td>
+
+                                </tr>
+
+                            </table>
+                            <!-- TOTAL -->
+                            <table style="width:100%; border-collapse:collapse;">
+                                <tr>
+
+                                    <td style="width:60%;">
+
+                                        <strong>ADDITIONAL AMOUNT :</strong>
+
+                                        <span style="display:inline-block; padding:0px 5px;"
+                                              t-esc="'%s %d' % (doc.currency_id.symbol, round(doc.additional_amount))"/>
+
+                                    </td>
+
+                                    <td style="width:40%;">
+
+                                        <strong>TOTAL AMOUNT :</strong>
+
+                                        <span style="display:inline-block; padding:0px 5px;">
                                             <span t-field="doc.amount_total"/>
-                                        </strong>
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
+                                        </span>
 
-                        <!--                    <div class="page" style="text-size:20px">-->
+                                    </td>
+
+                                </tr>
+                            </table>
+
+                        </div>
                         <hr t-if="doc.complimentory_food_id"
                             style="border-top: 1px solid black;margin-top:1px;"/>
                         <table t-if="doc.complimentory_food_id" width="100%">
@@ -598,26 +628,29 @@
                                             </t>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td id="table_head_border" style="padding:2px 4px; line-height:12px;">
-                                            <span t-field="doc.vip_food_note"/>
-                                        </td>
-                                        <td id="table_head_border" style="padding:2px 4px; line-height:12px;">
+                                    <t t-if="doc.vip_food_details_ids">
+
+                                        <tr>
+                                            <td id="table_head_border" style="padding:2px 4px; line-height:12px;">
+                                                <span t-field="doc.vip_food_note"/>
+                                            </td>
+                                            <td id="table_head_border" style="padding:2px 4px; line-height:12px;">
 
 
-                                            <t t-if="doc.vip_food_details_ids.vip_id">
-                                                <strong>VIP</strong>
-                                                <br/>
-                                                <t t-foreach="doc.vip_food_details_ids" t-as="line">
-                                                    <div style="margin-bottom:2px;">
-                                                        <span t-field="line.vip_id"/>
-                                                    </div>
+                                                <t t-if="doc.vip_food_details_ids.vip_id">
+                                                    <strong>VIP</strong>
+                                                    <br/>
+                                                    <t t-foreach="doc.vip_food_details_ids" t-as="line">
+                                                        <div style="margin-bottom:2px;">
+                                                            <span t-field="line.vip_id"/>
+                                                        </div>
+                                                    </t>
                                                 </t>
-                                            </t>
 
 
-                                        </td>
-                                    </tr>
+                                            </td>
+                                        </tr>
+                                    </t>
                                 </tbody>
                             </table>
                         </t>

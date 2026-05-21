@@ -59,8 +59,18 @@ class SaleOrderCustomisation(models.Model):
     food_type = fields.Selection(
         [('breakfast', 'Breakfast'), ('lunch', 'Lunch'), ('dinner', 'Dinner'), ('hi_tea', 'Hi-Tea')], default='',
         string="Food Types")
-    price_amount = fields.Float(string="Price Per Pax", default=0.0, copy=False)
-    price_amount_min = fields.Integer(string="No Of Pax", default=0, copy=False)
+    price_amount = fields.Float(
+        string="Price Per Pax",
+        compute="_compute_price_amount",
+        store=True,
+        copy=False
+    )
+    price_amount_min = fields.Integer(
+        string="No Of Pax",
+        compute="_compute_total_pax",
+        store=True,
+        copy=False
+    )
     notes = fields.Text(string="Description")
     # pax = fields.Char(string="Pax")
     # event_title = fields.Selection([('private', 'Private'), ('corporate', 'Corporate'), ('government', 'Goverment')],default="",string="Event Title")
@@ -87,6 +97,89 @@ class SaleOrderCustomisation(models.Model):
     hi_tea_pax = fields.Integer("Hi Tea Pax")
     hi_tea_per_pax = fields.Float("Hi Tea Per Pax")
 
+    @api.depends(
+        'breakfast_pax',
+        'lunch_pax',
+        'dinner_pax',
+        'hi_tea_pax'
+    )
+    def _compute_total_pax(self):
+        for order in self:
+            order.price_amount_min = (
+                    order.breakfast_pax +
+                    order.lunch_pax +
+                    order.dinner_pax +
+                    order.hi_tea_pax
+            )
+
+    @api.depends(
+        'breakfast_pax', 'breakfast_per_pax',
+        'lunch_pax', 'lunch_per_pax',
+        'dinner_pax', 'dinner_per_pax',
+        'hi_tea_pax', 'hi_tea_per_pax'
+    )
+    def _compute_price_amount(self):
+        for order in self:
+            breakfast_total = order.breakfast_pax * order.breakfast_per_pax
+            lunch_total = order.lunch_pax * order.lunch_per_pax
+            dinner_total = order.dinner_pax * order.dinner_per_pax
+            hi_tea_total = order.hi_tea_pax * order.hi_tea_per_pax
+
+            total_amount = (
+                    breakfast_total +
+                    lunch_total +
+                    dinner_total +
+                    hi_tea_total
+            )
+
+            total_pax = (
+                    order.breakfast_pax +
+                    order.lunch_pax +
+                    order.dinner_pax +
+                    order.hi_tea_pax
+            )
+
+            order.price_amount = (
+                total_amount / total_pax
+                if total_pax else 0.0
+            )
+
+    @api.depends(
+        'breakfast_pax',
+        'lunch_pax',
+        'dinner_pax',
+        'hi_tea_pax'
+    )
+    def _compute_total_pax(self):
+        for order in self:
+            order.price_amount_min = (
+                    order.breakfast_pax +
+                    order.lunch_pax +
+                    order.dinner_pax +
+                    order.hi_tea_pax
+            )
+
+    @api.constrains(
+        'breakfast_pax', 'breakfast_per_pax',
+        'lunch_pax', 'lunch_per_pax',
+        'dinner_pax', 'dinner_per_pax',
+        'hi_tea_pax', 'hi_tea_per_pax'
+    )
+    def _check_food_values(self):
+
+        food_types = [
+            ('Breakfast', self.breakfast_pax, self.breakfast_per_pax),
+            ('Lunch', self.lunch_pax, self.lunch_per_pax),
+            ('Dinner', self.dinner_pax, self.dinner_per_pax),
+            ('Hi Tea', self.hi_tea_pax, self.hi_tea_per_pax),
+        ]
+
+        for name, pax, price in food_types:
+
+            if (pax and not price) or (price and not pax):
+                raise ValidationError(
+                    _("Please enter both Pax and Price Per Pax for %s.") % name
+                )
     
     total_pax_food = fields.Integer(string="Pax", default=0)
     total_pax_com = fields.Integer(string="Pax", default=0)
